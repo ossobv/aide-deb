@@ -1,0 +1,6 @@
+#@@define LOC_WEBSITES (www\\.a\\.example|www\\.b\\.example)
+@@if defined LOC_WEBSITES
+@@define LOC_WEBALIZERFILES (index\\.html|usage\\.png|webalizer\\.(hist|current)|(ctry|daily|hourly)_usage_@@{YEAR4D}(0[1-9]|1[0-2])\\.png|usage_@@YEAR4D(0[1-9]|1[0-2])\\.html)
+
+/var/www/@@{LOC_WEBSITES}/stats/@@{LOC_WEBALIZERFILES}$ f VarFile
+@@endif

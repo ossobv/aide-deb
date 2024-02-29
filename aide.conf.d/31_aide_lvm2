@@ -1,0 +1,10 @@
+/@@{RUNLOCK}/lvm$ d RecreatedDir
+!/@@{RUN}/lvm/(new)?hints$ f
+/@@{RUN}/lvm(/((lvs|pvs)_online|pvs_lookup))?$ d RecreatedDir
+!/@@{RUN}/lvm/lvm(etad|polld)\\.socket$ s
+/@@{RUN}/lvmetad\\.pid$ f VarFile
+@@if defined LVM_VGS_ONLINE
+/@@{RUN}/lvm/vgs_online$ d RecreatedDir
+/@@{RUN}/lvm/vgs_online/@@{LVM_VGS_ONLINE}$ f VarFile
+@@undef LVM_VGS_ONLINE
+@@endif

@@ -1,0 +1,2 @@
+#Type	Name	ID	GECOS						Home directory	Shell
+u	_aide	-	"Advanced Intrusion Detection Environment"	/var/lib/aide	/usr/sbin/nologin

@@ -1,0 +1,3 @@
+/var/log/apcupsd\\.events$ f Log
+/@@{RUN}/apcupsd\\.pid$ f VarFile
+/@@{RUNLOCK}/LCK\\.\\.$ f VarFile

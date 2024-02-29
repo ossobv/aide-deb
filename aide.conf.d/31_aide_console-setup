@@ -1,0 +1,2 @@
+/@@{RUN}/console-setup$ d VarDirInode
+/@@{RUN}/console-setup/(boot_completed|font-loaded)$ f VarFile

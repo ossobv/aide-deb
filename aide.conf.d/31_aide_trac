@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#shellcheck disable=SC2154
+if [ -r "$UPAC_settingsd/31_aide_trac_settings" ]; then
+  # pull in configuration
+  #shellcheck disable=SC1090
+  . "$UPAC_settingsd/31_aide_trac_settings"
+fi
+
+for tracpath in $TRAC_REPOS; do
+    [ -d "${tracpath}" ] || exit 1
+    tracpath="${tracpath//\./\\\\.}"
+    printf "%sdb/trac\\.db$ f VarFile\\n" "${tracpath}"
+    printf "%sdb$ d VarDir\\n" "${tracpath}"
+done

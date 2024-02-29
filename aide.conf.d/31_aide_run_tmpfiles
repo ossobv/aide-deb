@@ -1,0 +1,2 @@
+/@@{RUN}/tmpfiles\\.d$ d VarDirInode
+/@@{RUN}/tmpfiles\\.d/static-nodes\\.conf$ f VarInode

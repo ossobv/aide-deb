@@ -1,0 +1,2 @@
+/usr/share/mythtv/mythweb/data/cache$ VarDir
+/usr/share/mythtv/mythweb/data/cache/[0-9_]+\.mpg\.png$ VarFile+ANF+ARF

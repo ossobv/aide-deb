@@ -1,0 +1,3 @@
+/var/log/apt/history.log => /var/log/apt/history.log.1.gz (#1030218)
+/var/lib/dpkg/diversions => /var/backups/dpkg.diversions.0
+/var/log/btmp (who owns, who rotates?)

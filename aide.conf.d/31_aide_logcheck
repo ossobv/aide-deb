@@ -1,0 +1,2 @@
+/@@{RUNLOCK}/logcheck$ d VarDirInode
+/var/lib/logcheck/offset\\.[[:alnum:]\\.]+$ f VarFile

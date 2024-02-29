@@ -1,0 +1,9 @@
+@@define AWSTATS_LANG (al|ba|bg|ca|tw|cn|hr|cz|dk|nl|en|et|eu|fi|fr|gl|de|gr|he|hu|is|id|it|jp|ko|lv|nn|nb|pl|pt|br|ro|ru|sr|sk|si|es|se|tr|ua|cy)
+@@define AWSTATS_MONTH (0[0-9]|1[02])
+/var/cache/awstats/awstats$ d VarDir
+/var/cache/awstats/awstats/@@{YEAR4D}/@@{AWSTATS_MONTH}$ d VarDir
+/var/cache/awstats/awstats/@@{YEAR4D}/@@{AWSTATS_MONTH}/awstats\\.awstats\\.@@{AWSTATS_LANG}\\.html$ f VarFile
+/var/cache/awstats/awstats/@@{YEAR4D}/@@{AWSTATS_MONTH}/awstats\\.awstats\\.(all(domains|hosts|robots)|browserdetail|downloads|errors40[034]|keyphrases|keywords|last(hosts|robots)|osdetail|referer(pages|se)|session|unknown(browser|ip|os)|url(detail|entry|exit))\\.@@{AWSTATS_LANG}\\.html$ f VarFile
+/var/cache/awstats/awstats/@@{YEAR4D}/@@{AWSTATS_MONTH}/index\\.@@{AWSTATS_LANG}\\.html$ l
+/var/lib/awstats$ d VarDir
+/var/lib/awstats/awstats[0-9]*\\.txt$ f VarFile

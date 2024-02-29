@@ -1,0 +1,138 @@
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+#    Developers do not need to manually edit POT or PO files.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: aide 0.11.99.20060718-1.0\n"
+"Report-Msgid-Bugs-To: aide@packages.debian.org\n"
+"POT-Creation-Date: 2013-06-09 22:00+0200\n"
+"PO-Revision-Date: 2006-09-24 01:22+0900\n"
+"Last-Translator: Hideki Yamane (Debian-JP) <henrich@debian.or.jp>\n"
+"Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid "Initialize AIDE database?"
+msgstr "AIDE データベースを初期化しますか?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid ""
+"Before AIDE can be used, you will have to initialize a database. You can "
+"immediately do this here, or run the '/usr/sbin/aideinit' script from a "
+"shell later."
+msgstr ""
+"AIDE を使えるようにする前に、データベースを初期化する必要があります。ここで直"
+"ちに初期化を行ってもよいですし、後ほど shell から '/usr/sbin/aideinit' として"
+"スクリプトを実行もできます。"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid "Overwrite existing /var/lib/aide/aide.db.new?"
+msgstr "既にある /var/lib/aide/aide.db.new ファイルを上書きしますか?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid ""
+"You have already a newly generated AIDE database in /var/lib/aide/aide.db."
+"new. If you choose this option, the existing file will be be overwritten by "
+"the new data obtained from the current state of your file system."
+msgstr ""
+"既に /var/lib/aide/aide.db.new に新しく生成した AIDE データベースが存在してい"
+"ます。この選択肢を選ぶと、現在のファイルシステムの状態から得られた新しいデー"
+"タによって、既にあるファイルは上書きされます"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid "Copy aide.db.new to aide.db?"
+msgstr "aide.db.new を aide.db にコピーしますか?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"It is advisable for you to first look over /var/lib/aide/aide.db.new file "
+"before replacing the existing db. You can have the package replace the "
+"database anyway here."
+msgstr ""
+"既存の db ファイルを置き換える前に、まず /var/lib/aide/aide.db.new ファイルの"
+"内容を確認するのをお勧めします。何にせよ、ここでパッケージがデータベースを置"
+"き換えるようにできます。"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"If you do not choose this option, you will need to copy the file /var/lib/"
+"aide/aide.db.new to /var/lib/aide/aide.db before AIDE can use it."
+msgstr ""
+"置き換えを選ばないのであれば、AIDE がデータベースを使えるようになる前に /var/"
+"lib/aide.db.new ファイルを /var/lib/aide/aide.db にコピーする必要があります。"
+
+#~ msgid "Move AIDE data files from old directory to new?"
+#~ msgstr ""
+#~ "AIDE のデータファイルを古いディレクトリから新しいディレクトリに移動します"
+#~ "か?"
+
+#~ msgid ""
+#~ "AIDE now stores its databases in /var/lib/aide by default. It appears "
+#~ "that you have an older version installed which uses /usr/lib/aide. You "
+#~ "can have the data files moved automatically."
+#~ msgstr ""
+#~ "AIDE は標準で /var/lib/aide にデータベースを保持するようになりました。今の"
+#~ "ところでは /usr/lib/aide を利用している古いバージョンがインストールされて"
+#~ "いるようです。データファイルは自動的に移動できます。"
+
+#~ msgid "Daily reports are mailed to root by default"
+#~ msgstr "デフォルトの状態では日次レポートが root にメールされます。"
+
+#~ msgid "You may change that in /etc/default/aide."
+#~ msgstr "これについては /etc/default/aide の設定で変更できます。"
+
+#~ msgid "Before AIDE can be used, you will have to initialize a database"
+#~ msgstr ""
+#~ "AIDE を使えるようにする前に、データベースを初期化する必要があります。"
+
+#~ msgid "In order to do this, simply use the '/usr/sbin/aideinit' script."
+#~ msgstr ""
+#~ "これを行うには、単に '/usr/sbin/aideinit' スクリプトを実行するだけです。"
+
+#~ msgid "You must install aide.db.new as /var/lib/aide/aide.db"
+#~ msgstr "aide.db.new を /var/lib/aide/aide.db としてインストールが必要です"
+
+#~ msgid "Where should daily reports be mailed?"
+#~ msgstr "日次レポートはどこへメールしますか?"
+
+#~ msgid ""
+#~ "To change this, you can edit the @@define MAILTO line in /etc/aide/aide."
+#~ "conf"
+#~ msgstr ""
+#~ "これを変更するには、/etc/aide/aide.conf 中の @@define MAILTO 行を編集しま"
+#~ "す。"
+
+#~ msgid ""
+#~ "It is advisable for you to first look over the new db. Say y to ignore "
+#~ "this sage advice."
+#~ msgstr ""
+#~ "まず、古い DB を上書きをして構わないものかどうか新しい DB を調べたほうがよ"
+#~ "いでしょう。y と入力することでこの賢明なアドバイスを無視します。"

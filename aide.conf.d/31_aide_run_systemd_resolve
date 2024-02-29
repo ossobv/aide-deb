@@ -1,0 +1,3 @@
+/@@{RUN}/systemd/resolve$ d VarDir
+/@@{RUN}/systemd/resolve/resolv\\.conf$ f VarFile
+!/@@{RUN}/systemd/resolve/io\\.systemd\\.Resolve(\\.Monitor)?$ s

@@ -1,0 +1,10 @@
+@@define ASTERISK_LOGDIR var/log/asterisk
+@@define ASTERISK_LOGRE (full|messages|queue_log)
+
+/@@{RUN}/asterisk$ d VarDirInode
+/@@{ASTERISK_LOGDIR}$ d VarDir
+/@@{ASTERISK_LOGDIR}/@@{ASTERISK_LOGS}$ f ActLog
+/@@{ASTERISK_LOGDIR}/@@{ASTERISK_LOGS}\\.[123]$ f MidlSerLog
+/@@{ASTERISK_LOGDIR}/@@{ASTERISK_LOGS}\\.4$ f LastSerLog
+@@undef ASTERISK_LOGDIR
+@@undef ASTERISK_LOGRE

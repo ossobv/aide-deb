@@ -1,0 +1,5 @@
+/etc/resolv\\.conf$ f VarFile
+/@@{RUN}/resolvconf/interface/(wlan|eth)[0-9]+(\\.(dhclient|inet))?$ f VarFile
+/@@{RUN}/resolvconf/enable-updates$ f VarFile
+/@@{RUN}/resolvconf/resolv\\.conf$ f VarFile
+/@@{RUN}/resolvconf(/interface)?$ d VarDirInode

@@ -1,0 +1,34 @@
+@@define VCI var/cache/icinga2
+@@define VLII var/lib/icinga2
+@@define VLOI var/log/icinga2
+# redefine or insert your own system's uuid for a better rule
+@@if not defined ICINGA2_UUID
+@@define ICINGA2_UUID [[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12}
+@@endif
+@@if not defined ICINGA2_HOSTNAMERE
+@@define ICINGA2_HOSTNAMERE ([[:alpha:]][-_\.[:alnum:]]*)
+@@endif
+
+/@@{VCI}$ d VarDir
+/@@{VCI}/(api-state\\.json|icinga2\\.(debug|vars)|objects\\.cache|status\\.dat)$ f VarFile
+/@@{VLII}(/api/log)?$ d VarDir
+/@@{VLII}/api/log/current$ f VarFile
+/@@{VLII}/(icinga2\\.state|modified-attributes\\.conf)$ f VarFile
+/@@{VLII}/api/packages/_api/@@{ICINGA2_UUID}/conf\\.d/(comments|downtimes)$ d VarDir
+!/@@{VLII}/api/packages/_api/@@{ICINGA2_UUID}/conf\\.d/comments/@@{ICINGA2_HOSTNAMERE}![[:alnum:][:space:].]+![[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12}\\.conf$ f
+/@@{VLOI}/compat(/archives)?$ d VarDir
+/@@{VLOI}/compat/icinga\\.log$ f ActLog
+!/@@{VLOI}/compat/archives/icinga-[[:digit:]]{2}-[[:digit:]]{2}-[[:digit:]]{4}-[[:digit:]]{2}\\.log$ f
+/@@{VLOI}$ d VarDir
+/@@{VLOI}/icinga2\\.log$ f ActLog
+/@@{VLOI}/icinga2\\.log\\.1$ f RotLog
+/@@{VLOI}/icinga2\\.log\\.2\\.gz$ f CompSerLog
+/@@{VLOI}/icinga2\\.log\\.[3456]\\.gz$ f MidlSerLog
+/@@{VLOI}/icinga2\\.log\\.7\\.gz$ f LastSerLog
+!/tmp/FileCache_icingaweb(/htmlpurifier\\.cache)?$ d
+!/tmp/FileCache_icingaweb/icinga-[0-9a-f]{8}-[0-9a-f]{8}-[0-9a-f]{8}\\.min\\.(css|js)$ f
+
+/@@{RUN}/icinga2(/cmd)?$ d RecreatedDir
+/@@{RUN}/icinga2/icing2\\.pid?$ f VarFile
+!/@@{RUN}/icinga2/cmd/icinga2\\.cmd$ p
+

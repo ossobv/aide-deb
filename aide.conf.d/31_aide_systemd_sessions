@@ -1,0 +1,4 @@
+/@@{RUN}/systemd/(sessions|transient|users)$ d VarDir
+!/@@{RUN}/systemd/sessions/[0-9]+(\\.ref)?$ p
+!/@@{RUN}/systemd/transient/session-[0-9]+\\.scope$ f
+!/@@{RUN}/systemd/users/[0-9]+$ f

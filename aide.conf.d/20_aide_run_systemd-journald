@@ -1,0 +1,10 @@
+#!/bin/bash
+
+printf "@@if not defined SYSTEMD_JOURNAL\\n"
+if [ -d "/var/log/journal" ]; then
+  printf "@@define SYSTEMD_JOURNAL var/log/journal\\n"
+else
+  printf "@@define SYSTEMD_JOURNAL @@{RUN}/log/journal\\n"
+  printf "/@@{RUN}/log$ d RecreatedDir\n"
+fi
+printf "@@endif\n"

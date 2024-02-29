@@ -1,0 +1,45 @@
+@@define INN2_LOGDIR var/log/news
+@@define INN2_DATAFILES (errlog|expire\\.(lastlowmark|log)|inn_status\\.html|innfeed\\.(log|status)|news|unwanted\\.log)
+@@define INN2_LOGS (expire\\.(list)|news(\\.(crit|err|notice))|rc\\.news)
+@@define INN2_OLDLOGDIR @@{INN2_LOGDIR}/OLD
+@@define INN2_OLDLOGS ((expire|innfeed)\\.log|active|errlog|news(\\.(crit|err|notice))?)
+@@define INN2_OLDELAYCOMPLOGS (unwanted\\.log)
+
+/var/lib/news$ d VarDir
+!/var/lib/news/history(\\.(dir|hash|index))?$ f
+/var/lib/news/(active(\\.old)?|newsgroups|\\.news\\.daily)$ f VarFile
+
+!/var/spool/news/articles(/[-a-z0-9+]+)+$ f
+/var/spool/news/overview/group\\.index$ f VarFile
+!/var/spool/news/overview(/[a-z0-9])+/[-\\.a-z0-9+]+\\.(IDX|DAT)$ f
+/var/spool/news/overview(/[a-z0-9])+$ d VarDir
+!/var/spool/news/articles/control/(newgroup|checkgroups|rmgroup)/[0-9]*$ f
+/var/spool/news/innfeed/@@{INN2_INNFEED_OUTFEEDS}(\\.(lock|output))?$ f VarFile
+!/var/spool/news/innfeed/@@{INN2_INNFEED_OUTFEEDS}\\.(input)$ f
+!/var/spool/news/innfeed/innfeed-dropped\\.A[0-9]{6,7}$ f
+/var/spool/news/innfeed$ d VarDir
+/var/spool/news/incoming(/tmp)?$ d VarDir
+
+/@@{RUN}/news/(control|(innd|innfeed|innwatch)\\.pid|innwatch\\.time|LOCK\\.innwatch|nntpin)$ f VarFile
+/@@{RUN}/news$ d RecreatedDir
+
+/@@{INN2_LOGDIR}(/path)?$ d VarDir
+/@@{INN2_LOGDIR}/@@{INN2_DATAFILES}$ f VarFile
+/@@{INN2_LOGDIR}/@@{INN2_LOGS}$ f ActLog
+/@@{INN2_LOGDIR}/path/inpaths\\.[0-9]{10}$ f VarFile+ANF
+/@@{INN2_LOGDIR}/@@{INN2_LOGS}$ f VarFile
+/@@{INN2_OLDLOGDIR}/@@{INN2_OLDLOGS}\\.1\\.gz$ f MidlSerLog+ANF
+/@@{INN2_OLDLOGDIR}/@@{INN2_OLDLOGS}\\.([2-9]|[12][0-9]|3[0-8])\\.gz$ f MidlSerLog
+/@@{INN2_OLDLOGDIR}/@@{INN2_OLDLOGS}\\.39\\.gz$ f LastSerLog
+/@@{INN2_OLDLOGDIR}/@@{INN2_OLDELAYCOMPLOGS}$ f VarFile
+/@@{INN2_OLDLOGDIR}/@@{INN2_OLDELAYCOMPLOGS}\\.1\\.gz$ f RotLog+ANF 
+/@@{INN2_OLDLOGDIR}/@@{INN2_OLDELAYCOMPLOGS}\\.([2-9]|[12][0-9]|3[0-8])\\.gz$ f MidlSerLog
+/@@{INN2_OLDLOGDIR}/@@{INN2_OLDELAYCOMPLOGS}\\.39\\.gz$ f LastSerLog
+/@@{INN2_OLDLOGDIR}(/(path|OLD))?$ d VarDir
+
+@@undef INN2_LOGDIR
+@@undef INN2_DATAFILES
+@@undef INN2_LOGS
+@@undef INN2_OLDLOGDIR
+@@undef INN2_OLDLOGS
+@@undef INN2_OLDELAYCOMPLOGS

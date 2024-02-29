@@ -1,0 +1,10 @@
+#!/bin/bash
+
+MIDFILE="/etc/machine-id"
+MACHINEID="0000000000000000000"
+if [ -r "$MIDFILE" ]; then
+  MACHINEID="$(head -n1 /etc/machine-id)"
+fi
+
+printf "@@define MACHINEID %s\\n" "$MACHINEID"
+

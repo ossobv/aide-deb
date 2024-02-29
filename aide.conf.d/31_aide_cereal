@@ -1,0 +1,18 @@
+# replace CEREALSESS with a regexp matching your session names
+#@@define CEREALSESS (session|session)
+#@@define CEREALDEVICES (ttyS0)
+@@if defined CEREALSESS
+!/@@{RUN}/screen/S-@@{CEREALSESS}$ d
+!/@@{RUN}/screen/S-@@{CEREALSESS}/[[:digit:]]+\\.cereal:@@{CEREALSESS}$ s
+/var/lib/cereal/sessions/@@{CEREALSESS}/socket$ p VarFile
+/var/lib/cereal/sessions/@@{CEREALSESS}(/log/main)?$ d VarDir
+/var/lib/cereal/sessions/@@{CEREALSESS}/log/main/current$ f VarFile-p-acl
+!/var/lib/cereal/sessions/@@{CEREALSESS}/log/main/@40000000[[:xdigit:]]{16}\\.s$ f
+/var/lib/cereal/sessions/@@{CEREALSESS}/(log/)?supervise$ d VarDir
+/var/lib/cereal/sessions/@@{CEREALSESS}/(log/)?supervise/(control|pid|stat(us)?)$ f VarFile
+@@endif
+
+@@if defined CEREALDEVICES
+/@@{RUN}/lock/LCK\\.\\.@@{CEREALDEVICES}$ f VarFile
+!/dev/@@{CEREALDEVICES}$ l
+@@endif

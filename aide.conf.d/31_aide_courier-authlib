@@ -1,0 +1,2 @@
+/@@{RUN}/courier/authdaemon/(pid|pid\\.lock|socket)$ f VarFile
+/@@{RUN}/courier(/authdaemon)?$ d VarDirInode

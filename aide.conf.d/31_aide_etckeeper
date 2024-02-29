@@ -1,0 +1,7 @@
+/etc/\\.etckeeper$ f VarFile
+/etc/\\.git(/refs/heads)?$ d VarDir
+/etc/\\.git(/(objects|refs/heads))?$ d VarDir
+/etc/\\.git/(index|logs/HEAD|(logs/)?refs/heads/master|COMMIT_EDITMSG)$ f VarFile
+/etc/\\.git/objects$ d VarDir-n
+/etc/\\.git/objects/[[:xdigit:]]{2}$ d VarDir+ANF
+!/etc/\\.git/objects/[[:xdigit:]]{2}/[[:xdigit:]]{38}$ f

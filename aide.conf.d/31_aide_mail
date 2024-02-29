@@ -1,0 +1,2 @@
+/var/mail/[a-z0-9]+$ f VarFile
+/var/mail$ d VarDir

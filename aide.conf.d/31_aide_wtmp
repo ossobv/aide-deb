@@ -1,0 +1,2 @@
+/var/log/wtmp$ f ActLog
+/var/log/wtmp\\.1$ f RotLog

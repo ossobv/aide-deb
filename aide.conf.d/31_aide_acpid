@@ -1,0 +1,7 @@
+/var/log/acpid$ f Log
+/var/log/acpid\\.1$ f LowLog
+/var/log/acpid\\.2\\.@@{LOGEXT}$ f LoSerMemberLog
+/var/log/acpid\\.3\\.@@{LOGEXT}$ f SerMemberLog
+/var/log/acpid\\.4\\.@@{LOGEXT}$ f HiSerMemberLog
+!/@@{RUN}/acpid\\.socket$ s
+/@@{RUN}/acpid\\.pid$ f VarFile

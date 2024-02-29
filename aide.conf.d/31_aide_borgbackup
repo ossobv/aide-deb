@@ -1,0 +1,28 @@
+@@if not defined BORGCACHE
+@@define BORGCACHE root/\\.cache/borg
+@@endif
+@@if not defined BORGCONFIG
+@@define BORGCONFIG root/\\.config/borg
+@@endif
+# define BORGBACKHOST, BORGBACKPATH and BORGBACKREPOS either here on in an earlier file
+/@@{BORGCACHE}(/(keys|security))?$ d VarDir-n
+!/@@{BORGCACHE}/[[:xdigit:]]{64}$ d
+!/@@{BORGCACHE}/[[:xdigit:]]{64}/(README|chunks|config|files|lock\\.roster|pre12-meta)$ f
+!/@@{BORGCACHE}/[[:xdigit:]]{64}/(chunks\\.archive\\.d|lock\\.exclusive|txn\\.active)$ d
+!/@@{BORGCACHE}/[[:xdigit:]]{64}/chunks\\.archive\\.d/[[:xdigit:]]{64}(\\.compact(\\.integrity)?)?$ f
+!/@@{BORGCACHE}/[[:xdigit:]]{64}/lock\\.exclusive/@@{HOSTNAME}\\.[[:digit:]]+\\-0$ f
+!/@@{BORGCACHE}/[[:xdigit:]]{64}/txn.active/(chunks|config|files)$ f
+/@@{BORGCACHE}/keys$ d VarDir
+@@if defined BORGBACKHOST
+@@if defined BORGBACKPATH
+@@if defined BORGBACKUPREPOS
+!/@@{BORGCACHE}/keys/@@{BORGBACKHOST}__@@{BORGBACKPATH}_@@{BORGBACKREPOS}\\.[[:digit:]]$ f
+@@undef BORGBACKHOST
+@@undef BORGBACKPATH
+@@undef BORGBACKREPOS
+@@endif
+@@endif
+@@endif
+!/@@{BORGCONFIG}/security/[[:xdigit:]]{64}$ d
+!/@@{BORGCONFIG}/security/[[:xdigit:]]{64}/(key-type|location|manifest-timestamp|nonce|tam_required)$ f
+

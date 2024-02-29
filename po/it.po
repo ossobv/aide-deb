@@ -1,0 +1,97 @@
+# Italian translation of aide
+# Copyright (C) 2010 Free Software Foundation, Inc.
+# This file is distributed under the same license as the aide package.
+#
+# Mark Caglienzi <mark.caglienzi@gmail.com>
+# Collaboratively translated during an online sprint, thanks to all contributors!
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: aide 0.15.1-2\n"
+"Report-Msgid-Bugs-To: aide@packages.debian.org\n"
+"POT-Creation-Date: 2013-06-09 22:00+0200\n"
+"PO-Revision-Date: 2010-12-15 22:44+0200\n"
+"Last-Translator: Mark Caglienzi <mark.caglienzi@gmail.com>\n"
+"Language-Team: Italian <tp@lists.linux.it>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid "Initialize AIDE database?"
+msgstr "Inizializzare il database di AIDE?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid ""
+"Before AIDE can be used, you will have to initialize a database. You can "
+"immediately do this here, or run the '/usr/sbin/aideinit' script from a "
+"shell later."
+msgstr ""
+"Prima che AIDE possa essere usato, bisogna inizializzare un database. Si può "
+"fare in questo momento, oppure lanciando in seguito lo script '/usr/sbin/"
+"aideinit' da shell."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid "Overwrite existing /var/lib/aide/aide.db.new?"
+msgstr "Sovrascrivere il file /var/lib/aide/aide.db.new esistente?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid ""
+"You have already a newly generated AIDE database in /var/lib/aide/aide.db."
+"new. If you choose this option, the existing file will be be overwritten by "
+"the new data obtained from the current state of your file system."
+msgstr ""
+"Un nuovo database di AIDE è stato generato in /var/lib/aide/aide.db.new.Se "
+"viene selezionata questa opzione, il file esistente verrà sovrascritto coi "
+"nuovi dati, ottenuti dallo stato attuale del filesystem."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid "Copy aide.db.new to aide.db?"
+msgstr "Copiare aide.db.new come aide.db?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"It is advisable for you to first look over /var/lib/aide/aide.db.new file "
+"before replacing the existing db. You can have the package replace the "
+"database anyway here."
+msgstr ""
+"È consigliabile controllare il file /var/lib/aide/aide.db.new prima di "
+"cambiare il database esistente. Se richiesto, in questa fase il pacchetto "
+"potrà occuparsi della sovrascrittura."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"If you do not choose this option, you will need to copy the file /var/lib/"
+"aide/aide.db.new to /var/lib/aide/aide.db before AIDE can use it."
+msgstr ""
+"Se non viene selezionata questa opzione, sarà necessario copiare il file /"
+"var/lib/aide/aide.db.new come /var/lib/aide/aide.db prima che AIDE possa "
+"usarlo."
+
+#~ msgid "Move AIDE data files from old directory to new?"
+#~ msgstr "Spostare i file di dati di AIDE dalla vecchia alla nuova directory?"
+
+#~ msgid ""
+#~ "AIDE now stores its databases in /var/lib/aide by default. It appears "
+#~ "that you have an older version installed which uses /usr/lib/aide. You "
+#~ "can have the data files moved automatically."
+#~ msgstr ""
+#~ "La versione attuale di AIDE memorizza di default i propri database in /"
+#~ "var/lib/aide. Attualmente risulta installata una versione precedente che "
+#~ "usa /usr/lib/aide. Se richiesto, i file di dati possono essere spostati "
+#~ "automaticamente."

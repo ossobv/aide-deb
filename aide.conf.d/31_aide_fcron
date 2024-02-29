@@ -1,0 +1,3 @@
+/@@{RUN}/fcron\\.(pid|fifo)$ f VarFile
+/var/spool/fcron/systab$ f VarFile
+/var/spool/fcron$ d VarDir

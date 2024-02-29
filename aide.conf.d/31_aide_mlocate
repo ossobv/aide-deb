@@ -1,0 +1,4 @@
+/var/lib/mlocate/mlocate\\.db$ f VarFile
+/var/lib/mlocate$ d VarDir
+/var/lib/systemd/timers/stamp-mlocate\\.timer$ f VarFile
+!/@@{RUN}/mlocate\\.daily\\.lock$ f

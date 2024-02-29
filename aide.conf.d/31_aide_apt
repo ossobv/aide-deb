@@ -1,0 +1,121 @@
+#!/bin/bash
+
+#shellcheck disable=SC2154
+if [ -x "$UPAC_settingsd/10_aide_sourceslist" ]; then
+  #shellcheck disable=SC1090
+  . "$UPAC_settingsd/10_aide_sourceslist"
+fi
+VARDIR="var/lib/apt"
+LISTSDIR="$VARDIR/lists"
+CACHEDIR="var/cache/apt"
+ARCHIVESDIR="$CACHEDIR/archives"
+SYSTEMDDIR="var/lib/systemd/timers"
+LOGDIR="var/log/apt"
+IGNORE_ARCHIVES=""
+IGNORE_FRQCHG=""
+
+if [ -r "$UPAC_settingsd/31_aide_apt_settings" ]; then
+  # pull in configuration
+  #shellcheck disable=SC1090
+  . "$UPAC_settingsd/31_aide_apt_settings"
+fi
+
+if [ -n "${DEBUG}" ]; then
+  printf "# debug output of 31_aide_apt\\n" 
+fi
+
+printf "@@define APT_TRANSLATIONS (ca|cs|da|de|de_DE|en|eo|es|eu|fi|fr|hr|hu|id|it|ja|km|ko|nb|nl|pl|pt|pt_BR|ro|ru|sk|sr|sv|uk|vi|zh|zh_CN|zh_TW)\\n"
+printf "@@define APT_ARCH (@@{ARCH}|all)\\n"
+
+RE="^\\(deb\\|deb-src\\)[[:space:]]\\+\\(\\(\\[[^]]\\+\\]\\)[[:space:]]\\+\\)\\?\\([^[:space:]]\\+\\)[[:space:]]\\+\\([^[:space:]]\\+\\)[[:space:]]\\+\\(.*\\)$"
+if [ -n "${DEBUG}" ]; then
+  printf "# SOURCESLIST: %s\\n" "${SOURCESLIST}"
+  printf "# RE: %s\\n" "${RE}"
+fi
+#shellcheck disable=SC2086
+awk '{print}' ${SOURCESLIST} /dev/null | sed 's/ #.*$//' | while read -r line; do
+  deb="$(echo "${line}" | sed -n "/^deb/{s/${RE}/\\1/;p;}")"
+  uri="$(echo "${line}" | sed -n "/^deb/{s/${RE}/\\4/;p;}")"
+  dist="$(echo "${line}" | sed -n "/^deb/{s/${RE}/\\5/;p;}")"
+  comp="$(echo "${line}" | sed -n "/^deb/{s/${RE}/\\6/;p;}")"
+  if [ -n "${DEBUG}" ]; then
+	
+    echo "${line}" | sed -n "/^deb/{s/${RE}/# parsing RE 1: \\1, 2: \\2, 3: \\3, 4: \\4, 5: \\5, 6: \\6/;p;}"
+    printf "# deb: %s\\n" "${deb}"
+    printf "# uri: %s\\n" "${uri}"
+    printf "# dist: %s\\n" "${dist}"
+    printf "# comp: %s\\n" "${comp}"
+  fi
+  #shellcheck disable=SC2001
+  PROTOCOL="$(echo "${uri}" | sed 's|\([^:]\+\).*|\1|')"
+  if echo "${PROTOCOL}" | grep -qE '(https?|ftp)'; then
+    HOST="$(echo "${uri}" | sed -e 's|.*//\([-_.[:alnum:]]\+\).*|\1|' -e 's|\.|\\\\.|g')"
+    HOSTPATH="$(echo "${uri}" | sed -e 's|.*//[^/[:space:]]\+/\?||;s|/$||;s|/|_|g;s|^\(.\+\)$|_\1|' -e 's|\.|\\\\.|g')"
+    dist="${dist//\//_}"
+    if [ -n "${DEBUG}" ]; then
+      echo "${line}" | sed -n "/^deb/{s/${RE}/# parsing RE 1: \\1, 2: \\2, 3: \\3, 4: \\4, 5: \\5, 6: \\6/;p;}"
+      printf "# HOST %s\\n" "${HOST}"
+      printf "# HOSTPATH %s\\n" "${HOSTPATH}"
+    fi
+    if [ "$deb" = "deb" ]; then
+      for c in $comp; do
+        printf "/%s(/partial)?/%s%s_dists_%s_%s_binary-@@{APT_ARCH}_Packages(\\\\\\\\.diff_Index)?$ f VarFile\\n" "${LISTSDIR}" "${HOST}" "${HOSTPATH}" "${dist}" "${c}"
+        printf "/%s(/partial)?/%s%s_dists_%s_%s_Contents-@@{APT_ARCH}((\\\\\\\\.diff_Index|\\\\\\\\.lz4))?$ f VarFile\\n" "${LISTSDIR}" "${HOST}" "${HOSTPATH}" "${dist}" "${c}"
+        printf "@@if defined FOREIGN_ARCHES\\n"
+        printf "/%s/%s%s_dists_%s_%s_binary-@@{FOREIGN_ARCHES}_Packages(\\\\\\\\.diff_Index)?$ f VarFile\\n" "${LISTSDIR}" "${HOST}" "${HOSTPATH}" "${dist}" "${c}"
+        printf "@@endif\\n"
+        printf "/%s/%s%s_dists_%s_(InRelease|Release(\\\\\\\\.gpg)?)$ f VarFile\\n" "${LISTSDIR}" "${HOST}" "${HOSTPATH}" "${dist}"
+        printf "/%s/%s%s_dists_%s_%s_i18n_Translation-@@{APT_TRANSLATIONS}(\\\\\\\\.diff_Index)?$ f VarFile\\n" "${LISTSDIR}" "${HOST}" "${HOSTPATH}" "${dist}" "${c}"
+      done
+      printf "!/%s/partial/%s%s_dists_%s_(InRelease|Release\\\\\\\\.gpg\\\\\\\\.reverify)$ f\\n" "${LISTSDIR}" "${HOST}" "${HOSTPATH}" "${dist}"
+    elif [ "$deb" = "deb-src" ]; then
+      for c in $comp; do
+        printf "/%s/%s%s_dists_%s_%s_source_Sources(\\\\\\\\.diff_Index)?$ f VarFile\\n" "${LISTSDIR}" "${HOST}" "${HOSTPATH}" "${dist}" "${c}"
+        printf "/%s/%s%s_dists_%s_(InRelease|Release(\\\\\\\\.gpg)?)$ f VarFile\\n" "${LISTSDIR}" "${HOST}" "${HOSTPATH}" "${dist}"
+      done
+    fi
+  else
+    : # other protocols are not supported. If you feel like they should
+    : # please give a good reason and probably a patch.
+  fi
+  printf "\\n\\n"
+done
+
+printf "/%s(/(auxfiles|partial))?$ d VarDir\\n" "${LISTSDIR}"
+printf "/%s/lock$ f VarFile\\n" "${LISTSDIR}"
+printf "/%s/periodic/(download-upgradeable|update)-stamp$ f VarTime\\n" "${VARDIR}"
+printf "/%s/(daily_lock|extended_states)$ f VarFile\\n" "${VARDIR}"
+printf "/%s$ d VarDir\\n" "${VARDIR}"
+printf "\\n"
+printf "/%s/stamp-apt-daily(-upgrade)?\\\\\\\\.timer$ f VarFile\\n" "${SYSTEMDDIR}"
+printf "\\n"
+printf "/%s/(term|history)\\\\\\\\.log$ f ActLog\\n" "${LOGDIR}"
+printf "/%s/(term|history)\\\\\\\\.log\\\\\\\\.1\\\\\\\\.@@{LOGEXT}$ f CompSerLog+ANF\\n" "${LOGDIR}"
+printf "/%s/(term|history)\\\\\\\\.log\\\\\\\\.([2-9]|1[0-1])\\\\\\\\.@@{LOGEXT}$ f MidlSerLog\\n" "${LOGDIR}"
+printf "/%s/(term|history)\\\\\\\\.log\\\\\\\\.12\\\\\\\\.@@{LOGEXT}$ f LastSerLog\\n" "${LOGDIR}"
+printf "/%s/eipp\\\\\\\\.log\\\\\\\\.xz$ f VarFile\\n" "${LOGDIR}"
+printf "/%s$ d VarDir\\n" "${LOGDIR}"
+printf "\\n"
+printf "/var/backups/apt\\\\\\\\.extended_states\\\\\\\\.0$ f ActLog\\n"
+printf "/var/backups/apt\\\\\\\\.extended_states\\\\\\\\.1\\\\\\\\.@@{LOGEXT}$ f CompSerLog+ANF\\n"
+printf "/var/backups/apt\\\\\\\\.extended_states\\\\\\\\.[2345]\\\\\\\\.@@{LOGEXT}$ f MidlSerLog\\n"
+printf "/var/backups/apt\\\\\\\\.extended_states\\\\\\\\.6\\\\\\\\.@@{LOGEXT}$ f LastSerLog\\n"
+
+if [ "$IGNORE_ARCHIVES" = "yes" ]; then
+  printf "!/%s/[-[:alnum:]%%\.~_+]+_@@{APT_ARCH}\\\\\\\\.deb$ f\\n" "${ARCHIVESDIR}"
+  printf "@@if defined FOREIGN_ARCHES\\n"
+  printf "!/%s/[-[:alnum:]%%\.~_+]+_@@{FOREIGN_ARCHES}\\\\\\\\.deb$ f\\n" "${ARCHIVESDIR}"
+  printf "@@endif\\n"
+fi
+
+if [ "$IGNORE_FRQCHG" = "yes" ]; then
+  printf "/%s(/partial|/lock)?$ d VarDir\\n" "${ARCHIVESDIR}"
+  printf "!/%s/(src)?pkgcache\\\\\\\\.bin$ f\\n" "${CACHEDIR}"
+  printf "/%s$ d VarDir\\n" "${CACHEDIR}"
+fi
+
+if [ -n "${DEBUG}" ]; then
+  printf "# end of debug output of 31_aide_apt\\n" 
+fi
+
+# vim: set shiftwidth=2 tabstop=2 softtabstop=2 expandtab:

@@ -1,0 +1,7 @@
+/var/lib/tt-rss/update_daemon.(stamp|lock)$ f VarFile
+/var/lib/tt-rss$ d VarDirTime
+
+/var/log/tt-rss\\.log$ f Log
+/var/log/tt-rss\\.log\\.1\\.@@{LOGEXT}$ f LoSerMemberLog
+/var/log/tt-rss\\.log\\.[2-6]\\.@@{LOGEXT}$ f SerMemberLog
+/var/log/tt-rss\\.log\\.7\\.@@{LOGEXT}$ f HiSerMemberLog

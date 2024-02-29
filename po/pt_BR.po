@@ -1,0 +1,145 @@
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+#    Developers do not need to manually edit POT or PO files.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: aide\n"
+"Report-Msgid-Bugs-To: aide@packages.debian.org\n"
+"POT-Creation-Date: 2013-06-09 22:00+0200\n"
+"PO-Revision-Date: 2006-09-23 18:52-0300\n"
+"Last-Translator: André Luís Lopes <andrelop@debian.org>\n"
+"Language-Team: Debian-BR Project <debian-l10n-portuguese@lists.debian.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid "Initialize AIDE database?"
+msgstr "Inicializar a base de dados do AIDE ?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid ""
+"Before AIDE can be used, you will have to initialize a database. You can "
+"immediately do this here, or run the '/usr/sbin/aideinit' script from a "
+"shell later."
+msgstr ""
+"Antes que o AIDE possa ser usado, você precisará inicializar uma base de "
+"dados. Você pode fazer isso imediatamente aqui ou executar o script '/usr/"
+"sbin/aideinit' a partir do prompt de comandos posteriormente."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid "Overwrite existing /var/lib/aide/aide.db.new?"
+msgstr "Sobrescrever /var/lib/aide/aide.db.new existente ?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid ""
+"You have already a newly generated AIDE database in /var/lib/aide/aide.db."
+"new. If you choose this option, the existing file will be be overwritten by "
+"the new data obtained from the current state of your file system."
+msgstr ""
+"Você já possui uma nova base de dados AIDE gerada em /var/lib/aide/aide.db."
+"new. Caso você escolha esta opção, o arquivo existente será sobreescrito "
+"pelos novos dados obtidos a partir do estado atual de seu sistema."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid "Copy aide.db.new to aide.db?"
+msgstr "Copiar aide.db.new para aide.db ?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"It is advisable for you to first look over /var/lib/aide/aide.db.new file "
+"before replacing the existing db. You can have the package replace the "
+"database anyway here."
+msgstr ""
+"É recomendável que você confira o arquivo /var/lib/aide/aide.db.new antes de "
+"substituir a base de dados existente. Você pode optar por fazer com que o "
+"pacote substitua a base de dados de qualquer forma aqui."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"If you do not choose this option, you will need to copy the file /var/lib/"
+"aide/aide.db.new to /var/lib/aide/aide.db before AIDE can use it."
+msgstr ""
+"Caso você não escolha esta opção, você precisará copiar o arquivo /var/lib/"
+"aide/aide.db.new para /var/lib/aide/aide.db antes que o AIDE possa usá-lo."
+
+#~ msgid "Move AIDE data files from old directory to new?"
+#~ msgstr "Mover arquivos de dados do AIDE do diretório antigo para o novo ?"
+
+#~ msgid ""
+#~ "AIDE now stores its databases in /var/lib/aide by default. It appears "
+#~ "that you have an older version installed which uses /usr/lib/aide. You "
+#~ "can have the data files moved automatically."
+#~ msgstr ""
+#~ "O AIDE agorá armazena suas bases de dados em /var/lib/aide por padrão. "
+#~ "Parece que você possui uma versão antiga instalada que usa o diretório /"
+#~ "usr/lib/aide. Esses arquivos de dados podem ser movidos automaticamente."
+
+#, fuzzy
+#~ msgid "Daily reports are mailed to root by default"
+#~ msgstr ""
+#~ "Relatórios diários são enviados para o root por padrão. Você pode mudar "
+#~ "isso aqui ou em /etc/default/aide."
+
+#, fuzzy
+#~ msgid "You may change that in /etc/default/aide."
+#~ msgstr ""
+#~ "Relatórios diários são enviados para o root por padrão. Você pode mudar "
+#~ "isso aqui ou em /etc/default/aide."
+
+#, fuzzy
+#~ msgid "Before AIDE can be used, you will have to initialize a database"
+#~ msgstr ""
+#~ "Antes que o AIDE possa ser usado você prcisará inicializar a base de "
+#~ "dados."
+
+#~ msgid "In order to do this, simply use the '/usr/sbin/aideinit' script."
+#~ msgstr "Para fazê-lo, simplesmente use o script '/usr/sbin/aideinit'."
+
+#~ msgid "You must install aide.db.new as /var/lib/aide/aide.db"
+#~ msgstr "Você deve instalar o arquivo aide.db.new como /var/lib/aide/aide.db"
+
+#~ msgid "Where should daily reports be mailed?"
+#~ msgstr "Para onde os relatórios diários via e-mail devem ser enviados ?"
+
+#~ msgid ""
+#~ "To change this, you can edit the @@define MAILTO line in /etc/aide/aide."
+#~ "conf"
+#~ msgstr ""
+#~ "Para mudar isso você pode editara linha @@define MAILTO em /etc/aide/aide."
+#~ "conf."
+
+#~ msgid "/var/lib/aide/aide.db before AIDE uses it."
+#~ msgstr "var/lib/aide/aide.db antes de usá-lo."
+
+#~ msgid ""
+#~ "It is advisable for you to first look over the new db. Say y to ignore "
+#~ "this sage advice."
+#~ msgstr ""
+#~ "É recomendável primeiro olhar a nova base de dados. Rerponda sim para "
+#~ "ignorar este sábio conselho."

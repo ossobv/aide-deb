@@ -1,0 +1,4 @@
+@@define EXIM_MSGID [[:lower:][:digit:]]{6}-[[:alnum:]]{6}-[[:upper:][:digit:]]{2}
+/var/spool/exim4/scan$ d VarDir
+!/var/spool/exim4/scan/@@{EXIM_MSGID}$ d
+!/var/spool/exim4/scan/@@{EXIM_MSGID}/@@{EXIM_MSGID}(-00000|\\.eml)$ f

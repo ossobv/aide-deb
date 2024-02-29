@@ -1,0 +1,107 @@
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+#    Developers do not need to manually edit POT or PO files.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: aide\n"
+"Report-Msgid-Bugs-To: aide@packages.debian.org\n"
+"POT-Creation-Date: 2013-06-09 22:00+0200\n"
+"PO-Revision-Date: 2006-09-29 10:25+0100\n"
+"Last-Translator: Bart Cornelis <cobaco@linux.be>\n"
+"Language-Team: dutch <debian-l10n-dutch@lists.debian.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid "Initialize AIDE database?"
+msgstr "Zal ik de AIDE database initialiseren?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid ""
+"Before AIDE can be used, you will have to initialize a database. You can "
+"immediately do this here, or run the '/usr/sbin/aideinit' script from a "
+"shell later."
+msgstr ""
+"Voordat AIDE gebruikt kan worden dient er een database geïnitialiseerd te "
+"worden. U kunt dit nu doen, of later door het '/usr/sbin/aideinit'-script "
+"uit te voeren van in een commandoregel."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid "Overwrite existing /var/lib/aide/aide.db.new?"
+msgstr "Bestaande /var/lib/aide/aide.db.new overschrijven?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid ""
+"You have already a newly generated AIDE database in /var/lib/aide/aide.db."
+"new. If you choose this option, the existing file will be be overwritten by "
+"the new data obtained from the current state of your file system."
+msgstr ""
+"U heeft reeds een nieuw aangemaakte AIDE-database in /var/lib/aide/aide.db."
+"new. Als u toch voor deze optie kiest wordt het bestaande bestande "
+"overschreven door de niewe data van de huidige status van uw bestandssysteem."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid "Copy aide.db.new to aide.db?"
+msgstr "aide.db.new naar aide.db kopiëren?"
+
+#  Type: boolean
+#  Description
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"It is advisable for you to first look over /var/lib/aide/aide.db.new file "
+"before replacing the existing db. You can have the package replace the "
+"database anyway here."
+msgstr ""
+"Het is aan te raden om het bestand '/var/lib/aide/aide.db.new' eerst na te "
+"kijken alvorens de bestaande db te vervangen. U kunt de bestaande database "
+"hier toch door het pakket laten vervangen."
+
+#  Type: note
+#  Description
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"If you do not choose this option, you will need to copy the file /var/lib/"
+"aide/aide.db.new to /var/lib/aide/aide.db before AIDE can use it."
+msgstr ""
+"Als u deze optie afslaat zult u het bestand /var/lib/aide/aide.db.new naar /"
+"var/lib/aide/aide.db moeten kopieren alvorens AIDE dit kan gebruiken."
+
+#~ msgid "Move AIDE data files from old directory to new?"
+#~ msgstr "AIDE databestanden van de oude map naar de nieuwe verplaatsen?"
+
+#  Type: boolean
+#  Description
+#~ msgid ""
+#~ "AIDE now stores its databases in /var/lib/aide by default. It appears "
+#~ "that you have an older version installed which uses /usr/lib/aide. You "
+#~ "can have the data files moved automatically."
+#~ msgstr ""
+#~ "AIDE slaat zijn databases nu standaard op in /var/lib/aide. Het lijkt "
+#~ "erop dat u een oudere versie geïnstalleerd heeft die hiervoor nog /usr/"
+#~ "lib/aide gebruikt. Wilt u de databestanden automatisch verplaatsen?"

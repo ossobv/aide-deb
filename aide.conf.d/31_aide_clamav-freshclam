@@ -1,0 +1,12 @@
+/var/lib/clamav$ d VarDir
+/var/lib/clamav/(scam|junk)\\.ndb$ f VarFile
+/var/log/clamav/freshclam\\.log$ f Log
+/var/log/clamav/freshclam\\.log\\.1$ f LowLog 
+/var/log/clamav/freshclam\\.log\\.2\\.@@{LOGEXT}$ f LoSerMemberLog
+/var/log/clamav/freshclam\\.log\\.([3-9]|1[0-1])\\.@@{LOGEXT}$ f SerMemberLog
+/var/log/clamav/freshclam\\.log\\.12\\.@@{LOGEXT}$ f HiSerMemberLog
+/var/lib/clamav/(safebrowsing|bytecode)\\.cld$ f VarFile
+/var/lib/clamav/daily\\.inc/daily\\.(info|[nmhp]db)$ f VarFile
+/var/lib/clamav/daily\\.cld$ f VarFile
+/var/lib/clamav/mirrors.dat$ f VarFile
+/@@{RUN}/clamav/freshclam\\.pid$ f VarFile

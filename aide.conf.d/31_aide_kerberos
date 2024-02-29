@@ -1,0 +1,6 @@
+/var/tmp/krb5kdc_rcache$ f VarFile
+/var/tmp/(nfs|host)_[0-9]+$ f VarFile
+/tmp/krb5cc_machine_[A-Z.]+$ f VarFile
+!/tmp/krb5cc_[0-9]+_[[:alnum:]]+$ f
+/var/lib/krb5kdc/principal$ f VarFile+s+b+i
+/var/lib/krb5kdc/principal\\.ok$ f VarTime

@@ -1,0 +1,19 @@
+@@define RSYSLOG_LOGDIR var/log
+
+/@@{RSYSLOG_LOGDIR}$ d VarDir
+
+@@define RSYSLOG_LOGFILE4RRE (syslog|messages|debug|(cron|lpr|auth|daemon|kern|user)\\.log|mail\\.(log|err|warn|info))
+@@if defined RSYSLOG_LOGFILE4RRE
+/@@{RSYSLOG_LOGDIR}/@@{RSYSLOG_LOGFILE4RRE}$ f ActLog
+/@@{RSYSLOG_LOGDIR}/@@{RSYSLOG_LOGFILE4RRE}\\.1$ f RotLog
+/@@{RSYSLOG_LOGDIR}/@@{RSYSLOG_LOGFILE4RRE}\\.2\\.@@{LOGEXT}$ f CompSerLog
+/@@{RSYSLOG_LOGDIR}/@@{RSYSLOG_LOGFILE4RRE}\\.3\\.@@{LOGEXT}$ f MidlSerLog
+/@@{RSYSLOG_LOGDIR}/@@{RSYSLOG_LOGFILE4RRE}\\.4\\.@@{LOGEXT}$ f LastSerLog
+@@undef RSYSLOG_LOGFILE4RRE
+@@endif
+
+
+/@@{RUN}/rsyslogd\\.pid$ f VarFile
+/@@{RUN}/sendsigs\\.omit\\.d/rsyslog$ f VarInode
+@@undef RSYSLOG_LOGDIR
+

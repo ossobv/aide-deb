@@ -1,0 +1,19 @@
+#! /bin/bash
+# this script automatically sets the BINDCHROOT variable to the
+# directory that bind chroots to via configuration in
+# /etc/default/bind9. This is only going to work if your /etc/default/bind9
+# is not too modified.
+#
+# If you want to use this magic, just uncomment it.
+# You can also manually set the chroot directory in a non-executable
+# file: @@define BINDCHROOT /var/cache/bind
+
+# # Automagically extract chroot directory
+# . /etc/default/bind9
+# set $OPTIONS
+# for i in $@;do
+#   if [ "$1" == "-t" ]
+#     then echo "@@define BINDCHROOT $2"; break
+#     else shift
+#   fi
+# done

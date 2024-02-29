@@ -1,0 +1,94 @@
+# Danish translation aide.
+# Copyright (C) 2010 aide & nedenstående oversættere.
+# This file is distributed under the same license as the aide package.
+# Morten Brix Pedersen <morten@wtf.dk>, 2005.
+# Joe Hansen <joedalton2@yahoo.dk>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: aide\n"
+"Report-Msgid-Bugs-To: aide@packages.debian.org\n"
+"POT-Creation-Date: 2013-06-09 22:00+0200\n"
+"PO-Revision-Date: 2010-09-22 17:30+01:00\n"
+"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
+"Language-Team: Danish <debian-l10n-danish@lists.debian.org> \n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid "Initialize AIDE database?"
+msgstr "Initialiser AIDE-databasen?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid ""
+"Before AIDE can be used, you will have to initialize a database. You can "
+"immediately do this here, or run the '/usr/sbin/aideinit' script from a "
+"shell later."
+msgstr ""
+"Før AIDE kan bruges, skal du initialisere en database. Du kan gøre dette "
+"øjeblikkeligt her, eller køre skriptet '/usr/sbin/aideinit' fra en skal "
+"senere."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid "Overwrite existing /var/lib/aide/aide.db.new?"
+msgstr "Overskriv eksisterende /var/lib/aide/aide.db.new?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid ""
+"You have already a newly generated AIDE database in /var/lib/aide/aide.db."
+"new. If you choose this option, the existing file will be be overwritten by "
+"the new data obtained from the current state of your file system."
+msgstr ""
+"Du har allerede en nylig oprettet AIDE-database i /var/lib/aide/aide.db.new. "
+"Hvis du vælger denne indstilling, vil den eksisterende fil blive overskrevet "
+"af de nye data indhentet fra den aktuelle tilstand på dit filsystem."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid "Copy aide.db.new to aide.db?"
+msgstr "Kopier aide.db.new til aide.db?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"It is advisable for you to first look over /var/lib/aide/aide.db.new file "
+"before replacing the existing db. You can have the package replace the "
+"database anyway here."
+msgstr ""
+"Det anbefales, at du først kigger den nye fil /var/lib/aide/aide.db.new "
+"igennem, inden du erstatter din eksisterende db. Du kan her lade pakken "
+"erstatte databasen alligevel."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"If you do not choose this option, you will need to copy the file /var/lib/"
+"aide/aide.db.new to /var/lib/aide/aide.db before AIDE can use it."
+msgstr ""
+"Hvis du ikke vælger denne indstilling, skal du kopiere filen /var/lib/aide/"
+"aide.db.new til /var/lib/aide/aide.db før AIDE kan bruge den."
+
+#~ msgid "Move AIDE data files from old directory to new?"
+#~ msgstr "Flyt AIDE-datafiler fra gammel mappe til ny?"
+
+#~ msgid ""
+#~ "AIDE now stores its databases in /var/lib/aide by default. It appears "
+#~ "that you have an older version installed which uses /usr/lib/aide. You "
+#~ "can have the data files moved automatically."
+#~ msgstr ""
+#~ "AIDE gemmer nu sine databaser i /var/lib/aide som standard. Det ser ud "
+#~ "til, at du har en gammel version installeret, som bruger /usr/lib/aide. "
+#~ "Vil du have indholdet flyttet for dig?"

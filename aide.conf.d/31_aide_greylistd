@@ -1,0 +1,4 @@
+/var/lib/greylistd$ d VarDir
+/var/lib/greylistd/(states|triplets)$ f VarFile
+/@@{RUN}/greylistd$ d VarDir
+/@@{RUN}/greylistd/(pid|socket)$ f VarFile

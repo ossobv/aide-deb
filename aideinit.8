@@ -1,0 +1,44 @@
+.TH AIDEINIT 8 "Dec 19, 2003"
+.SH NAME
+aideinit \- create a new AIDE database
+.SH SYNOPSIS
+.B aideinit
+.RI [ options ]
+.SH DESCRIPTION
+.B aideinit
+creates a new AIDE database. It will initialize an AIDE database in the default database_out location. It will then prompt you to replace your existing AIDE database. In most cases you will want to check for any problems before doing this.
+.PP
+.B aideinit
+attempts to automatically detect the correct locations of your database and database_out files based on your aide.conf settings. These settings may be overridden on the command line, as may the prompts.
+.SH OPTIONS
+.TP
+.B -y, --yes
+Overwrite database_out file
+.TP
+.B -f, --force
+Force overwrite of database with new database
+.TP
+.B -c, --config
+Specify alternate config file
+.TP
+.B -o, --output
+Specify alternate output file
+.TP
+.B -d, --database
+Specify alternate database file
+.TP
+.B -b, --background
+Run in the background (will mail any errors to aide.conf MAILTO or root)
+.SH FILES
+.TP
+.B /etc/aide/aide.conf, /etc/aide/aide.conf.d
+Default AIDE configuration files
+.TP
+.B /var/lib/aide/aide.db
+Default location for AIDE database
+.TP
+.B /var/lib/aide/aide.db.new
+Default location for newly-created AIDE database
+.SH AUTHOR
+This manual page was written by Mike Markley <mike@markley.org>,
+for the Debian GNU/Linux system (but may be used by others).

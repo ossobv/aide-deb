@@ -1,0 +1,24 @@
+@@define CLAMAV_UNOFFICIAL_SIG_DBS (add-dbs|mbl-dbs|msrbl-dbs|si-dbs|ss-dbs)
+/var/cache/clamav-unofficial-sigs/@@{CLAMAV_UNOFFICIAL_SIG_DBS}$ d VarDir
+/var/cache/clamav-unofficial-sigs/@@{CLAMAV_UNOFFICIAL_SIG_DBS}/.*\\.(ndb|ign2|ldb|hdb|ftm|sig|gz)$ f VarFile
+
+!/var/lib/clamav-unofficial-sigs/pid/clamav-unofficial-sigs\\.pid$ f
+/var/lib/clamav$ d VarDir
+/var/lib/clamav/\\.wget-hsts$ f VarFile
+/var/lib/clamav/(blurl|jurlbl|phish(tank)?|porcupine|winnow_malware_links)\\.ndb$ f VarFile
+/var/lib/clamav/(foxhole_filename)\\.cdb$ f VarFile
+/var/lib/clamav/(porcupine)\\.hsb$ f VarFile
+/var/lib/clamav/(safebrowsing)\\.cld$ f VarFile
+/var/lib/clamav-unofficial-sigs(/(configs|dbs-(add|lmd|mbl|si|ss|yara)|gpg-key|pid))?$ d VarDir
+/var/lib/clamav-unofficial-sigs/configs/((ss-include|current|previous)-dbs|db-changes|last-(linuxmalwaredetect|ss|yararulesproject)-update|purge)\\.txt$ f VarFile
+/var/lib/clamav-unofficial-sigs/dbs-lmd/rfxn\\.[hn]db$ f VarFile
+/var/lib/clamav-unofficial-sigs/dbs-ss/(blurl|bofhland_(cracked|malware|phishing)_URL|bofhland_malware_attach|junk|jurlbl|phish(tank)?|porcupine|rogue|winnow(\\.attachments|_bad_cw|_extended_malware|_malware(_links)?)|scam|spamimg|foxhole_filename)\\.(ndb|hdb|hsb|cdb|yara)(\\.sig)?$ f VarFile
+/var/lib/clamav-unofficial-sigs/dbs-ss/sigwhitelist\\.ign2(\\.sig)?$ f VarFile
+/var/lib/clamav-unofficial-sigs/dbs-yara/(EK_(Angler|Blackhole|BleedingLife|Crimepack|Eleonore|Fragus|Phoenix|Sakura|ZeroAcces|Zerox88|Zeus)|antidebug_antivm)\\.(yar)$ f VarFile
+/var/lib/clamav/(rogue|winnow_(extended_)?malware|bofhland_(malware|cracked|phishing)_URL|spaming|rfxn)\\.(ndb|hdb)$ f VarFile
+/var/log/clamav/clamav-unofficial-sigs\\.log$ f Log
+/var/log/clamav/clamav-unofficial-sigs\\.log\\.1$ f LowLog
+/var/log/clamav/clamav-unofficial-sigs\\.log\\.2\\.@@{LOGEXT}$ f LoSerMemberLog
+/var/log/clamav/clamav-unofficial-sigs\\.log\\.3\\.@@{LOGEXT}$ f SerMemberLog
+/var/log/clamav/clamav-unofficial-sigs\\.log\\.4\\.@@{LOGEXT}$ f HiSerMemberLog
+@@undef CLAMAV_UNOFFICIAL_SIG_DBS

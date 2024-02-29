@@ -1,0 +1,3 @@
+/@@{RUN}/console-log(/Debian-console-log)?$ d VarDirInode
+/@@{RUN}/console-log/Debian-console-log/(8-_-_var_-_log_-_exim4_-_mainlog|9-_-_var_-_log_-_syslog_-_syslog)$ f VarFile
+/@@{RUN}/console-log/Debian-console-log/(8-_-_var_-_log_-_exim4_-_mai|9-_-_var_-_log_-_syslog_-_sy).clientpid$ f VarFile

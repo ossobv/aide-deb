@@ -1,0 +1,48 @@
+@@define LIBVIRT_VL var/lib/libvirt
+@@define LIBVIRT_VLQ @@{LIBVIRT_VL}/qemu
+/@@{LIBVIRT_VL}(/qemu)?$ d VarDir
+/@@{LIBVIRT_VLQ}/(channel(/target)?|dump|nvram|save|snapshot)$ d VarDir-n
+@@if defined LIBVIRT_QEMU_GUESTS
+!/@@{LIBVIRT_VLQ}(/channel/target)?/domain-[[:digit:]]+-@@{LIBVIRT_QEMU_GUESTS}$ d
+!/@@{LIBVIRT_VLQ}/domain-[[:digit:]]+-@@{LIBVIRT_QEMU_GUESTS}/master-key\\.aes$ f
+!/@@{LIBVIRT_VLQ}/nvram/@@{LIBVIRT_QEMU_GUESTS}_VARS\\.fd$ f
+!/@@{LIBVIRT_VLQ}(/channel/target)?/domain-[[:digit:]]+-@@{LIBVIRT_QEMU_GUESTS}/(monitor\\.sock|org\\.qemu\\.guest_agent\\.0)$ s
+@@endif
+
+@@define LIBVIRT_LOGPATH var/log/libvirt
+@@if defined LIBVIRT_QEMU_GUESTS
+@@define LIBVIRT_LOGFILERE qemu/@@{LIBVIRT_QEMU_GUESTS}\\.log
+/@@{LIBVIRT_LOGPATH}$ d VarDir
+/@@{LIBVIRT_LOGPATH}/@@{LIBVIRT_LOGFILERE}$ f ActLog
+/@@{LIBVIRT_LOGPATH}/@@{LIBVIRT_LOGFILERE}\\.1$ f RotLog
+/@@{LIBVIRT_LOGPATH}/@@{LIBVIRT_LOGFILERE}\\.2\\.@@{LOGEXT}$ f CompSerLog
+/@@{LIBVIRT_LOGPATH}/@@{LIBVIRT_LOGFILERE}\\.3\\.@@{LOGEXT}$ f MidlSerLog
+/@@{LIBVIRT_LOGPATH}/@@{LIBVIRT_LOGFILERE}\\.4\\.@@{LOGEXT}$ f LastSerLog
+@@undef LIBVIRT_LOGFILERE
+@@endif
+
+/@@{RUN}/(libvirtd|virtlogd)\\.pid$ f VarFile
+@@define LIBVIRT_RL @@{RUN}/libvirt
+@@define LIBVIRT_RL_SUBDIRS @@{LIBVIRT_RL}/(interface|network|nodedev|nwfilter|qemu|secrets|storage)
+/@@{LIBVIRT_RL_SUBDIRS}$ d VarDir
+/@@{LIBVIRT_RL_SUBDIRS}/driver\\.pid$ f VarFile
+/@@{LIBVIRT_RL}(/(qemu|uml-guest))?$ d RecreatedDir
+/@@{LIBVIRT_RL}/(hostdevmgr|lxc|network|storage)$ d RecreatedDir
+/@@{LIBVIRT_RL}/network/nwfilter\\.leases$ f VarFile
+/@@{LIBVIRT_RL}/network/br[[:digit:]]{1,3}\\.xml$ f VarFile
+/@@{LIBVIRT_RL}/(libvirt-(admin-sock|sock(-ro)?)|virt(lock|log)d-sock)$ s VarFile
+@@if defined LIBVIRT_QEMU_GUESTS
+!/@@{LIBVIRT_RL}/qemu/@@{LIBVIRT_QEMU_GUESTS}\\.(pid|xml)$ f
+!/@@{RUN}/systemd/machines/qemu-[[:digit:]]{1,2}-@@{LIBVIRT_QEMU_GUESTS}$ f
+!/@@{RUN}/systemd/machines/unit:machine-qemu\\\\x2d[[:digit:]]{1,2}\\\\x2d@@{LIBVIRT_QEMU_GUESTS}\\.scope$ l
+!/@@{RUN}/systemd/units/invocation:machine-qemu\\\\x2d[[:digit:]]{1,2}\\\\x2d@@{LIBVIRT_QEMU_GUESTS}\\.scope$ l
+!/@@{RUN}/systemd/transient/machine-qemu\\\\x2d[[:digit:]]{1,2}\\\\x2d@@{LIBVIRT_QEMU_GUESTS}\\.scope$ f
+@@undef LIBVIRT_QEMU_GUESTS
+@@endif
+
+/@@{RUNLOCK}/libvirt-guests$ f RecreatedDir
+@@undef LIBVIRT_RL
+@@undef LIBVIRT_RL_SUBDIRS
+@@undef LIBVIRT_VL
+@@undef LIBVIRT_VLQ
+@@undef LIBVIRT_LOGPATH

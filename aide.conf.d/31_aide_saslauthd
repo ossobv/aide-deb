@@ -1,0 +1,4 @@
+/@@{RUN}/saslauthd$ d VarDirInode
+/@@{RUN}/saslauthd/cache.(flock|mmap)$ f VarFile
+/@@{RUN}/saslauthd/mux(\\.accept)?$ f VarFile
+/@@{RUN}/saslauthd/saslauthd\\.pid$ f VarFile

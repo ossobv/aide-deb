@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if [ -e /etc/apache2/mods-enabled/suexec.load ]; then
+  echo "@@define APACHE2_SUEXEC 1"
+fi

@@ -1,0 +1,21 @@
+@@define MUNIN_NODE_VL var/lib/munin-node
+
+!/@@{RUN}/munin/munin-node\\.pid$ f
+/run/systemd/propagate/munin-node\\.service$ d RecreatedDir
+/@@{MUNIN_NODE_VL}/plugin-state/(munin|nobody)$ d VarDir
+/@@{MUNIN_NODE_VL}/plugin-state/munin/munin_stats-::ffff:127\\.0\\.0\\.1$ f VarFile
+/@@{MUNIN_NODE_VL}/plugin-state/nobody/(disk|exim_mail)stats-::ffff:127\\.0\\.0\\.1$ f VarFile
+/@@{MUNIN_NODE_VL}/plugin-state/nobody/iostat-ios\\.state$ f VarFile
+
+@@define MUNIN_NODE_LOGDIR var/log/munin
+@@define MUNIN_NODE_LOGFILES munin-node\\.log
+/@@{MUNIN_NODE_LOGDIR}$ d VarDir
+/@@{MUNIN_NODE_LOGDIR}/@@{MUNIN_NODE_LOGFILES}$ f ActLog
+/@@{MUNIN_NODE_LOGDIR}/@@{MUNIN_NODE_LOGFILES}\\.1$ f RotLog
+/@@{MUNIN_NODE_LOGDIR}/@@{MUNIN_NODE_LOGFILES}\\.2\\.@@{LOGEXT}$ f CompSerLog
+/@@{MUNIN_NODE_LOGDIR}/@@{MUNIN_NODE_LOGFILES}\\.[3-6]\\.@@{LOGEXT}$ f MidlSerLog
+/@@{MUNIN_NODE_LOGDIR}/@@{MUNIN_NODE_LOGFILES}\\.7\\.@@{LOGEXT}$ f LastSerLog
+@@undef MUNIN_NODE_LOGDIR
+@@undef MUNIN_NODE_LOGFILES
+
+@@undef MUNIN_NODE_VL

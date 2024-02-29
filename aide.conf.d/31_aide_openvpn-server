@@ -1,0 +1,6 @@
+/etc/openvpn/ipp\\.txt$ f VarFile
+!/(var/)?tmp/systemd-private-[[:xdigit:]]{32}-openvpn@server\\.service-[[:alnum:]]{6}$ d
+!/(var/)?tmp/systemd-private-[[:xdigit:]]{32}-openvpn@server\\.service-[[:alnum:]]{6}/tmp$ d
+/@@{RUN}/openvpn$ d RecreatedDir
+/@@{RUN}/openvpn/server\\.(pid|status)$ f VarFile
+

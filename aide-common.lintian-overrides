@@ -1,0 +1,5 @@
+aide-common: maintainer-script-calls-start-stop-daemon
+aide-common: uses-dpkg-database-directly
+aide-common: repeated-path-segment aide [usr/share/aide/config/aide/]
+aide-common: possibly-insecure-handling-of-tmp-files-in-maintainer-script /var/tmp [postinst:46]
+

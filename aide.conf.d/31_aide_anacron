@@ -1,0 +1,2 @@
+/var/spool/anacron/cron\\.(monthly|weekly|daily)$ f VarFile
+/var/lib/systemd/timers/stamp-anacron\\.timer$ f VarFile

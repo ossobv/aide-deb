@@ -1,0 +1,5 @@
+/var/lib/plocate$ d VarDir
+/var/lib/plocate/plocate\\.db$ f VarFile
+/var/lib/systemd/timers/stamp-plocate-updatedb\\.timer$ f VarFile
+!/@@{RUN}/systemd/propagate/plocate-updatedb\\.service$ d
+

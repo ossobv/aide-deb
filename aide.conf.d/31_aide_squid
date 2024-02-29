@@ -1,0 +1,4 @@
+!/var/spool/squid/[0-9A-F]{2}/[0-9A-F]{2}/[0-9A-F]{8} f
+/var/spool/squid/(netdb_state|swap.state(.last-clean)?)$ f VarFile
+/var/spool/squid/[0-9A-F]{2}(/[0-9A-F]{2})?$ d VarDir
+/var/log/squid/(access|store)\\.log$ f Log

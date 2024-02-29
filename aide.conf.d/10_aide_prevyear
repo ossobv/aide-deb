@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "@@define PREVYEAR4D $(date +%Y --date="last year")"

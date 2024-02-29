@@ -1,0 +1,8 @@
+/@@{RUN}/(rpc\\.statd|sm-notify)\\.pid$ f VarFile
+/var/lib/nfs/state$ f VarFile
+/var/lib/nfs/etab$ f VarInode
+/var/lib/nfs/rpc_pipefs/nfs/clnt[0-9]/(info|krb5|idmap)$ f VarTime
+/var/lib/nfs/rpc_pipefs/nfs/clnt[0-9]$ d VarDir
+/var/lib/nfs/rpc_pipefs/(statd|portmap|nfs|mount|lockd)$ d VarDir
+/var/lib/nfs/rpc_pipefs$ d VarDirInode
+/var/lib/nfs(/v4recovery)?$ d VarDir

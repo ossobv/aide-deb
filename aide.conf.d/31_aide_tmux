@@ -1,0 +1,6 @@
+#@@define TMUX_ALLOWED_UIDS 
+@@if defined TMUX_ALLOWED_UIDS
+!/tmp/tmux-@@{TMUX_ALLOWED_UIDS}$ d
+!/tmp/tmux-@@{TMUX_ALLOWED_UIDS}/default$ s
+@@endif
+

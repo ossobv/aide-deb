@@ -1,0 +1,2 @@
+/var/spool/cron/at(spool|jobs)$ d VarDir
+/@@{RUN}/atd\\.pid$ f VarFile

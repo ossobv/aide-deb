@@ -1,0 +1,2 @@
+/@@{RUN}/systemd/resolve/stub-resolv\\.conf$ f VarFile
+

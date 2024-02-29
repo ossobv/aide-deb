@@ -1,0 +1,4 @@
+/var/log/proftpd/proftpd(_(access|auth|xfer))?\\.log$ f Log
+/@@{RUN}/proftpd/proftpd\\.(delay|pid|scoreboard)$ f VarFile
+/var/log/proftpd$ d VarDir
+/@@{RUN}/proftpd$ d VarDirInode

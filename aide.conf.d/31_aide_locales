@@ -1,0 +1,7 @@
+@@define LOCALES (ab|ace|ach|af|ak|am|an|ar|as|ast|ay|az|ba|bal|bar|be|be@latin|bg|bi|bn|bn_BD|bn_IN|br|bs|byn|ca|ca@valencia|ce|ch|chr|ckb|crh|cs|csb|cv|cy|da|de|de_CH|de@hebrew|dv|dz|ee|el|en|en@arabic|en_AU|en@boldquot|en_CA|en@cyrillic|en_GB|en@greek|en@hebrew|en@piglatin|en@quot|en@shaw|eo|es|et|et_EE|eu|fa|ff|fi|fil|fo|fr|frp|fur|fy|ga|gd|gez|gl|gn|gu|gv|ha|haw|he|hi|hr|ht|hu|hy|ia|id|io|is|it|iu|ja|jam|ka|kab|ki|kk|kl|km|kmr|kn|ko|kok|ku|kv|kw|kw_GB|ky|lg|lo|locale.alias|lt|lv|mai|mg|mhr|mi|mk|ml|mn|mo|mr|ms|mt|my|na|nah|nb|nb_NO|nds|ne|nl|nn|nso|nv|oc|or|pa|pap|pi|pl|ps|pt|pt_BR|pt_PT|ro|ru|rw|sc|sd|si|sk|sl|so|son|sq|sr|sr@ije|sr@latin|sv|sw|ta|te|tg|th|ti|tig|tk|tl|tr|tt|tt@iqtelif|tzm|ug|uk|ur|uz|ve|vi|wa|wal|wo|xh|yi|yo|zh_CN|zh_Hans|zh_Hant|zh_HK|zh_TW|zu)
+
+/usr/(lib|share)/locale$ d VarDir
+/usr/lib/locale/locale-archive$ f VarFile
+/usr/share/locale/@@{LOCALES}/LC_MESSAGES$ d VarDir
+
+

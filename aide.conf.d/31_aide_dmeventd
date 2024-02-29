@@ -1,0 +1,2 @@
+!/@@{RUN}/dmeventd-(client|server)$ p
+!/@@{RUN}/dmeventd\\.pid$ f

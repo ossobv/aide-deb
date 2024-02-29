@@ -1,0 +1,180 @@
+#!/bin/sh
+#
+# Copyright (C) 2003-2005 Mike Markley <mike@markley.org>
+# Copyright (C) 2005-2022 Marc Haber
+# Copyright (C) 2010 Hannes von Haugwitz
+#
+# This script is free for any purpose whatseoever so long as the above
+# copyright notice remains in place.
+
+if [ -f /etc/default/aide ]; then
+    . /etc/default/aide
+fi
+
+# Defaults
+MAILTO="${MAILTO:-root}"
+CONFIG="${CONFIG:-/etc/aide/aide.conf}"
+
+# Options
+opt_f=0
+opt_y=0
+opt_c=0
+opt_b=0
+
+if ! [ -f "/usr/bin/aide" ] && ! [ -f "/usr/sbin/aide" ]; then
+  printf >&2 "no /usr/bin/aide found, check your dependencies\\n"
+  exit 1
+fi
+
+aideinit_usage() {
+    printf >&2 "Usage: %s [options] -- [aide options]\\n" "$0"
+    printf >&2 "  -y|--yes         Overwrite output file\\n"
+    printf >&2 "  -f|--force       Force overwrite of database\\n"
+    printf >&2 "  -c|--config      Specify alternate config file\\n"
+    printf >&2 "  -o|--output      Specify alternate output file\\n"
+    printf >&2 "  -d|--database    Specify alternate database file\\n"
+    printf >&2 "  -b|--background  Run in the background\\n"
+}
+
+while [ -n "$1" ]; do
+    case "$1" in
+        -h|--help)
+            aideinit_usage
+            exit 0
+            ;;
+        -f|--force)
+            opt_f=1
+            shift
+            ;;
+        -y|--yes)
+            opt_y=1
+            shift
+            ;;
+        -b|--background)
+            opt_b=1
+            shift
+            ;;
+        -o|--output)
+            shift
+            [ -z "$1" ] && aideinit_usage && exit 1
+            outfile=$1
+            shift
+            ;;
+        -d|--database)
+            shift
+            [ -z "$1" ] && aideinit_usage && exit 1
+            dbfile=$1
+            shift
+            ;;
+        -c|--config)
+            opt_c=1
+            shift
+            [ -z "$1" ] && aideinit_usage && exit 1
+            config=$1
+            shift
+            ;;
+        --)
+            shift
+            break 2
+            ;;
+        *)
+            printf >&2 "Unknown option %s (use -- to delimit aideinit and aide options)\\n" "$1"
+            exit
+            ;;
+    esac
+done
+
+
+config=${config:-$CONFIG}
+
+if [ ! -f "$config" ]; then
+    printf >&2 "%s: %s: file not found\\n" "$0" "${config}"
+    exit 1
+fi
+
+if [ -z "${outfile}" ]; then
+    outfile=$(grep -E "^[[:space:]]*database_out=file:" "${config}" | cut -d: -f2)
+    [ -z "${outfile}" ] && outfile="/var/lib/aide/aide.db.new"
+fi
+if [ -z "${dbfile}" ]; then
+    dbfile=$(grep -E "^[[:space:]]*database_in=file:" "${config}" | cut -d: -f2)
+    [ -z "${dbfile}" ] && dbfile="/var/lib/aide/aide.db"
+fi
+
+if [ -f "${outfile}" ]; then
+    if [ $opt_y -eq 0 ]; then
+        printf "Overwrite existing %s [Yn]? " "${outfile}"
+        read yn
+        case "$yn" in
+            [Nn]*)
+            exit 0
+            ;;
+        esac
+    fi
+fi
+
+extraflags=""
+
+run_aideinit() {
+    if command -v capsh >/dev/null; then
+        capsh --caps="cap_dac_read_search,cap_audit_write+eip cap_setpcap,cap_setuid,cap_setgid+ep" --keep=1 --user=_aide --addamb=cap_dac_read_search,cap_audit_write -- \
+            -c "aide --config=${config} --init $extraflags $@ >/var/log/aide/aideinit.log 2>/var/log/aide/aideinit.errors"
+        RET=$?
+    else
+        aide --config="${config}" --init ${extraflags} $@ >/var/log/aide/aideinit.log 2>/var/log/aide/aideinit.errors
+        RET=$?
+    fi
+    printf "AIDE --init return code %d\\n" "${RET}" >> /var/log/aide/aideinit.log
+    if [ "$RET" != "0" ]; then
+       printf "AIDE --init return code %d\\n" "${RET}" >> /var/log/aide/aideinit.errors
+    fi
+    return $RET
+}
+
+aideinit_background() {
+    printf "running aide --init in background. See /var/log/aide/aideinit.* for log and errors\\n"
+    touch /var/log/aide/adeinit.still-running
+    run_aideinit
+    RET=$?
+    rm -f /var/log/aide/adeinit.still-running
+    if [ -f "${dbfile}" ] && [ "${opt_f}" -eq 0 ]; then
+        printf >&2 "%s exists and -f was not specified\\n" "${dbfile}" >> /var/log/aide/aideinit.errors
+    fi
+    if [ "$(< /var/log/aide/aideinit.errors wc -l)" -gt 0 ]; then
+        (printf "AIDE init errors:\\n"; cat /var/log/aide/aideinit.errors) | /usr/bin/mail -s "AIDE initialization problem" "${MAILTO}"
+    else
+        cp -f "${outfile}" "${dbfile}"
+    fi
+    return "${RET}"
+}
+
+if [ "${opt_b}" -eq 1 ]; then
+    aideinit_background &
+    exit 0
+fi
+
+# this is only reached if we run in foreground
+printf >&2 "Running aide --init...\\n"
+run_aideinit
+RET=$?
+
+if [ "$RET" != "0" ]; then
+    printf >&2 "AIDE --init return code %s\\n" "${RET}"
+    exit $RET
+fi
+
+if [ -f "$dbfile" ] && [ "${opt_f}" -eq 0 ]; then
+    printf "Overwrite %s [yN]? " "${dbfile}"
+    read yn
+    case "$yn" in
+        [yY]*)
+        cp -f "${outfile}" "${dbfile}"
+            ;;
+    esac
+else
+    cp -f "${outfile}"  "${dbfile}"
+fi
+
+# vim: tabstop=4 shiftwidth=4 expandtab
+# end of file
+

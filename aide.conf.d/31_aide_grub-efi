@@ -1,0 +1,8 @@
+@@if defined AMD64_FIRMWARE_EFI
+# FAT filesystems change synthesized inodes on every mount
+/boot/efi/EFI(/debian)?$ d Full-i
+/boot/efi/EFI/debian/BOOTX64.CSV$ f Full-i
+/boot/efi/EFI/debian/grub\\.cfg$ f Full-i
+/boot/efi/EFI/debian/(fbx64|grubx64|mmx64|shimx64)\\.efi$ f Full-i
+/boot/efi/EFI/BOOT/BOOTX64\\.EFI$ f Full-i
+@@endif

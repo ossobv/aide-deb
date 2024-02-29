@@ -1,0 +1,113 @@
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+#    Developers do not need to manually edit POT or PO files.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: aide\n"
+"Report-Msgid-Bugs-To: aide@packages.debian.org\n"
+"POT-Creation-Date: 2013-06-09 22:00+0200\n"
+"PO-Revision-Date: 2006-09-23 21:03+0200\n"
+"Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
+"Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid "Initialize AIDE database?"
+msgstr "Inicializovat databázi AIDE?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid ""
+"Before AIDE can be used, you will have to initialize a database. You can "
+"immediately do this here, or run the '/usr/sbin/aideinit' script from a "
+"shell later."
+msgstr ""
+"Dříve, než budete moci AIDE používat, musíte inicializovat databázi. Buď to "
+"můžete provést rovnou zde, nebo můžete později v shellu spustit skript '/usr/"
+"sbin/aideinit'."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid "Overwrite existing /var/lib/aide/aide.db.new?"
+msgstr "Přepsat stávající /var/lib/aide/aide.db.new?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid ""
+"You have already a newly generated AIDE database in /var/lib/aide/aide.db."
+"new. If you choose this option, the existing file will be be overwritten by "
+"the new data obtained from the current state of your file system."
+msgstr ""
+"Ve /var/lib/aide/aide.db.new se již nachází nově vygenerovaná databáze AIDE. "
+"Povolíte-li tuto možnost, stávající soubor bude přepsán novými daty "
+"získanými z aktuálního stavu vašeho souborového systému."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid "Copy aide.db.new to aide.db?"
+msgstr "Zkopírovat aide.db.new na aide.db?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"It is advisable for you to first look over /var/lib/aide/aide.db.new file "
+"before replacing the existing db. You can have the package replace the "
+"database anyway here."
+msgstr ""
+"Před samotným nahrazením stávající databáze souborem /var/lib/aide/aide.db."
+"new jej doporučujeme prohlédnout. Přesto můžete nechat balík, aby databázi "
+"nahradil."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"If you do not choose this option, you will need to copy the file /var/lib/"
+"aide/aide.db.new to /var/lib/aide/aide.db before AIDE can use it."
+msgstr ""
+"Jestliže tuto možnost nezvolíte, budete muset před použitím AIDE ručně "
+"zkopírovat soubor /var/lib/aide/aide.db.new na /var/lib/aide/aide.db."
+
+#~ msgid "Move AIDE data files from old directory to new?"
+#~ msgstr "Přesunout datové soubory ze starého do nového adresáře?"
+
+#~ msgid ""
+#~ "AIDE now stores its databases in /var/lib/aide by default. It appears "
+#~ "that you have an older version installed which uses /usr/lib/aide. You "
+#~ "can have the data files moved automatically."
+#~ msgstr ""
+#~ "AIDE nyní uchovává svou databázi ve /var/lib/aide. Zdá se, že máte "
+#~ "nainstalovanou starší verzi, která ještě používá /usr/lib/aide. Balík "
+#~ "může přesunout datové soubory na nové místo automaticky."
+
+#~ msgid "Daily reports are mailed to root by default"
+#~ msgstr "Denní hlášení se implicitně zasílají uživateli root"
+
+#~ msgid "You may change that in /etc/default/aide."
+#~ msgstr "Změnit to můžete v souboru /etc/default/aide."
+
+#~ msgid "Before AIDE can be used, you will have to initialize a database"
+#~ msgstr "Než budete moci AIDE používat, musíte inicializovat databázi."
+
+#~ msgid "In order to do this, simply use the '/usr/sbin/aideinit' script."
+#~ msgstr "Pro to stačí jednoduše spustit skript '/usr/sbin/aideinit'."

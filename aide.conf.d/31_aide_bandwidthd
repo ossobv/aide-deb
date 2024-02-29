@@ -1,0 +1,15 @@
+# All the subnet addresses that can match the subnets configured in
+# /etc/bandwidthd/bandwidthd.conf.
+#@@define BANDWIDTHD_SUBNETS
+# All the IPs that can match the BANDWIDTHD_SUBNETS subnets.
+#@@define BANDWIDTHD_SUBNET_HOSTS
+@@if defined BANDWIDTHD_SUBNETS
+/var/lib/bandwidthd/log\\.[0-9.]*\\.cdf$ f VarFile
+/var/lib/bandwidthd/htdocs$ d VarDir
+/var/lib/bandwidthd/htdocs/index[234]?\\.html$ f VarFile
+/var/lib/bandwidthd/htdocs/Subnet-[1-4]-@@{BANDWIDTHD_SUBNETS}\\.html$ f VarFile
+/var/lib/bandwidthd/htdocs/Total-[1-4]-[RS]\\.png$ f VarFile
+@@endif
+@@if defined BANDWIDTHD_SUBNET_HOSTS
+/var/lib/bandwidthd/htdocs/@@{BANDWIDTHD_SUBNET_HOSTS}-[1-4]-[RS]\\.png$ f VarFile
+@@endif

@@ -1,0 +1,15 @@
+@@define TIGER_LOGS (check_(accounts|group|netrc|passwdformat|passwd|perms|rhosts|system|aliases|exports|inetd|printcap|anonftp|path|crontabs|tcpd|services|ftpusers|umask|exrc|embedded|devices)|find_files)
+/var/log/tiger/@@{TIGER_LOGS}\\.out\\.1$ f LoSerMemberLog
+/var/log/tiger/@@{TIGER_LOGS}\\.out\\.[2-9]$ f SerMemberLog
+/var/log/tiger/@@{TIGER_LOGS}\\.out\\.10$ f HiSerMemberLog
+
+@@define TIGER_8LOGS (logfiles|rootkit|root|rootdir|runprocs|known)
+/var/log/tiger/check_@@{TIGER_8LOGS}\\.out\\.[123]$ f LoSerMemberLog
+/var/log/tiger/check_@@{TIGER_8LOGS}\\.out\\.[4-7]$ f SerMemberLog
+/var/log/tiger/check_@@{TIGER_8LOGS}\\.out\\.(8|9|10)$ f HiSerMemberLog
+
+/var/log/tiger/check_listeningprocs\\.out\\.([1-9]|10)$ f FreqRotLog
+
+/var/log/tiger$ d VarDir
+
+/var/lib/tiger/work$ d VarDir

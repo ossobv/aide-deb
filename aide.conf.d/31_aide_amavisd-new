@@ -1,0 +1,13 @@
+/@@{RUN}/amavis/amavisd.(lock|pid)$ f VarFile
+/@@{RUN}/amavis$ d VarDirInode
+/var/lib/amavis$ d VarDir
+/var/lib/amavis/tmp$ d VarDir
+!/var/lib/amavis/tmp/amavis-[0-9]{8}T[0-9]{6}-[0-9]{5}$ d
+!/var/lib/amavis/tmp/amavis-[0-9]{8}T[0-9]{6}-[0-9]{5}/(email\\.txt|parts)$ f
+/var/lib/amavis/amavisd.sock$ s VarInode
+/var/lib/amavis/db$ d VarDir
+/var/lib/amavis/db/__db.[0-9]{3}$ f VarFile
+/var/lib/amavis/db/(cache(-expiry)?|snmp|nanny)\\.db$ f VarFile
+/var/lib/amavis/.spamassassin$ d VarDir
+/var/lib/amavis/.spamassassin/bayes_(toks|seen)$ f VarFile
+/var/lib/amavis/.spamassassin/auto-whitelist$ f VarFile

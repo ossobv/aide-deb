@@ -1,0 +1,5 @@
+/var/log/haproxy\\.log$ f Log
+/var/log/haproxy\\.log\\.1$ f LowLog
+/var/log/haproxy\\.log\\.2\\.@@{LOGEXT}$ f LoSerMemberLog
+/var/log/haproxy\\.log\\.[345678]\\.@@{LOGEXT}$ f SerMemberLog
+/var/log/haproxy\\.log\\.9\\.@@{LOGEXT}$ f HiSerMemberLog

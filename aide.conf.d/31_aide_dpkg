@@ -1,0 +1,26 @@
+@@define DPKG_LOGS (alternatives|dpkg)\\.log
+@@define DPKG_BACKUPS (alternatives\\.tar|dpkg\\.(status|diversions|statoverride|arch))
+/var/lib/dpkg/(available|status)(-old)?$ f VarFile
+/var/lib/dpkg/status\\.yesterday(\\.[0-9]*)?(\\.gz)?$ f VarFile
+/var/lib/dpkg/triggers/Lock$ f VarFile
+/var/lib/dpkg(/(info|updates))?$ d VarDir
+/var/lib/dpkg/lock$ f VarFile
+/var/lib/dpkg/lock-frontend$ f VarFile
+/var/lib/systemd/timers/stamp-dpkg-db-backup\\.timer$ f VarFile
+/var/log/@@{DPKG_LOGS}$ f ActLog
+/var/log/@@{DPKG_LOGS}\\.1$ f RotLog
+/var/log/@@{DPKG_LOGS}\\.2\\.@@{LOGEXT}$ f CompSerLog
+/var/log/@@{DPKG_LOGS}\\.([3-9]|1[01])\\.@@{LOGEXT}$ f MidlSerLog
+/var/log/@@{DPKG_LOGS}\\.12\\.@@{LOGEXT}$ f LastSerLog
+
+# these are backups from /var/lib/dpkg. They just look like logs.
+# Most of those files change very rarely, and aide currently does
+# not nicely handle files that are rotated but don't change.
+# Hence, an exclude is currently (0.18) the probably best way to handle.
+/var/backups/@@{DPKG_BACKUPS}\\.0$ f Full+ANF
+/var/backups/@@{DPKG_BACKUPS}\\.1\\.@@{LOGEXT}$ f CompSerLog
+/var/backups/@@{DPKG_BACKUPS}\\.[2-5]\\.@@{LOGEXT}$ f MidlSerLog
+/var/backups/@@{DPKG_BACKUPS}\\.6\\.@@{LOGEXT}$ f LastSerLog
+
+@@undef DPKG_LOGS
+@@undef DPKG_BACKUPS

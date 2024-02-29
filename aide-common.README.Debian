@@ -1,0 +1,376 @@
+AIDE for Debian
+---------------
+
+Debian's aide packages add some value and functionality to AIDE. Most
+of this functionality is delivered by scripts and is configured via
+the Debian configuration file in /etc/default/aide. That file is
+extensively commented.
+
+In normal use, aide runs unattended as a daily job.  In its default
+setup, it sends out daily reports.
+
+
+Installation
+^^^^^^^^^^^^
+On installation, debconf questions are asked at medium priority to
+query the user whether to initialize the AIDE database and whether to
+automatically place the new database at a place where aide can pick it
+up as a reference. aideinit, the script used to initialize the
+database, has a man page, and can be invoked at the users' discretion
+at a later time.
+
+
+Configuring AIDE the Debian way
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AIDE's Debian default configuration takes a very paranoid stance and
+is likely to report more changes than you will need to focus your
+attention on.
+
+The AIDE configuration used by the Debian scripts is maintained in
+/etc/aide/aide.conf and makes use of the @@x_include feature to pull
+in snippets from /etc/aide/aide.conf.d. The databases are kept in
+/var/lib/aide by default.
+
+After changing your aide configuration, you might want to re-build
+your database either by using the aideinit script, or aide itself via
+aide --init or aide --update. Otherwise, you will on the next run get
+a spurious comparison between a newly generated database and the old
+reference database. Doing this update with aide --update is generally
+recommended since this gives you a chance to spot changes in the file
+system that were done between the last aide run and re-building of the
+database.
+
+
+Writing rules
+^^^^^^^^^^^^^
+We try to write high quality rules. If you write your own rules, and
+they're sufficiently general to be of use for other uses of a package,
+please consider submitting them to us via a wishlist bug or, probably
+better, to the package in question. We are also open for improvements
+for the rules we deliver with the package.
+
+aide rules should be delivered in /etc/aide/aide.conf.d.  aide is
+configured to read only files named according to the Debian cron
+script namespace restrictions (see run-parts(8)).
+
+All rules should be restricted to a certain file type. A rule
+delivered with this package that does not have a restriction is a bug.
+Please report it.  Please write all new rules with this suggestion in
+mind. If a rule is deliberately unrestricted, aide (starting with
+version 0.18) offers the explicit "non-restriction" 0. Please use it.
+
+If you define variables, keep the name space clean and prefix your
+variables with the name of the package the rule is for. Conside using
+@@undef to undefine the variable after use.
+ 
+Rules with the x-bit set are not included verbatim, but are executed
+instead and their output is taken as configuration. To prevent
+privilege escalation, aide will not execute files that do not belong
+to either root or the user running aide and that are group or world
+writeable. Have a close look at your directory permissions to be
+secure!
+
+For the package, we try to only include scripts that are written in a
+robust way and pass shellcheck(1) cleanly. If you find scripts that
+are not shellcheck clean, that's a bug, please report it (and send a
+patch if you feel like it).
+
+
+Common configuration issues
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+By default, aide checks the entire file system, including /home. This
+may be undesirable for a system with actively used shell accounts.
+You might want to exclude the home directories of your active shell
+users explicitly, which ma cut down aide run time severely if your
+home directories are big.
+
+Aide's default configuration includes rule files for the most common
+packages. For a more comprehensive set of rules, users of other
+packages are encouraged to submit their rules for inclusion in the
+aide distribution. Aide rules can both be included with aide, or with
+the respective package. From a security point of view, it is desirable
+to have the aide rules come with the respective package, since this
+makes sure that the only files excluded from the aide check are those
+that are actually in use on the system. This approach minimizes the
+amount of unneeded aide rules being in place in normal system
+operation, but needs the cooperation of the other maintainers.
+
+Aide rules that come with other packages should be placed as
+/etc/aide/aide.conf.d/nn_foo_rulename, with foo being the name of the
+package that contains them, to minimize the potential of conflict and
+to easy migration from a rule that comes with aide to a rule that
+comes with the respectiv package. Fellow Debian maintainers, if you
+include aide rules in your package, please file a bug against aide, so
+that the respective rules can be removed from the aide package. Users,
+if you detect a conflict between a rule in the aide package and a rule
+from another package, please file a bug against aide so that the issue
+can be cleared up. Of course, the local admin of a system can locally
+resolve the rule conflict by editing the files - they are
+dpkg-conffiles.
+
+Administrators who would like to have full control about their rules
+can - for example - modify the @@x_include statement at the bottom of
+/etc/aide.conf to read from a different directory such as
+/etc/aide/aide.conf.local.d populated with the rules that they really want.
+Symlinks are accepted, so it is possible to take advantage of future
+rule updates by symlinking from /etc/aide/aide.conf.d.
+
+
+aide as non-root
+^^^^^^^^^^^^^^^^
+Starting with aide 0.18, the Debian packages do create a system user
+_aide on installation and try hard to run aide as that user. This
+needs either the system having systemd as pid 1 or capsh(1) from the
+libcap2-bin package installed.  If neither is the case, aide runs as
+root. A non-root aide is augmented with the cap_dac_read_search
+capability which allows the non-root user to read anywhere.
+
+The daily aide cron job running as non-root on a systemd system cannot
+send out mail via the traditional /usr/lib/sendmail interface since
+the capability-related systemd unit also disabled suid which is needed
+for the MTA to function. This affects both mailx and bsd-mailx.
+Non-root aide on systemd systems can only send out mail if s-nail is
+installed, which in turn relies on a local MTA to listen for s-nail's
+SMTP connections.
+
+This affects both new installations and upgraded installations.
+See below for details.
+
+A significant part of the shell scripts that surround the aide calls
+in Debian will still run as root.  Patches accepted.
+
+The non-systemd code paths are badly tested. Please expect breakage
+and send patches. We appreciate your help here.
+
+
+the daily AIDE check
+^^^^^^^^^^^^^^^^^^^^
+Main work of the aide package happens in a daily job. On a system
+using systemd, it's a system timer running between 0200 and 0400. On a
+system that is not using systemd, the same job is invoked via
+cron.daily.
+
+Logging
+-------
+The daily job invokes aide, instructs aide to write the report to a
+temporary file. Standard error is captured to a temporary file as
+well. The actual command which is invoked is controlled by the COMMAND
+variable in /etc/default/aide, and additional parameters can be passed
+in via AIDEARGS in /etc/default/aide. Standard output eventually ends
+up in /var/log/aide/aide.log, and standard error in
+/var/log/aide/error.log.  Both files are rotated, so that older
+reports stay available.
+
+Copying (activating) the new database
+-------------------------------------
+After running aide, the newly generated database which was created
+with COMMAND="update" is optionally copied over the old reference
+database. The setting of COPYNEWDB in /etc/default/aide controls this.
+This is a tradeoff between not being bothered by "unnecessary" reports
+and getting all changes summarized in a single report.
+
+COPYNEWDB="no" (the default) will never copy the newly created
+database. Therefore, all changes that are in today's log wil be
+reported again tomorrow since tomorrow's run will be based on the same
+input database like today's run. If you want to accept the reported
+changes and start from an empty report again, you need to copy the new
+database over the old one manually. The ever increasing logs need
+almost daily attention and will probably be a nuisance to all users.
+It's still the safest, sane default though.
+
+COPYNEWDB="ifnochange" only copies the new database over the old one
+if aide has not detected any changes. In this case, you need to
+manually copy over the databases after the first report showing
+changes, or your ANF+ARF rules and log handling rules are going to
+stop working until you rebuild and manually copy the database.
+
+COPYNEWDB="yes" unconditionally accepts all changes after each run of
+the daily aide check. The archived logs are the only place where a
+change is reported, and each change reported once will not be reported
+again. You will need to inspect every single log for unwanted changes.
+If you use COPYNEWDB="yes" and do not manually increase the log level
+by setting (for example) AIDEARGS="--log-level info", you lose the
+possibility of inspecting the changes more closely.
+
+Reporting
+---------
+The daily aide check generates a report which is saved to
+/var/log/aide/aide.log. On systems that allow aide's mail sending
+mechanism to work, the report is postprocessed as explained below
+and sent to the address configured as MAILTO if either
+  - reportable changes have been found or
+  - no reportable changes have been found and QUIETREPORTS is not
+    set to "yes".
+
+That means, that if QUIETREPORTS="yes", no message with contents "no
+changes detected, everything is fine" will be sent.
+
+Error and standard output are truncated to the first LINES lines each
+in the message.  If the output was truncated, this is prominently
+visible in the message.  Also, if aide returned a non-zero exit value,
+this is mentioned in the message. 
+
+Mail is sent to the address given in the MAILTO setting, root by
+default.  MAILTO is run through one stage of shell evaluation, so it
+is possible to have the message sent to recipients depending on
+variable values, such as the host name.
+
+If NOISE is set to a regular expression, matching lines do not appear
+in the report message.  This is commonly used in environments where
+some changes are not important enough to be part of the report that is
+read by humans, but should be in the log nevertheless for future
+reference.  A second, not de-noised copy of the output is included as
+well.
+
+Sending the report per mail
+---------------------------
+The sending of mail reports by the daily aide check is controlled by
+settings in /etc/default/aide.
+
+To send out mail reports, the daily aide check either uses s-nail or
+mail(1) (such as the executable provided by bsd-mailx).  If neither is
+installed, a warning is given on stderr (this ends up in the Journal
+if systemd is used or is sent via e-mail by the cron daemon).  Set
+SILENTREPORTS=yes to confirm that you really want the daily aide check
+to be silent.  Logs are written in either case.
+
+S-nail is the tool preferred by the script to send out the message via
+SMTP to localhost.  A working MTA is expected on localhost.  An
+unqualified recipient address is qualified with the contents of
+/etc/mailname to make it acceptable over SMTP.
+
+If s-nail is not installed, and the daily cron job is running as
+non-root under systemd, it will log a message to the journal and the
+log file and not send mail. On a non-systemd system, it will use
+mail(1) to send the message.  This is done this way because most
+implementations of mail(1) use /usr/lib/sendmail to deliver the
+outgoing message. /usr/lib/sendmail is suid root with some MTAs, and
+this way of privilege escalation is not available when the daily aide
+job is invoked a non-root user by systemd.
+
+The daily aide check will automatically select the method of sending
+mail according to the rules documented above.  The variable MAILCMD in
+/etc/default/aide can be used to override these rules.  If you know
+that your mail(1) works in a scenario where the automatism refuses to
+use mail(1), setting MAILCMD to the path to mail(1) manually will force
+the script to use mail(1).  If you need more flexibility and/or would
+prefer to have additional methods of delivering the report supported
+by the package, please file a wishlist bug.
+
+The following additional settings are available in /etc/default/aide
+to control the sending of the message.
+
+The variable MAILTO controls where the reports are sent to. An
+unqualified setting such as "root" is used verbatim if mail(1) is
+used, relying on the local MTA and its settings (typically
+/etc/aliases) to yield a qualified recipient. If s-nail is used, an
+unqualified recipient is augmented with the contents of /etc/mailname
+to form a fully qualified mail address that is useable in SMTP. The
+variable is expanded before it is used, so you can use variables here.
+For example, MAILTO=$FQDN-aide@domain.example will send the report to
+host.name.example-aide@domain.example is the local FQDN is
+host.name.example. MAILTO defaults to "root".
+
+The variable MAILSUBJ is used as the subject for the e-mail reports.
+If your mail client only threads by subject, you might want to add
+some variable content here (for example $(date +%Y-%m-%d)). The
+variable is expanded before use, so other variables can be used here.
+If defaults to "Daily AIDE report for $FQDN"
+
+The variable FQDN is used as the host name to be used in the AIDE
+reports. It can be set to arbitrary values, and defaults to the output
+of $(hostname --fqdn).
+
+RFC 5322 (2.1.1) limits the maximum line length in e-mail messages to
+998. aide limits its mail messages to 990 in default and wraps longer
+lines. If your mail system can handle messages with longer lines and
+you have very long paths on your system, set this to a very high
+value.
+
+Setting QUIETREPORTS to yes suppresses the mails completely when no
+changes have been detected during the AIDE run and no error output was
+given. This setting defaults to no.
+
+Setting SILENTREPORTS=yes does never send out mail. It default so no
+and setting it to yes, this of course implies QUIETREPORTS=yes.
+
+The result of the daily aide check is given with figlet(6) if figlet
+is installed. This makes it easier to skim through a list of check
+results. If you don't want this, set FIGLET=no. The setting defaults
+to yes.
+
+If you need other functionality, please file a bug against the aide
+package.
+
+
+Using aide for your own ideas
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+If you intend to use AIDE for your own use, please note that aide is
+compiled without setting a default configuration file, so you _always_
+need to give a --config option with the path to a configuration file.
+This is to prevent an accidental invocation of aide from messing with
+the Debian database.
+
+The scripts and programs that are invoking aide and come with the Debian package
+do explicitly use --config /etc/aide/aide.conf.
+
+
+no longer statically linked
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Aide used to be statically linked by default. The reasoning behind
+that was the possibility of an attacker modifying libc or other
+libraries, wrapping system calls and compromising the integrity of
+aide's reports even if the binary and database are sitting on
+physically write-protected media. However, it has not been possible to
+have a fully static binary on Linux for years; the NSS libs are always
+dynamically linked. This in turn leads to aide segfaulting as soon as
+a glibc is updated and aide not (#993876).
+
+Additionally, this kind of attack is actually possible at the kernel
+level as well, which further reduces the security gained by static
+linking.
+
+Furthermore, a statically linked aide needs updating whenever one of
+the statically linked libraries gets a security update. Recent
+versions of aide have grown quite a number of dependencies with their
+features, and Debian does not have (yet) a mechanism to automatically
+rebuild packages with statically linked binaries when one of their
+dependencies is updated. It has proven unpractical to do this
+manually.
+
+Hence, we have decided to stop shipping a statically linked binary
+since it is not feasible to keep this updated in time. Using dynamic
+linking will ensure that security updates get rolled out easily and
+quickly. This opens the attack vector of trojaned libraries, but we
+are convinced that this change is still a net gain.
+
+While we're still paranoid in maintaining a security tool, practical
+needs need to take precedence. If you want to build a statically
+linked package locally, take a look at the tag debian/0.17.3-4.9 in
+git. This is the last tag that still supports building a
+aide-static.deb. Note that aide 0.18 changed the upstream configure
+default to dynamic linking, so there is now an --enable-static flag
+instead of the --disable-static of 0.17 and earlier.
+
+
+Low Memory Systems
+^^^^^^^^^^^^^^^^^^
+AIDE keeps its database and some additional information in memory at
+run-time. Please make sure that an adequate amount of physical memory
+and swap is available when aide runs. If adding more memory and/or
+swap is not possible, it might be helpful to exclude bigger parts of
+the file system using a "!" directive. Please note that this
+sacrifices some security as parts of the file system remain unchecked.
+
+
+Authors
+^^^^^^^
+This file is maintained by Marc Haber, starting from the README.Debian
+by Mike Markley <mike@markley.org>, last changed on Fri, 19 Dec 2003
+02:47:49 -0800.
+
+See /usr/share/doc/aide/changelog.Debian.gz for an actual changelog
+and current timestamps for package and docs.
+
+# vim: textwidth=70
+

@@ -1,0 +1,2 @@
+/@@{RUN}/ippl/ippl.(pid|conf)$ f VarFile
+/@@{RUN}/ippl$ d VarDirInode

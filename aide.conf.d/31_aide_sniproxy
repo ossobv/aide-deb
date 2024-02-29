@@ -1,0 +1,6 @@
+@@define SNIPROXY_LOG var/log/sniproxy/https?_access\\.log
+/@@{SNIPROXY_LOG}$ f FreqRotLog
+/@@{SNIPROXY_LOG}\\.1$ f LowLog
+/@@{SNIPROXY_LOG}\\.2\\.@@{LOGEXT}$ f LoSerMemberLog
+/@@{SNIPROXY_LOG}\\.[345678]\\.@@{LOGEXT}$ f SerMemberLog
+/@@{SNIPROXY_LOG}\\.9\\.@@{LOGEXT}$ f HiSerMemberLog

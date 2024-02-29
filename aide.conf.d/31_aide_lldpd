@@ -1,0 +1,3 @@
+/@@{RUN}/lldpd(/etc)?$ d VarDirInode
+/@@{RUN}/lldpd/etc/localtime$ f VarFile
+!/@@{RUN}/lldpd\\.socket$ s

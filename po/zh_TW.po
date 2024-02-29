@@ -1,0 +1,119 @@
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+#    Developers do not need to manually edit POT or PO files.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: aide 0.10-6\n"
+"Report-Msgid-Bugs-To: aide@packages.debian.org\n"
+"POT-Creation-Date: 2013-06-09 22:00+0200\n"
+"PO-Revision-Date: 2005-02-16 15:13+0800\n"
+"Last-Translator: Asho Yeh <asho@debian.org.tw>\n"
+"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Chinese\n"
+"X-Poedit-Country: TAIWAN\n"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid "Initialize AIDE database?"
+msgstr "是否要初始化 AIDE 資料庫？"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid ""
+"Before AIDE can be used, you will have to initialize a database. You can "
+"immediately do this here, or run the '/usr/sbin/aideinit' script from a "
+"shell later."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid "Overwrite existing /var/lib/aide/aide.db.new?"
+msgstr "要複寫 /var/lib/aide/aide.db.new 嗎？"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid ""
+"You have already a newly generated AIDE database in /var/lib/aide/aide.db."
+"new. If you choose this option, the existing file will be be overwritten by "
+"the new data obtained from the current state of your file system."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid "Copy aide.db.new to aide.db?"
+msgstr "要複製 aide.db.new 成 aide.db？"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+#, fuzzy
+msgid ""
+"It is advisable for you to first look over /var/lib/aide/aide.db.new file "
+"before replacing the existing db. You can have the package replace the "
+"database anyway here."
+msgstr ""
+"複寫以存在的 db 檔前，建議先查閱過 /var/lib/aide/aide.db.new。您要複寫它了"
+"嗎？"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+#, fuzzy
+msgid ""
+"If you do not choose this option, you will need to copy the file /var/lib/"
+"aide/aide.db.new to /var/lib/aide/aide.db before AIDE can use it."
+msgstr ""
+"使用 AIDE 之前，您必須先複製 /var/lib/aide/aide.db.new 成 /var/lib/aide/aide."
+"db。"
+
+#~ msgid "Move AIDE data files from old directory to new?"
+#~ msgstr "移動舊有目錄下的 AIDE 資料檔到新目錄嗎？"
+
+#, fuzzy
+#~ msgid ""
+#~ "AIDE now stores its databases in /var/lib/aide by default. It appears "
+#~ "that you have an older version installed which uses /usr/lib/aide. You "
+#~ "can have the data files moved automatically."
+#~ msgstr ""
+#~ "AIDE 目前預設儲存資料庫到 /var/lib/aide 下。該訊息出現的話表示您還有較舊的"
+#~ "版本使用 /usr/lib/aide。您想要移動這些資料嗎？"
+
+#, fuzzy
+#~ msgid "Daily reports are mailed to root by default"
+#~ msgstr "每日記錄報告預設是寄給 root。您能修改 /etc/default/aide 來改變它。"
+
+#, fuzzy
+#~ msgid "You may change that in /etc/default/aide."
+#~ msgstr "每日記錄報告預設是寄給 root。您能修改 /etc/default/aide 來改變它。"
+
+#, fuzzy
+#~ msgid "Before AIDE can be used, you will have to initialize a database"
+#~ msgstr "您必須初使化資料庫才能使用 AIDE。"
+
+#~ msgid "In order to do this, simply use the '/usr/sbin/aideinit' script."
+#~ msgstr "要完成該目的，只要使用 '/usr/sbin/aideinit' script。"
+
+#~ msgid "You must install aide.db.new as /var/lib/aide/aide.db"
+#~ msgstr "您必須安裝 aide.db.new 成 /var/lib/aide/aide.db"
+
+#~ msgid "Where should daily reports be mailed?"
+#~ msgstr "指定每日記錄報告的寄件位址？"

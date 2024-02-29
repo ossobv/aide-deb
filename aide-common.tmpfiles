@@ -1,0 +1,3 @@
+d /run/aide			0700	_aide	root
+d /var/log/aide			2755	_aide	adm
+d /var/lib/aide			0700	_aide	root

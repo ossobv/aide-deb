@@ -1,0 +1,20 @@
+#!/bin/sh
+
+sanitize()
+{
+    sed 's/[^[:alnum:]/]/_/g'
+}
+
+if [ -e "/etc/debian_version" ]; then
+  printf "@@if not defined DEBIANVERSION\\n"
+  printf "@@define DEBIANVERSION Debian/%s\\n" "$(head -n 1 /etc/debian_version | sanitize)"
+  printf "@@endif\\n"
+fi
+if [ -x "/usr/bin/lsb_release" ]; then
+  for parm in id description release codename; do
+    PARM="$LSB_$(echo $parm | tr '[:lower:]' '[:upper:]')"
+    printf "@@if not defined %s\\n" "${PARM}"
+    printf "@@define %s %s\\n" "${PARM}" "$(/usr/bin/lsb_release --short --$parm | sanitize)"
+    printf "@@endif\\n"
+  done
+fi

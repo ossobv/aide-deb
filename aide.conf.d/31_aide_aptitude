@@ -1,0 +1,13 @@
+/var/log/aptitude$ d Log
+/var/log/aptitude\\.1\\.@@{LOGEXT}$ f LoSerMemberLog
+/var/log/aptitude\\.[2-5]\\.@@{LOGEXT}$ f SerMemberLog
+/var/log/aptitude\\.6\\.@@{LOGEXT}$ f HiSerMemberLog
+/var/backups/aptitude\\.pkgstates\\.0$ f LowLog
+/var/backups/aptitude\\.pkgstates\\.1\\.gz$ f LoSerMemberLog
+/var/backups/aptitude\\.pkgstates\\.[2345]\\.gz$ f SerMemberLog
+/var/backups/aptitude\\.pkgstates\\.6\\.gz$ f HiSerMemberLog
+/var/lib/aptitude/pkgstates(\\.old)?$ f VarFile
+/var/lib/aptitude$ d VarDir
+!/@@{RUNLOCK}/aptitude$ f
+/root/\\.(aptitude|debtags)$ d VarDir
+/root/\\.aptitude/config$ f VarFile 

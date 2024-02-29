@@ -1,0 +1,17 @@
+/var/lib/fail2ban/fail2ban\\.sqlite3$ f VarFile
+
+@@define FAIL2BAN_LOGDIR var/log
+@@define FAIL2BAN_LOGRE fail2ban\\.log
+/@@{FAIL2BAN_LOGDIR}/@@{FAIL2BAN_LOGRE}$ f ActLog
+/@@{FAIL2BAN_LOGDIR}/@@{FAIL2BAN_LOGRE}\\.1$ f RotLog
+/@@{FAIL2BAN_LOGDIR}/@@{FAIL2BAN_LOGRE}\\.2\\.@@{LOGEXT}$ f CompSerLog
+/@@{FAIL2BAN_LOGDIR}/@@{FAIL2BAN_LOGRE}\\.3\\.@@{LOGEXT}$ f MidlSerLog
+/@@{FAIL2BAN_LOGDIR}/@@{FAIL2BAN_LOGRE}\\.4\\.@@{LOGEXT}$ f LastSerLog
+
+@@define FAIL2BAN_RUNDIR @@{RUN}/fail2ban
+/@@{FAIL2BAN_RUNDIR}$ d RecreatedDir
+/@@{FAIL2BAN_RUNDIR}/fail2ban\\.pid$ f VarFile
+!/@@{FAIL2BAN_RUNDIR}/fail2ban\\.sock$ s
+@@undef FAIL2BAN_RUNDIR
+@@undef FAIL2BAN_LOGDIR
+@@undef FAIL2BAN_LOGRE

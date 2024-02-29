@@ -1,0 +1,21 @@
+@@if not defined DOKUWIKI_PATHRE
+@@define DOKUWIKI_PATHRE var/lib/dokuwiki/data
+@@endif
+/@@{DOKUWIKI_PATHRE}/(cache/[[:xdigit:]]|index)$ d VarDir
+!/@@{DOKUWIKI_PATHRE}/cache/[[:xdigit:]]/[[:xdigit:]]{32}\\.(feed|metadata|updmsg|media\\.[[:digit:]]+x[[:digit:]]+(\\.crop)?\\.png)$ f
+!/@@{DOKUWIKI_PATHRE}/cache/[[:xdigit:]]/[[:xdigit:]]{32}\\.(i|xhtml)$ f
+/@@{DOKUWIKI_PATHRE}/index/(page(word)|relation_references_[ipw]|title|[iw][[:digit:]]{1,2})\\.idx$ f VarFile
+/@@{DOKUWIKI_PATHRE}/cache/purgefile$ f VarFile
+/@@{DOKUWIKI_PATHRE}/locks$ d VarDir-n
+!/@@{DOKUWIKI_PATHRE}/locks/[[:xdigit:]]{32}$ d
+!/@@{DOKUWIKI_PATHRE}/locks/[[:xdigit:]]{32}\\.lock$ f
+/@@{DOKUWIKI_PATHRE}/log/error$ d VarDir
+/@@{DOKUWIKI_PATHRE}/log/error/[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}\\.log$ f Full+ANF 
+/@@{DOKUWIKI_PATHRE}/meta/(_(dokuwiki|media)\\.changes(\\.trimmed)?)$ f VarFile
+!/@@{DOKUWIKI_PATHRE}/meta/[[:alnum:]]+\\.(changes(\\.trimmed)?|indexed|meta)$ f
+/@@{DOKUWIKI_PATHRE}/meta/wiki/syntax\\.indexed$ f VarFile
+/@@{DOKUWIKI_PATHRE}/meta(/public)?/[[:alnum:]]+\\.meta$ f VarFile
+!/@@{DOKUWIKI_PATHRE}/pages/[[:alnum:]]+\\.txt$ f
+/@@{DOKUWIKI_PATHRE}/attic(/public)?$ d VarDir
+!/@@{DOKUWIKI_PATHRE}/attic(/public)?/[[:alnum:]]+\\.[[:digit:]]+\\.txt\\.gz$ f
+@@undef DOKUWIKI_PATHRE

@@ -1,0 +1,261 @@
+aide (0.18.1-1) unstable; urgency=medium
+
+    The aide cron job does no longer run as root. On systemd systems,
+    this means that no mail is sent out by default but a warning is
+    written to the journal instead unless s-nail is installed and a local
+    MTA is present. This affects already installed systems as well as
+    new installs..
+
+    Manual intervention is required to have the daily cron job send
+    mail as it has been the default previously.
+
+    This affects new installs as well as upgraded installations. See
+    README.Debian for a detailed explanation.
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Mon, 13 Mar 2023 14:41:41 +0100
+
+aide (0.17.3-5) unstable; urgency=medium
+
+    The aide binary installed by the aide.deb is no longer statically
+    linked. The aide-dynamic.deb is a transitional package that pulls
+    in aide.deb. There is no statically linked binary any mode.
+
+    For more details and explanation, see README.Debian
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sun, 28 Nov 2021 13:53:02 +0100
+
+aide (0.17-2) unstable; urgency=medium
+
+    The Debian configuration had the whirlpool checksum disabled due to
+    failures on sparc and sparc64 back in the 200x years. This issue was
+    solved long ago, and we have enabled whirlpool in the current default
+    configuration.
+
+    Until you successfully --update your databases, every file in your
+    database will be reported as "has different attributes". The rest of
+    the report will be accurate and the whirlpool checksum not be subject
+    of a --check.
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Wed, 27 Jan 2021 15:51:31 +0100
+
+aide (0.17-1) unstable; urgency=medium
+
+    In aide 0.17, the configuration parser had a major update. Some
+    incompatibilites have been unavoidable. Most prominent change is
+    new behavior regarding quoting of special characters in rules.
+    See the upstream NEWS file /usr/share/doc/aide-common/NEWS.gz for details.
+
+    Most of the functionality of update-aide.conf and the aide.wrapper
+    has moved into aide proper. The two scripts have been removed. This also
+    means that the @@{ROOTPREFIX} prefix is no longer added to every rule
+    written in the configuration. If you have been using this feature, please
+    consider one of these alternatives:
+    - the root_prefix configuration option allows you to specify a single
+      prefix
+    - write your own tool that, for example, copies the contents of
+      /etc/aide/aide.conf.d to /etc/aide/aide.conf.container.d and does the
+      appropriate preprocessing of the copied rules.
+    - write/generate your own per-container ruleset in a different directory
+      and @@x_include it appropriately.
+    If none of these suggestions looks acceptable for you, please file
+    a wishlist bug report and let us know what is missing.
+
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sun, 17 Jan 2021 16:29:27 +0100
+
+aide (0.16~b1-1) unstable; urgency=medium
+
+    BACKWARDS INCOMPATIBLE CHANGES
+     Negative selection lines of the form '!<regex> <groups>' are no longer
+     supported (use '!<regex>' instead). The affected config files in the
+     aide-common package (31_aide_ntp-server, 31_aide_inn2) have been fixed.
+
+     The switch to Perl 5 Compatible Regular Expressions and the fix of
+     '.*'-rule matching may result in different rule matching behaviour.
+
+    Apart from that the options report_attributes and ignore_list has been
+    deprecated (use report_force_attrs and report_ignore_changed_attrs
+    instead).
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Sun, 17 Apr 2016 09:13:09 +0200
+
+aide (0.14.2.git20100726-1) unstable; urgency=low
+
+    The important changes since last NEWS entry are:
+    - aide is now checking the file type and file attributes on
+      a Linux second extended file system
+    - the checksum whirlpool has been disabled as it is broken on sparc
+      and sparc64
+    - the files in the report are now sorted by filename
+    - new group definition: VarDirTime
+    - new upstream grouped feature to disable the grouping in the report
+    - new command 'aide-attributes' (see man page for details)
+
+    Due to the above changes in configuration, you may want to
+    update your database (the way you usually do it) to avoid
+    thousands of "different attribute" warnings.
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Wed, 28 Jul 2010 11:58:58 +0200
+
+aide (0.14~rc3-1) unstable; urgency=low
+
+    In this release, a lot of things have changed. Most changes were
+    inspired and done by Hannes von Haugwitz, who has been a real big help
+    in preparing the new version of aide, both for Debian and upstream.
+    
+    The important changes in this release are:
+    - added aide.settings.d
+      Some rules delivered by the aide distributions can be
+      parametrized. These parameters used to be in the rule directory
+      itself, but were moved to /etc/aide/aide.settings.d with this
+      version of the package. Old parameter files still sitting in the
+      rule directory will take precedence, but trigger a warning. You
+      may want to review your parameter files and adapt them.
+    - /etc/default/aide has new options: TRUNCATEDETAILS, FILTERUPDATES,
+      FILTERINSTALLATIONS, LINES=0, UPAC_SETTINGSD. They are
+      documented in the file itself.
+    - many, many updated and new rules
+    - new group definitions: VarTime, VarInode, VarDirInode
+    - aide is now checking the target of symbolic links (link name)
+    - On systems supporting these features aide is now checking ACLs,
+      extended attributes and selinux attributes.
+    - The obsolete checksums md5 and sha-1 have been replaced by
+      sha256 and sha512.
+    - The upstream summarize_changes feature is disabled by default to
+      avoid changing the output format, but it may be enabled in a
+      future release. We would appreciate testing of the new feature, so if
+      you feel like it, please enable it manually in aide.conf 
+    - The daily e-mail now includes the log file checksum to detect
+      modifications of the log file on the target system.
+    
+    Due to the numerous changes in configuration, you may want to
+    update your database (the way you usually do it) to avoid
+    thousands of "different attribute" warnings.
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 25 Feb 2010 11:37:02 +0100
+
+aide (0.13.1-10) unstable; urgency=low
+
+    The aide configuration now sets a macro called YEAR4D to the four
+    digit current year, and makes use of that macro in the
+    configuration files where a year is included in a file name. This
+    means that you do not need to adapt your configuration over the
+    new year and still only exclude files that are concerned with the
+    current year. However, you'll get a whole bunch of "file changed"
+    and "new file" reports on new year. If you don't like to manually
+    accept these changes on new year, you can manually set YEAR4D to a
+    regexp covering the years you don't want reported.
+
+    In the course of this change, configuration that still acted on
+    2006's files only has been fixed. Sheesh.
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sun, 23 Mar 2008 10:07:14 +0100
+
+aide (0.12.20061123-0) unstable; urgency=low
+
+    aide now suports a new hash called whirlpool which is enabled in
+    the default config. This means that aide --update|--check is going
+    to complain about database entries with different attributes. The
+    final aide output will be correct though, so it is advised to update
+    your databases after installing this package.
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Fri, 24 Nov 2006 14:35:46 +0100
+
+aide (0.11a-4) unstable; urgency=low
+
+    This version has changed the way that the Debian configuration is
+    handled with regard to local configurations that might be used to
+    have additional, local checks.
+
+    The AIDE binary is /usr/bin/aide again, and the wrapper handling
+    locking and special configuration processing is now aide.wrapper.
+    The scripts delivered with the Debian package now invoke
+    aide.wrapper to make explicit use of the wrapper. aide is now
+    compiled to use a non-existing directory and a non-existing
+    configuration file by default, which will lead to an error message
+    if invoked parameterless. This is a feature designed to avoid
+    accidental tampering with the Debian databases.
+
+    The advantage of this change is that /usr/bin/aide now behaves
+    exactly as upstream AIDE again, removing Debian specialties for
+    people who are not accustomed to the Debian configuration. If you
+    use AIDE in a special way, with your own configuration and your
+    own database directory, you'll likely have to change your
+    procedures.
+    
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Fri, 26 May 2006 11:11:40 +0000
+
+aide (0.11a-3) unstable; urgency=low
+
+    Starting with aide 0.11a-2, aide's default configuration has been
+    changed. Previously, AIDE did only superficial checks of the
+    static parts of the file system. Now, the entire file system is
+    included, and the changing parts of the file system are excluded
+    from the check. We are changing from a "forbid all possibly
+    dangerous changes" stance to a "allow only changes that we know
+    are harmless" stance.
+
+    Please note that this might significantly increase aide's
+    execution times as we now check the whole file system by default.
+    On systems with big, changing file systems (like shell servers or
+    big ftp or web servers), you might want to exclude parts of the
+    file system to bring execution times down to an acceptable level.
+    This is not done in the default configuration since AIDE aims for
+    maximum security by default, and big data directories are a
+    preferred target for crackers to place their root kit binaries. An
+    example rule file to exclude home directories of users with uid >=
+    1000 is included in the package and might be put into use at the
+    local admin's discretion.
+
+    To allow better updateability, a split configuration scheme has
+    been introduced with aide 0.10-5, which is now being put into use
+    for the default configuration. /etc/aide.conf is reduced to
+    default definitions, while the real work is being done in the
+    configuration snippets in /etc/aide/aide.conf.d.
+
+    The contents of /etc/aide/aide.conf.d has already been split to
+    reflect which package contains the files that change too
+    frequently to be part of a regular check. This allows moving these
+    configuration snippets into the respective packages at a later
+    time.
+
+    You might want to accept all conffile changes that are offered
+    with this update, or otherwise your AIDE will most probably stop
+    working.
+
+    The new rule sets in 0.11a-2 have been extensively tested on my
+    productive systems. However, since my productive systems are all
+    reasonably similar, the new rule sets may not be fully suitable
+    for other people's systems. Please do not hesitate to file bugs
+    against aide if your AIDE reports include excessive changes that
+    should not be flagged as such. Don't forget to include
+    configuration and report snippets that might help in devising the
+    new rules. These bugs will be usertagged in the BTS with
+    "2006-04-configuration" for aide@packages.debian.org.
+
+    Chances are that you don't have all packages installed that are
+    taken care of by AIDE's default configuration. That way, you might
+    end up excluding more parts of the namespace than you would need
+    for your system, but the AIDE protection is still working on a
+    broader basis than it did with the old configuration. If you are
+    paranoid, you might want to either delete the config snippets you
+    don't use (ucf should notice that and not re-install the files on
+    update) or create your own conf.d directory (like
+    /etc/aide/aide.conf.local.d), symlink the snippets you want in
+    there and point aide towards the new conf.d directory by setting
+    UPAC_CONFD in /etc/default/aide. This last option is the way I
+    have chosen for my personal systems.
+
+    Package maintainers, if you intend to deliver your own aide.conf.d
+    snippet in your package, please put your package name after the
+    number (31_aide_foo => 31_foo_something) to avoid a namespace
+    clash and file a bug against aide so indicate that aide can remove
+    its config snippet. It does not hurt to have both installed, so
+    there is no need to coordinate.
+
+    The source package can optionally build a package aide-config-zg2,
+    which contains rules that are probably only suitable on my
+    systems. Of course, building of aide-config-zg2 is disabled by
+    default.  
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Fri, 26 May 2006 11:05:10 +0000

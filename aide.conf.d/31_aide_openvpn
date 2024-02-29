@@ -1,0 +1,5 @@
+/@@{RUN}/openvpn$ d RecreatedDir
+/@@{RUN}/openvpn/client\\.(pid|status)$ f VarFile-i
+/@@{RUN}/openvpn-client$ d RecreatedDir
+!/(var/)?tmp/systemd-private-[[:xdigit:]]{32}-openvpn@client\\.service-[[:alnum:]]{6}$ d
+!/(var/)?tmp/systemd-private-[[:xdigit:]]{32}-openvpn@client\\.service-[[:alnum:]]{6}/tmp$ d

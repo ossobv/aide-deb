@@ -1,0 +1,2 @@
+/var/lib/apache2/fcgid/sock$ d VarDir
+!/var/lib/apache2/fcgid/sock/[0-9]{5}\\.[0-9]$ s

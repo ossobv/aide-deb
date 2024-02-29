@@ -1,0 +1,4 @@
+/var/lib/postgrey$ d VarDir
+/var/lib/postgrey/postgrey(|lock)\\.db$ f VarFile
+/var/lib/postgrey/log\\.[0-9]{10}$ f VarFile
+/var/lib/postgrey/__db\\.[0-9]{3}$ f VarFile

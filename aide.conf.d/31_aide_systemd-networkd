@@ -1,0 +1,5 @@
+
+@@define RUNNETWD @@{RUN}/systemd
+!/@@{RUNNETWD}/netif(/(leases|links|lldp))?$ d
+!/@@{RUNNETWD}/netif/(leases|links|lldp)/[[:digit:]]{1,2}$ f
+!/@@{RUNNETWD}/netif/state$ f

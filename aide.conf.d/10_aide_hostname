@@ -1,0 +1,64 @@
+#!/bin/sh
+
+escapere()
+{
+  sed 's/\./\\\\./g'
+}
+
+_HOST="$(hostname 2>/dev/null)"
+_FQDN="$(hostname --fqdn 2>/dev/null)"
+if [ "$?" -eq 1 ]; then
+  _FQDN="${_HOST}"
+fi
+_DNSDN="$(dnsdomainname 2>/dev/null)"
+if [ "$?" -eq 1 ]; then
+  _DNSDN=""
+fi
+if [ -n "${_FQDN}" ]; then
+  printf "@@if not defined FQDN\\n"
+  printf "@@define FQDN %s\\n" "$(echo "${_FQDN}" | escapere)"
+  printf "@@endif\\n"
+fi
+if [ -n "${_HOST}" ]; then
+  printf "@@if not defined HOSTNAME\\n"
+  printf "@@define HOSTNAME %s\\n" "$(echo "${_HOST}" | escapere)"
+  printf "@@endif\\n"
+fi
+if [ -n "${_DNSDN}" ]; then
+  printf "@@if not defined DNSDOMAINNAME\\n"
+  printf "@@define DNSDOMAINNAME %s\\n" "$(echo "${_DNSDN}" | escapere)"
+  printf "@@endif\\n"
+fi
+_ARCH="$(dpkg --print-architecture)"
+if [ -n "${_ARCH}" ]; then
+  printf "@@if not defined ARCH\\n"
+  printf "@@define ARCH %s\\n" "${_ARCH}"
+  printf "@@endif\\n"
+fi
+if [ "${_ARCH}" = "amd64" ]; then
+  if [ -e /sys/firmware/efi ]; then
+    printf "@@if not defined AMD64_FIRMWARE_EFI\\n"
+    printf "@@define AMD64_FIRMWARE_EFI 1\\n"
+    printf "@@endif\\n"
+  else
+    printf "@@if not defined AMD64_FIRMWARE_BIOS\\n"
+    printf "@@define AMD64_FIRMWARE_BIOS 1\\n"
+    printf "@@endif\\n"
+  fi
+fi
+if [ -n "$(dpkg --print-foreign-architectures)" ]; then
+  if [ "$(dpkg --print-foreign-architectures | wc -l)" -gt 1 ]; then
+    printf "@@if not defined FOREIGN_ARCHES\\n"
+    printf "@@define FOREIGN_ARCHES %s\\n" "$(dpkg --print-foreign-architectures | tr '\\n' '|' | sed 's/^/(/; s/|$/)/')"
+    printf "@@endif\\n"
+  else
+    printf "@@if not defined FOREIGN_ARCHES\\n"
+    printf "@@define FOREIGN_ARCHES %s\\n" "$(dpkg --print-foreign-architectures)"
+    printf "@@endif\\n"
+  fi
+fi
+dpkg-architecture --host-type 2>/dev/null | awk '{print "@@define " $1 " " $2}' FS="="
+
+unset _HOST _FQDN _DNSDN _ARCH
+
+# vim:tabstop=2:expandtab:shiftwidth=2

@@ -1,0 +1,8 @@
+/var/lib/rkhunter/db/(mirrors|rkhunter_prop_list)\\.dat$ f VarTime
+/var/lib/rkhunter/tmp/(group|passwd)$ f VarFile
+/var/lib/rkhunter/(db|tmp)$ d VarDir
+/var/log/rkhunter\\.log$ f Log
+/var/log/rkhunter\\.log\\.1$ f LowLog
+/var/log/rkhunter\\.log\\.2\\.@@{LOGEXT}$ f LoSerMemberLog
+/var/log/rkhunter\\.log\\.3\\.@@{LOGEXT}$ f SerMemberLog
+/var/log/rkhunter\\.log\\.4\\.@@{LOGEXT}$ f HiSerMemberLog

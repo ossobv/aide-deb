@@ -1,0 +1,10 @@
+!/dev/pts/[0-9]{1,2}$ c
+/dev/pts$ d VarDir
+
+# reading Xattrs for some /dev nodes will cause unwanted actions, including
+# - on-the-fly creation of other device nodes
+# - reboots (!)
+# - loading of kernel modules
+/dev/(btrfs-control|loop-control|net/tun|ppp|tty[[:digit:]]+|watchdog0?|vhost-net)$ c RamdiskData-X
+
+/dev/ 0 RamdiskData

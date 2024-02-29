@@ -1,0 +1,9 @@
+@@define DEBSPAWN_DISTS (buster|bullseye|bookworm|sid)
+/var/tmp/debspawn$ d VarDir
+/var/lib/debspawn/results$ d VarDir
+/var/lib/debspawn/aptcache$ d RecreatedDir
+/var/lib/debspawn/aptcache/(@@{DEBSPAWN_DISTS}-@@{ARCH})$ d RecreatedDir-e2fsattrs
+!/var/lib/debspawn/aptcache/(@@{DEBSPAWN_DISTS}-@@{ARCH})/[-[:alnum:].]+_[-+[:alnum:]%~.]+_(all|@@{ARCH})\\.deb$ f
+/var/lib/debspawn/images/@@{DEBSPAWN_DISTS}-@@{ARCH}\\.tar\\.zst$ f VarFile
+/var/lib/debspawn/images(/dcache)?$ d VarDir
+@@undef DEBSPAWN_DISTS

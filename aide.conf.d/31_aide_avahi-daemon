@@ -1,0 +1,3 @@
+/@@{RUN}/avahi-daemon$ d VarDirInode
+/@@{RUN}/avahi-daemon/pid$ f VarFile
+!/@@{RUN}/avahi-daemon/socket$ s

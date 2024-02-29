@@ -1,0 +1,19 @@
+# you can define your own APACHE2_LOGS regex in an earlier file,
+# overriding the defaults given here
+@@if not defined APACHE2_LOGS
+@@if defined APACHE2_SUEXEC
+@@define APACHE2_LOGS (access|error|suexec)
+@@else
+@@define APACHE2_LOGS (access|error)
+@@endif
+@@endif
+/var/log/apache2/@@{APACHE2_LOGS}\\.log$ f Log
+/var/log/apache2/@@{APACHE2_LOGS}\\.log\\.1$ f LowLog
+/var/log/apache2/@@{APACHE2_LOGS}\\.log\\.2\\.@@{LOGEXT}$ f LoSerMemberLog
+/var/log/apache2/@@{APACHE2_LOGS}\\.log\\.([3-9]|[1-4][0-9]|5[0-1])\\.@@{LOGEXT}$ f SerMemberLog
+/var/log/apache2/@@{APACHE2_LOGS}\\.log\\.52\\.@@{LOGEXT}$ f HiSerMemberLog
+
+/@@{RUN}/apache2/apache2\\.pid$ f VarFile
+/@@{RUN}/apache2/ssl_scache$ f VarFile
+/var/log/apache2$ d VarDir
+/@@{RUN}/apache2$ d VarDirInode

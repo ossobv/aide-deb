@@ -1,0 +1,2773 @@
+aide (0.18.6-2osso0+REL) stable; urgency=medium
+
+  * Version taken from Noble, backported to Focal/Jammy.
+
+ -- Walter Doekes <wjdoekes+aide@osso.nl>  Thu, 29 Feb 2023 11:40:11 +0100
+
+aide (0.18.6-2) unstable; urgency=medium
+
+  * the last version was accidentally uploaded with a not
+    yet released warning in changelog.
+  * adapt spamassassin rule for bookworm
+  * Recommend cron | cron-daemon.
+    Thanks to Alexandre Detiste (Closes: #1052487)
+  * improve rules:
+    * 10_aide_hostname
+    * 31_aide_apt-cacher-ng
+    * 31_aide_dpkg
+    * 31_aide_grub
+  * fix typo in 31_aide_munin
+  * re-work mail sending in dailyaidecheck.
+  * rename aide cron job to dailyaidecheck
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Wed, 04 Oct 2023 18:14:42 +0200
+
+aide (0.18.6-1) unstable; urgency=medium
+
+  * New upstream version 0.18.6
+    * Improve handling of ACL errors
+    * Fix double free() during report generation
+  * Use mail(1) if called from cron via capsh.
+    Thanks to Guillem Jover (Closes: #1032387)
+  * robustness changes in shell scripts
+  * update postgresql rule for postgresql 15
+  * new rules:
+    * munin-node
+    * haveged
+  * remove obsolete roles:
+    * mailman 2
+  * rule improvements:
+    * 31_aide_atop: add proper restrictions
+    * 31_aide_rsyslog: do not try to unset an already unset variable
+    * systemd-journald
+    * 31_aide_apt
+    * 31_aide_apt-cacher-ng
+    * 31_aide_borgbackup
+    * 31_aide_cereal
+    * 31_aide_clamav-unofficial-sigs
+    * 31_aide_cron-apt
+    * 31_aide_dev
+    * 31_aide_dokuwiki
+    * 31_aide_dovecot
+    * 31_aide_icinga2
+    * 31_aide_inn2
+    * 31_aide_libvirt
+    * 31_aide_lvm2
+    * 31_aide_munin
+    * 31_aide_openvpn
+    * 31_aide_php-fpm
+    * 31_aide_rsyslog
+    * 31_aide_runuser
+    * 31_aide_screen
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sat, 01 Jul 2023 13:26:22 +0200
+
+aide (0.18.5-1) unstable; urgency=medium
+
+  * New upstream version 0.18.5
+    * Fix broken handling of equals rules. Closes: #1039936
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Mon, 26 Jun 2023 21:53:51 +0200
+
+aide (0.18.4-1) unstable; urgency=medium
+
+  * New upstream version 0.18.4
+  * remove unneeded patch
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Wed, 14 Jun 2023 16:51:49 +0200
+
+aide (0.18.3-2) unstable; urgency=medium
+
+  * improve 31_aide_atop rule
+  * call dh_installsysusers manually in debian/rules
+    Thanks to Tomasz Ciolek (Closes: #1037171)
+  * Fix handling of extended attributes on symlinks. (Closes: #1037436)
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Wed, 14 Jun 2023 16:48:04 +0200
+
+aide (0.18.3-1) unstable; urgency=medium
+
+  * New upstream version 0.18.3
+    * Fix handling of readlink() errors.
+      Thanks to Thomas Dorner (Closes: #1034816)
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 20 Apr 2023 23:50:04 +0200
+
+aide (0.18.2-1) unstable; urgency=medium
+
+  * New upstream version 0.18.2
+
+  [ Marc Haber ]
+  * fix broken log handling in 31_aide_redis
+  * improve 31_aide_haproxy
+  * move dailyaidecheck to 01:50
+  * Process aide.db itself as VarFile+ANF.
+
+  [ Guillem Jover ]
+  * Add new 31_aide_bandwidthd rules
+  * Add new 31_aide_awstats rules
+  * Add new 31_aide_greylistd rules
+  * improve rule 21_aide_spamassassin.
+  * improve rule 31_aide_clamav-unofficial-sigs.
+  * improve 31_aide_samba.
+  * Update 31_aide_dpkg rules
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 20 Apr 2023 18:52:45 +0200
+
+aide (0.18.1-2) unstable; urgency=medium
+
+  * initialize AIDEUSER with what we actually run as.  (Closes: #1033044)
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 16 Mar 2023 10:58:22 +0100
+
+aide (0.18.1-1) unstable; urgency=medium
+
+  [ Marc Haber ]
+  * New upstrem version 0.18.1:
+    * Fix segfault when using --dry-init
+    * Fix handling of empty growing files
+  * remove patch empty-logs (incorporated upstream)
+  * pull upstream patch to Adjust log messages about inode comparison
+  * fix syntax error in aide-common.postinst error message
+  * fix log handling for aide itself
+  * new romanian translation.
+    Thanks to Remus-Gabriel Chelu (Closes: #1031135)
+  * new rules:
+    * 31_aide_nginx
+    * 31_aide_oidentd
+  * updated rules:
+    * 31_aide_atop
+    * 31_aide_dev
+    * 31_aide_dmeventd
+    * 31_aide_fail2ban
+    * 31_aide_inn2
+    * 31_aide_lvm2
+    * 31_aide_mariadb
+    * 31_aide_netdata
+    * 31_aide_postgresql-13
+    * 31_aide_util-linux
+    * 31_aide_uuidd-runtime
+  * general rule changes:
+    * fix \\
+    * modernize log handling
+  * use dh_installsysusers instead of manual approach.
+    Thanks to Guillem Jover
+  * fix postinst to also chown aideinit logs.
+    This partly addresses #1032381
+    Thanks to Guillem Jover
+  * Mention libcap2-bin in README.Debian as source for capsh.
+    Thanks to Guillem Jover
+  * Improve docs about mails sending behavior
+    Thanks to Guillem Jover
+  * dailyaidecheck:
+    * call dotlockfile from lock directory.
+    * shut up s-nail under capsh
+    * add README references error messages
+
+  [ Hannes von Haugwitz ]
+  * debian/watch: use Github API
+  * Update debian/copyright
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue, 14 Mar 2023 22:35:45 +0100
+
+aide (0.18-2) unstable; urgency=medium
+
+  * fix autopkgtest dependencies
+  * remove unnecessary autopkgtest for aide-dynamic
+  * reword daily cron job to dailyaidecheck
+  * remove second set of autopkgtest (was for aide-dynamic)
+  * aide.conf: remove accidental leftover
+  * README.Debian:
+    * improve non-root documentation
+    * improve logging documentation
+    * improve documentation about daily report mails
+    * move documentation from defaults file to README
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue, 07 Feb 2023 21:31:45 +0100
+
+aide (0.18-1) unstable; urgency=medium
+
+  * new upstream release 0.18
+    * Support multithreading for hashsum calculation
+    * Switch from PCRE to PCRE2 (Closes: #1000018)
+    * Remove bashism in configure.ac
+      Thanks to Andrej Shadura (Closes: #998766)
+    * 'S' attribute is now deprecated, use 'growing+s' attributes instead
+    * '@@ifdef', macro is now deprecated, use '@@if defined' instead
+    * '@@ifndef', macro is now deprecated, use '@@if not defined' instead
+    * '@@ifhost', macro is now deprecated, use '@@if hostname' instead
+    * '@@ifnhost', macro is now deprecated, use '@@if not hostname' instead
+    * Add new 'growing' attribute
+    * Add new 'compressed' attribute
+    * Add new log level 'compare'
+    * Replace 'S' attribute in '>' compound group with 'growing+s'
+    * Add 'report_format' option (available formats: `plain`, `json`)
+    * Add @@if macro
+    * Add 'exists' boolean function (Closes: #699422)
+    * Add 'config_check_warn_unrestricted_rules' option
+    * Support restricted rules with empty restriction
+    * Add prefix option to directory include macros
+    * Add exit code 22 for memory allocation errors
+    * Update e2fs attributes to match upstream
+      - the 'h' attribute has been removed
+      - use `report_ignore_e2fsattrs=VNIE` to ignore read only attributes
+    * Improve logging
+    * Improve error messages during config parsing
+    * Update documentation
+  * integrate experimental changes to unstable
+  * update lintian overrides
+  * drop aide-xen
+  * update README.Debian
+  * move bsd-mailix | mailx to Suggests, add s-nail as option
+  * aide.conf:
+    * update documentation
+    * use report_ignore_e2fsattrs=VNIE
+    * document default values, keep unchanged options commented
+    * remove documentation about logs, it has moved upstream to aide.conf(5)
+  * ongoing change processes:
+    * use new log handling
+    * change variable names to prefix package name
+    * undefine variables after use
+  * improved and updated rules:
+    * 20_aide_run_systemd-journald
+    * 31_aide_apache2-fcgid
+    * 31_aide_apt
+    * 31_aide_apt-cacher-ng
+    * 31_aide_asterisk
+    * 31_aide_borgbackup
+    * 31_aide_btmp
+    * 31_aide_cereal
+    * 31_aide_dbus
+    * 31_aide_debspawn
+    * 31_aide_dev
+    * 31_aide_dpkg
+    * 31_aide_e2fsprogs
+    * 31_aide_etckeeper
+    * 31_aide_exim4
+    * 31_aide_exim4_logs
+    * 31_aide_gnupg
+    * 31_aide_grub-efi
+    * 31_aide_icinga2
+    * 31_aide_inn2
+    * 31_aide_irqbalance
+    * 31_aide_libvirt
+    * 31_aide_lighttpd
+    * 31_aide_lvm2
+    * 31_aide_man
+    * 31_aide_mariadb
+    * 31_aide_nginx
+    * 31_aide_ntpsec
+    * 31_aide_openvpn-server
+    * 31_aide_php-fpm
+    * 31_aide_postfix
+    * 31_aide_postgresql-13
+    * 31_aide_redis
+    * 31_aide_rsyslog
+    * 31_aide_runuser
+    * 31_aide_run_systemd_resolve
+    * 31_aide_samba
+    * 31_aide_screen
+    * 31_aide_smokeping
+    * 31_aide_spamassassin
+    * 31_aide_sudo
+    * 31_aide_syslog
+    * 31_aide_systemd
+    * 31_aide_systemd-journald
+    * 31_aide_systemd-resolved
+    * 31_aide_systemd-timesyncd
+    * 31_aide_udev
+    * 31_aide_util-linux
+    * 31_aide_uuidd-runtime
+    * 31_aide_wtmp
+  * update README.Debian:
+    * reporting
+    * remove paragraph about mmap errors
+  * install SECURITY.md
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue, 07 Feb 2023 06:21:12 +0100
+
+aide (0.17.4.1.20230124-1) experimental; urgency=medium
+
+  * package upstream git snapshot taken on 2023-01-24
+  * rework aide.conf for 0.18
+  * mark deliberately unrestricted rules with the 0 restriction
+  * aide 0.18 will have new functionality for log handling
+    * adapt aide.conf, define new groups
+    * use new log handling in some rules:
+      * 31_aide_exim4_logs
+      * 31_aide_libvirt
+      * 31_aide_lighttpd
+      * 31_aide_rsyslog
+      * 31_aide_samba
+  * new rules:
+    * 31_aide_netdata
+    * 31_aide_schroot
+    * 31_aide_uuidd-runtime
+  * improved rules:
+    * 20_aide_run_systemd-journald
+    * 31_aide_btmp
+    * 31_aide_dbus
+    * 31_aide_debspawn
+    * 31_aide_dev
+    * 31_aide_e2fsprogs
+    * 31_aide_exim4
+    * 31_aide_gnupg
+    * 31_aide_grub-efi
+    * 31_aide_irqbalance
+    * 31_aide_libvirt
+    * 31_aide_lighttpd
+    * 31_aide_lvm2
+    * 31_aide_man
+    * 31_aide_netdata
+    * 31_aide_ntpsec
+    * 31_aide_postfix
+    * 31_aide_run_systemd_resolve
+    * 31_aide_runuser
+    * 31_aide_samba
+    * 31_aide_sudo
+    * 31_aide_systemd
+    * 31_aide_systemd-journald
+    * 31_aide_systemd-resolved
+    * 31_aide_udev
+    * 31_aide_util-linux
+    * 31_aide_wtmp
+  * Standards-Version: 4.6.2 (no changes necessary)
+  * postinst: ignore error messages from chmod and chown
+    (files do not need to exist)
+  * update README.Debian
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue, 24 Jan 2023 14:19:06 +0100
+
+aide (0.17.4.1.20220903-1) experimental; urgency=medium
+
+  * New upstream snapshot 0.17.4.1.20220903
+  * use a systemd timer instead of cronjob on systemd systems
+  * run daily cron job with capsh if available
+  * dailyaidecheck:
+    * remove -V4 from default AIDEARGS
+    * run with capabilities as non-root
+    * add setting MAILCMD according to mail or s-nail being available
+    * have aide write the report directly to a file instead of
+      redirecting output
+    * move work directory to /var/lib/aide
+  * aideinit:
+    * run with capabilities as non-root
+    * re-work code logic, use more functions
+  * improve lintian overrides
+  * mark deliberately unrestricted rules with the 0 restriction
+  * update README.Debian
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sat, 03 Sep 2022 22:49:41 +0200
+
+aide (0.17.4.1.20220815-1) experimental; urgency=medium
+
+  [ Marc Haber ]
+  * New upstream snapshot 0.17.4.1.20220815
+  * add autoconf-archive to Build-Depends
+  * improve 31_aide_apt-cacher-ng rule
+  * improve 31_aide_borgbackup rule
+  * improve 31_aide_dev rule
+  * improve 31_aide_etckeeper rule
+  * improve 31_aide_mariadb rule
+  * improve 31_aide_ntpsec rule
+  * improve 31_aide_php-fpm rule
+  * improve 31_aide_postgresql-13 rule
+  * improve 31_aide_redis rule
+  * improve 31_aide_rsyslog rule
+  * improve 31_aide_screen rule
+  * improve 31_aide_smokeping rule
+  * improve 31_aide_systemd rule
+  * improve 31_aide_systemd-journald rule
+  * improve 31_aide_systemd-timesyncd rule
+  * improve 31_aide_udev rule
+  * improve 31_aide_apache2-fcgid rule
+  * improve 31_aide_nginx rule
+  * update aide.conf
+
+  [ Hannes von Haugwitz ]
+  * Update debian/copyright
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sun, 14 Aug 2022 23:41:51 +0200
+
+aide (0.17.4.1.20220724-1) experimental; urgency=medium
+
+  * New upstream snapshot 0.17.4.1.20220724
+  * This fixes a crippling bug in rule evaluation
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Mon, 25 Jul 2022 06:21:43 +0200
+
+aide (0.17.4.1.20220711-2) experimental; urgency=medium
+
+  * Build-Depend on libpcre2-dev (newer library)
+  * replace @@ifn?def with @@if (not)? defined in rules
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue, 12 Jul 2022 11:19:31 +0200
+
+aide (0.17.4.1.20220711-1) experimental; urgency=medium
+
+  [ Marc Haber ]
+  * New upstream snapshot 0.17.4.1.20220711
+  * adapt debian/copyright: removed files, new year
+  * remove empty directory from aide-common.dirs and packages
+  * default configuration: new value for report_ignore_e2fsattrs
+  * adapt lintian overrides, explain them
+  * fix $HOSTNAME bashism
+  * New upstream version 0.17.4.1.20220711dd
+  * 31_aide_apt: add vim helper line
+  * 31_aide_apt: improve debug output
+  * 31_aide_apt: handle sources.list files without ending newline.
+    Thanks to Lilo von Hanffstengel (Closes: #1008277)
+  * improve samba rule
+  * fix wrong comment in 31_aide-postgresql-ad
+  * 31_aide_cups, re-introduce accidentally removed @@LOGEXT
+  * 31_aide_pp-fpm, allow PHPVERSION to be overridden
+  * 31_aide_tlp, use RUN
+  * rename ntp-server to ntpsec, adapt rule
+
+  [ Adam Jacobs ]
+  * 21_aide_spamassassin: improve version number detection
+
+  [ Hannes von Haugwitz ]
+  * 31_aide_amanda-server: fix handling of empty and comment lines
+    (Closes: #1011957)
+  * Bump to Standards-Version 4.6.1 (no changes)
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue, 12 Jul 2022 06:29:32 +0200
+
+aide (0.17.4-2) unstable; urgency=medium
+
+  [ Anton Shestakov ]
+  * escape dot character in 31_aide_ssh-server
+  * treat /run/sshd as a directory that's recreated on reboot
+  * remove 31_aide_sshd rule (covered by 31_aide_ssh-server)
+  * new 31_aide_ufw rule
+  * escape dot character in .pid
+  * ignore inode of directories in @@{RUN}
+  * acpid: separate .pid and .socket, ignore .socket
+  * chrony: add .pid, .sock and the two dirs in /run/
+  * fail2ban: separate .pid and .sock, ignore .sock
+  * fail2ban: add fail2ban.sqlite3 as a VarFile
+
+  [ Marc Haber ]
+  * improve 31_aide_locales
+  * improve 31_aide_man
+  * improve 31_aide_samba
+  * improve 31_aide_spamassassin
+  * add new 31_aide_postgresql-13
+  * improve 31_aide_apt-cacher-ng
+  * improve 31_aide_cups
+  * improve 31_aide_libvirt-bin
+  * improve 31_aide_php-fpm
+  * improve 31_aide_systemd
+  * improve 31_aide_tlp
+  * improve 31_aide_udev
+  * rename 31_aide_libvirt-bin -> 31_aide_libvirt
+  * prepare to introduce systemd timers:
+    * move former cron script to /usr/share/aide/bin
+    * cron job script now accepts a parameter to know who called it
+  * new cron job script
+  * more lintian overrides
+  * remove Built-Using from binary packages
+  * remove redundant Priority fields
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 24 Mar 2022 09:54:59 +0100
+
+aide (0.17.4-1) unstable; urgency=medium
+
+  * new upstream release
+    * this fixes CVE-2021-45417
+  * fix stupid typo in 31_aide_spamassassin (Closes: #1003563)
+  * more improvements for 31_aide_Spamassassin
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 30 Dec 2021 22:45:57 +0100
+
+aide (0.17.3-6) unstable; urgency=medium
+
+  * document changelog error:
+    the aide-static package was removed before 0.17.3-5 was released.
+    See README.Debian.
+  * document changelog error, no static binary any more
+  * Standards-Version: 4.6.0 (no changes)
+  * add check to Build-Depends
+  * set PATH for executable config files
+  * improve various aide rules
+  * add various aide rules
+  * Update Spamassassin version number.
+    Thanks to Rimas Kudelis (Closes: 996875)
+  * Make it easier to override spamassassin version number.
+    Thanks to Rimas Kudelis (Closes: 996875)
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 30 Dec 2021 20:59:19 +0100
+
+aide (0.17.3-5) unstable; urgency=medium
+
+  * the default is now a dynamically linked binary
+    * move aide to aide-static
+    * move aide-dynamic to aide
+    * make aide-dynamic a transitional package
+    * update autopkgtest
+  * packaging:
+    * add versioned dependency for e2fsprogs (#986332)
+    * run wrap-and-sort
+    * remove -X workaround as #986332 is fixed now
+    * enable basic salsa CI
+    * remove version from libext2fs-dev build-depends
+    * update debian/copyright
+    * move lintian files to *.lintian-overrides
+    * some lintian override tweaking
+    * some changes to autopkgtests
+  * rules:
+    * fix wrong \\n in 31_aide_munin-node.
+      Thanks to Jochen Pawletta (Closes: #994168)
+    * stop checking for /run/aide
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Fri, 10 Dec 2021 18:49:51 +0100
+
+aide (0.17.3-4) unstable; urgency=medium
+
+  * Debian has switched to keeping only 4 rotations of syslog instead of 7.
+    See rsyslog@651236c2. Thanks to Adam Jacobs (Closes: #989044)
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 13 May 2021 23:11:32 +0200
+
+aide (0.17.3-3) unstable; urgency=medium
+
+  * move log rotation compression suffix to a variable
+  * add missing + in regexp in 31_aide_systemd_sessions
+  * add code to remove x bit from 31_aide_sudo.
+    Thanks to Adam L Jacobs (Closes: 988438)
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 13 May 2021 21:43:41 +0200
+
+aide (0.17.3-2) unstable; urgency=low
+
+  * small fixes to rules:
+    - 10_aide_year
+    - 31_aide_postgresql
+    - 31_aide_systemd
+    - 31/70_aide_dev
+    - 31_aide_udev
+    - 31_aide_lvm2
+    - 31_aide_openvpn-server
+    - 31_aide_postgresql
+  * small fixes in cron Job:
+    - process "no lock" error from aide
+    - re-word and clarify some error message
+    - give more information about cronjob internal errors
+    - use a better name for the temporary file
+  * small fixes in build process:
+    - use dpkg/default.mk
+    - remove unused buildpackage variable
+    - straighten COMMON_CONFIGURE_ARGS to a define
+    - set DPKG_EXPORT_BUILDFLAGS
+    - strip configure args
+    - dpkg-buildflags use export=cmdline instead of export=configure
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Mon, 05 Apr 2021 10:07:37 +0200
+
+aide (0.17.3-1) unstable; urgency=medium
+
+  * New upstream version 0.17.3
+  * 31_aide_dev: improvements
+  * 31_aide_man: add uk manpages
+  * new portuguese translation.
+    Thanks to Miguel Figueiredo
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 11 Feb 2021 07:05:56 +0100
+
+aide (0.17.2-2) unstable; urgency=medium
+
+  * remove x bits from unchanged 31_aide_smokeping
+  * fix obvious errors in:
+    * 31_aide_exim4_exiscan
+    * 31_aide_icinga2
+    * 31_aide_php-fpm
+    * 31_aide_systemd-journald
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sun, 07 Feb 2021 09:24:57 +0100
+
+aide (0.17.2-1) unstable; urgency=medium
+
+  [ Marcin Owsiany ]
+  * Add missing copyright and license information to pl.po
+
+  [ Marc Haber ]
+  * new upstream version 0.17.2
+  * update debian/copyright (polish translation)
+  * create /run/aide on boot, handle the directory
+  * improve rules:
+    * 31_aide_console-log
+    * 31_aide_systemd
+    * 31_aide_systemd_journal
+  * fix PCRE quoting:
+    * 10_aide_constants
+    * 10_aide_machineid
+    * 21_aide_run_agetty
+    * 31_aide_acpid
+    * 31_aide_alsa
+    * 31_aide_amanda-client
+    * 31_aide_amavisd-new
+    * 31_aide_anacron
+    * 31_aide_anubis
+    * 31_aide_apache2
+    * 31_aide_apcupsd
+    * 31_aide_apt-cacher-ng
+    * 31_aide_apt-listbugs
+    * 31_aide_apt-listchanges
+    * 31_aide_aptitude
+    * 31_aide_at
+    * 31_aide_atop
+    * 31_aide_bind9
+    * 31_aide_boinc-client
+    * 31_aide_borgbackup
+    * 31_aide_btmp
+    * 31_aide_cereal
+    * 31_aide_checksecurity
+    * 31_aide_chrony
+    * 31_aide_clamav
+    * 31_aide_clamav-freshclam
+    * 31_aide_clamav-unofficial-sigs
+    * 31_aide_courier-authlib
+    * 31_aide_cracklib-runtime
+    * 31_aide_cron
+    * 31_aide_cron-apt
+    * 31_aide_cups
+    * 31_aide_ddclient
+    * 31_aide_debconf
+    * 31_aide_dehydrated
+    * 31_aide_dev
+    * 31_aide_dlocate
+    * 31_aide_dokuwiki
+    * 31_aide_dovecot
+    * 31_aide_e2fsprogs
+    * 31_aide_etckeeper
+    * 31_aide_exim4
+    * 31_aide_exim4_logs
+    * 31_aide_fail2ban
+    * 31_aide_fake-hwclock
+    * 31_aide_fcron
+    * 31_aide_gnupg
+    * 31_aide_hald
+    * 31_aide_haproxy
+    * 31_aide_hapsd
+    * 31_aide_ifplugd
+    * 31_aide_inetd
+    * 31_aide_initramfs-tools
+    * 31_aide_initscripts
+    * 31_aide_isc-dhcp-client
+    * 31_aide_isc-dhcp-server
+    * 31_aide_kerberos
+    * 31_aide_laptop-mode-tools
+    * 31_aide_libapache2-mod-fastcgi
+    * 31_aide_libvirt-bin
+    * 31_aide_lighttpd
+    * 31_aide_lldpd
+    * 31_aide_logcheck
+    * 31_aide_logrotate
+    * 31_aide_lpd
+    * 31_aide_lvm2
+    * 31_aide_mailman
+    * 31_aide_man
+    * 31_aide_mdadm
+    * 31_aide_mini-buildd
+    * 31_aide_mlocate
+    * 31_aide_modules
+    * 31_aide_munin
+    * 31_aide_mysql-server
+    * 31_aide_network-manager
+    * 31_aide_nfs
+    * 31_aide_nrpe
+    * 31_aide_nscd
+    * 31_aide_nslcd
+    * 31_aide_ntp-server
+    * 31_aide_openvpn
+    * 31_aide_openvpn-server
+    * 31_aide_pam_motd
+    * 31_aide_pcscd
+    * 31_aide_php-common
+    * 31_aide_portmap
+    * 31_aide_postfix
+    * 31_aide_postgresql
+    * 31_aide_postgrey
+    * 31_aide_proftpd
+    * 31_aide_resolvconf
+    * 31_aide_rkhunter
+    * 31_aide_rngd
+    * 31_aide_root-dotfiles
+    * 31_aide_rsnapshot
+    * 31_aide_rsyslog
+    * 31_aide_run_systemd_resolve
+    * 31_aide_run_tmpfiles
+    * 31_aide_runuser
+    * 31_aide_samba
+    * 31_aide_saslauthd
+    * 31_aide_screen
+    * 31_aide_slapd
+    * 31_aide_slrn
+    * 31_aide_smartmontools
+    * 31_aide_smokeping
+    * 31_aide_snmpd
+    * 31_aide_spamassassin
+    * 31_aide_squid
+    * 31_aide_ssh-agent
+    * 31_aide_syslog-ng
+    * 31_aide_systemd-resolved
+    * 31_aide_systemd_sessions
+    * 31_aide_tiger
+    * 31_aide_tt-rss
+    * 31_aide_unbound
+    * 31_aide_vsftpd
+    * 31_aide_webalizer
+    * 31_aide_wpasupplicant
+    * 31_aide_wtmp
+    * 31_aide_x11-common
+    * 31_aide_xdm
+    * 70_aide_run
+    * 70_aide_tmp
+  * improve rules:
+    * 10_aide_distribution
+    * 10_aide_hostname
+    * 10_aide_year
+    * 30_inn2_vars
+    * 31_aide_aide
+    * 31_aide_amanda-server
+    * 31_aide_apt-cacher-ng
+    * 31_aide_apt
+    * 31_aide_cereal
+    * 31_aide_console-log
+    * 31_aide_cups
+    * 31_aide_dovecot
+    * 31_aide_dpkg
+    * 31_aide_exim4
+    * 31_aide_inn2
+    * 31_aide_lighttpd
+    * 31_aide_lvm2
+    * 31_aide_mailman
+    * 31_aide_mini-buildd
+    * 31_aide_munin-node
+    * 31_aide_smokeping
+    * 31_aide_svn-server
+    * 31_aide_systemd
+    * 31_aide_systemd-cron
+    * 31_aide_systemd-networkd
+    * 31_aide_torrus
+    * 31_aide_trac
+    * 31_aide_udev
+    * 31_aide_util-linux
+  * fix shellcheck warnings:
+    * 31_aide_trac
+    * 31_aide_torrus
+    * 31_aide_svn-server
+    * 31_aide_munin
+  * new rules:
+    * 31_aide_exim4_exiscan
+    * 31_aide_icinga2
+    * 31_aide_php-fpm
+    * 31_aide_sniproxy
+    * 31_aide_systemd-journald
+  * remove obsolete 31_aide_apache (apache 1.3)
+  * remove accidental local data from 31_aide_borgbackup
+  * fix documentation typo in 31_aide_dehydrated
+  * exclude common /tmp contents
+  * settings snippets are now mode 755
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Fri, 05 Feb 2021 19:45:39 +0100
+
+aide (0.17.1-1) unstable; urgency=medium
+
+  [ Marc Haber ]
+  * new upstream version 0.17.1
+  * adapt aide "metarules" to new cronjob tmp file location
+
+  [ Hannes von Haugwitz ]
+  * c.d/aide: adjust FILTERINSTALLATIONS/FILTERUPDATES to work with AIDE 0.17
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sun, 31 Jan 2021 09:22:30 +0100
+
+aide (0.17-3) unstable; urgency=medium
+
+  * fix wrong line number in autopkgtest
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 28 Jan 2021 07:58:54 +0100
+
+aide (0.17-2) unstable; urgency=medium
+
+  * move to debhelper-compat 13
+  * add hardening (does not seem to work for static aide)
+  * remove aide-xen, add transitional package
+  * pull aide-common dependencies to 0.17, the rules need the new parser
+  * Have cron job limit line length (configurable, default 998)
+    (Closes: 882311)
+  * have cron job handle early interruptions with a custom error message
+    (Closes: 964965)
+  * have daily cron job place temporary files in /var/tmp. Add more paranoia.
+    (Closes: 791462)
+  * ucf-helper is now in ucf, remove ucf-helper testsuite
+  * re-enable whirlpool and document the need to --update
+  * rule updates:
+    * all rules should be restricted now. An unrestricted rule found in
+      the package is a bug.
+    * explicitly mention all deliberately unrestricted rules
+    * some new rules and rule improvements from Zugschlus
+    * some new rules and rule improvements from
+      Paweł Tomulik. (Closes: #729202)
+    * remove obsolete 31_aide_apt-file.
+      Thanks to Niels Thykier (Closes: 815188)
+    * remove obsolete all-comments ucf-conffiles
+    * remove 31_aide_crack (identical to 31_aide_cracklib-runtime)
+    * remove obsolete 31_aide_nagios2 and 31_aide_nagios3
+    * remove obsolete 31_aide_tetex-bin
+    * add documentation for 99_aide_root
+    * fix syntax issues
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Wed, 27 Jan 2021 13:57:51 +0100
+
+aide (0.17-1) unstable; urgency=medium
+
+  [ Marc Haber ]
+  * new upstream release 0.17
+    * docs/manual.html was removed
+
+  [ Hannes von Haugwitz ]
+  * Add autopkgtests
+  * Set Rules-Requires-Root to no
+  * Remove obsolete d/aide-common.doc-base
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sun, 24 Jan 2021 20:00:00 +0100
+
+aide (0.16.2-87-g9804cf4-2) experimental; urgency=medium
+
+  * fix buildd issues
+  * libcap build depends for linux only
+  * capabilities is linux-only
+  * e2fslibs is now libext2fs
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Wed, 20 Jan 2021 15:03:40 +0100
+
+aide (0.16.2-87-g9804cf4-1) experimental; urgency=medium
+
+  * upstream development snapshot (0.17 release candidate)
+    * patches no longer needed
+    * workaround for issue #24 no longer needed
+    * changes include:
+      * new --dry-init option (Closes: #289174)
+      * error messages are now reported in the correct
+        line. Thanks to Marc Schiffbauer (Closes: #414268)
+      * takes a lock on database_out
+      * can be compiled without default configuration
+      * Can include static and dynamic configuration
+        from a directory. (Closes: #824036)
+  * adapt aide.conf to the incompatible changes
+  * aide-attributes does no longer exist
+  * change aide.conf examples to file restrictions
+  * configure --without-config-file and --disable-default-db
+  * enable capabilities and Build-Depend on libcap
+  * fix strange indents in debian/rules
+  * Build-Depend on pkg-config
+  * remove no longer needed aide.wrapper
+  * remove no longer needed update-aide.conf
+  * convert pl.po, sv.po, es.po, nl.po and fr.po to UTF-8
+  * Standards-Version: 4.5.1 (no changes necessary)
+  * improve debian/copyright (needs more work because of translations)
+  * document incompatible changes in NEWS.Debian
+  * add documentation about how to write good rules
+  * adapt rules to new syntax:
+    * 31_aide_amanda-server
+    * 31_aide_apt
+    * 31_aide_bind9
+    * 31_aide_spamassassin
+  * improve rules, add selection restrictions: (Closes: #977966)
+    * 31_aide_anacron
+    * 31_aide_apt
+    * 31_aide_apt-cacher-ng
+    * 31_aide_aptitude
+    * 31_aide_atop
+    * 31_aide_clamav-freshclam
+    * 31_aide_clamav-unofficial-sigs
+    * 31_aide_cron-apt
+    * 31_aide_dbus
+    * 31_aide_dehydrated
+    * 31_aide_dpkg
+    * 31_aide_etckeeper
+    * 31_aide_exim4
+    * 31_aide_haproxy
+    * 31_aide_initramfs-tools
+    * 31_aide_libvirt-bin
+    * 31_aide_logcheck
+    * 31_aide_lvm2
+    * 31_aide_man
+    * 31_aide_mlocate
+    * 31_aide_php-common
+    * 31_aide_runuser
+    * 31_aide_samba
+    * 31_aide_screen
+    * 31_aide_spamassassin
+    * 31_aide_sudo
+    * 31_aide_udev
+    * 31_aide_util-linux
+    * 70_aide_run
+    * 70_aide_tmp
+  * new rules:
+    * 10_aide_machineid
+    * 21_aide_run_agetty
+    * 31_aide_avahi-daemon
+    * 31_aide_chrony
+    * 31_aide_console-setup
+    * 31_aide_dev
+    * 31_aide_dmeventd
+    * 31_aide_lldpd
+    * 31_aide_locales
+    * 31_aide_needrestart
+    * 31_aide_network-manager
+  * remove deprecation warnings:
+    * 31_aide_apt (added with 0.14~rc3-1 in 2010)
+  * some of these rule changes were submitted by
+    Bill Wohler. Thank you very much! (closes: #683957)
+  * fix wrong excludes of /proc and /sys. Thanks to
+    Andreas Hasenack. (closes: #977680)
+
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Mon, 18 Jan 2021 20:20:30 +0100
+
+aide (0.16.2-1) experimental; urgency=medium
+
+  * New upstream version 0.16.2
+  * rule improvements
+    * fix path to openvpn client status file
+    * fix wrong rule for msg.sock directory
+    * allow APACHE2_LOGS to be overridden
+    * fix wrong path to apache2 pid file
+    * clean up leftovers, avoid dual rules for /run
+      * LIBINITRW
+      * DEVDOT
+    * improve 31_aide_wpasupplicant rule
+    * 31_aide_bind9: add code for slave paths and slave dirs
+    * 31_aide_dehydrated: add rule
+    * 31_aide_dehydrated: add rule
+    * 31_aide_lighttpd: improve rule
+    * 31_aide_apt-cacher-ng: add rule
+    * 31_aide_cereal: improve rule
+    * 31_aide_clamav-freshclam: improve rule
+    * 31_aide_clamav-unofficial-sigs: new rule
+    * 31_aide_dpkg: improve rule
+    * 31_aide_e2fsprogs: new rule
+    * 31_aide_etckeeper: improve rule
+    * 31_aide_fake-hwclock: new rule
+    * 31_aide_haproxy: new rule
+    * 31_aide_libvirt-bin: improve rule
+    * 31_aide_logrotate: improve rule
+    * 31_aide_runuser: improve rule
+    * 31_aide_spamassassin: improve rule
+    * 31_aide_ssh-agent: improve rule
+    * 31_aide_sshd: new rule
+    * 31_aide_systemd-cron: new rule
+    * 31_aide_systemd-networkd: new rule
+    * 31_aide_systemd-resolved: new rule
+    * 31_aide_xe-guest-utilities: new rule
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sun, 02 Jun 2019 19:23:52 +0200
+
+aide (0.16.1-1) unstable; urgency=medium
+
+  [ Hannes von Haugwitz ]
+  * new upstream version v0.16.1
+    - changes include:
+      - fix short form of --limit parameter (closes: #855313)
+      - use AC_PATH_TOOL to find pkg-config (closes: #907580)
+    - move upstream to GitHub:
+      - d/control: update Homepage field
+      - d/watch: update download URL
+      - d/copyright: update source URL
+    - adapt debian/patches/10-manpages.patch
+    - remove debian/patches/15-arithmetic-exit.patch (incorporated upstream)
+  * Bump to Standards-Version 4.3.0 (no changes necessary)
+  * 31_aide_gnupg: handle S.scdaemon
+  * 31_aide_systemd_journal, 31_aide_mlocate: use @@{RUN} macro
+  * 31_aide_cereal, 31_aide_systemd_sessions: add missing $ to some rules
+  * aide.wrapper.8:
+    - document default value of DBAGE
+    - remove trailing whitespaces
+  * Switch to debhelper 12
+  * cron.daily/aide:
+    - avoid subshell usage in conditions
+    - fix shell globbing
+    - fix new lines in filtered packages list
+    - disable checkwinsize shell option
+  * aide.wrapper: refactor DBAGE code
+  * Remove empty lines at the end of rule files
+  * Adjust lintian overrides:
+    - aide,aide-xen: remove 'embedded-library' for libm
+    - aide-common: add 'uses-dpkg-database-directly' (the pkg just provides
+      rules for dpkg files)
+  * debian/copyright: update copyright information
+  * Add debian/upstream/metadata
+
+  [ Marc Haber ]
+  ∙ 31_aide_boinc-client: new rule
+  ∙ 31_aide_crack: new rule
+  ∙ 31:aide_dlocate: optimize rule
+  ∙ 31_aide_mailman: add Varir for log directory
+  * aideinit: send most output to stderr
+
+  [ Ondřej Nový ]
+  * d/copyright: Change Format URL to correct one
+  * d/control: Remove redundant Priority field in binary package
+  * d/changelog: Remove trailing whitespaces
+  * d/watch: Use https protocol
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Thu, 28 Feb 2019 21:34:34 +0100
+
+aide (0.16-4) unstable; urgency=medium
+
+  * aide.wrapper:
+    * introduce DBAGE
+    * renumber wrapper errors to get rid of number clashes
+    * refine wrapper man page
+  * daily cron job:
+    * clean up white space lines in different cases of output
+    * give overview over aide results in figlet if installed
+    * streamline indent to expantabs and tab 4.
+    * Make shellcheck happy
+  * refresh patches
+  * give better explanation for the arithmetic exit codes (Closes: 901954)
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sat, 21 Jul 2018 17:24:58 +0200
+
+aide (0.16-3) unstable; urgency=medium
+
+  * move package to salsa
+  * use tracker as maintainer address
+  * remove Mike from Uploaders. Thanks for helping with the package.
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Fri, 02 Feb 2018 20:16:08 +0100
+
+aide (0.16-2) unstable; urgency=medium
+
+  * improve rules:
+    * 10_aide_distribution: Take more care in sanitizing
+      distribution data. Thanks to Raphaël Hertzog (Closes: #868749)
+    * 31_aide_amanda-server
+      Thanks to Daniel Dickinson (Closes: #710912, #723904)
+    * 31_aide_apt
+      * Take multiarch patch from bug report.
+        Thanks to Simon Deziel (Closes: #770095)
+      * remove Pre-component Release Files (see discussion in #879272)
+        Thanks to Julian Andres Klode
+    * 31_aide_apt-listbugs: clean up obsolete dev comments
+    * 31_aide_cups
+    * 31_aide_dpkg
+    * 31_aide_isc-dhcp-server / 31_aide_isc-dhcp-client
+      * rename from 31_aide_dhcp3-server and 31_aide_dhcp3-client
+      * adapt paths
+    * 31_aide_logrotate
+    * 31_aide_man: add CACHEDIR
+    * 31_aide_mlocate: leaves around a lock file
+    * Add 31_aide_php7, remove 31_aide_php[45].
+      Thanks to Frederik Himpe (Closes: #724291)
+    * 31_aide_samba
+    * 31_aide_sudo: properly handle changing run directory
+    * 70_aide_run: /run changes link count
+  * new rules:
+    * 10_aide_prevyear: help log file handling
+    * 31_aide_atop
+    * 31_aide_cereal
+    * 31_aide_gnupg
+    * 31_aide_pam_motd
+    * 31_aide_php-common
+    * 31_aide_run_systemd_netif
+    * 31_aide_run_systemd_resolve
+    * 31_aide_runuser
+    * 31_aide_systemd_journal
+    * 31_aide_systemd_sessions
+  * remove rules that only had placeholder comments
+  * remove obsolete 31_aide_gpg
+  * remove obsolete 31-aide_apt_[un]stable
+  * aide.wrapper:
+    * wrapper now aborts immediately if lock cannot be
+      obtained (Closes: #841006)
+    * Use --config-check in wrapper (Closes: #289171)
+  * major rework of ucf handling:
+    * Allow rules to be overridden (Closes: #720009)
+    * The new code will eventually be submitted for inclusion in
+      ucf proper or packaged as ucf-helper
+  * Standards-Version: 4.1.1
+    * aide-xen and aide-dynamic are now Priority: optional
+    * no other changes necessary
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 02 Nov 2017 15:58:26 +0100
+
+aide (0.16-1) unstable; urgency=medium
+
+  * new upstream version, changes include:
+    - fix compilation with latest libaudit (closes: #829575)
+  * adapt debian/patches/10-manpages.patch
+  * debian/control:
+    - bump to Standards-Version 3.9.8 (no changes necessary)
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Tue, 26 Jul 2016 21:50:19 +0200
+
+aide (0.16~b1-1) unstable; urgency=medium
+
+  * new beta upstream version, changes include:
+    - switch to PCRE library
+    - restricted selection lines
+    - fix FTBFS with e2fsprogs 1.43 (closes: #818858)
+    - new '--limit' parameter
+    - new options:
+      - database_add_metadata
+      - report_force_attrs (deprecates report_attributes)
+      - report_ignore_added_attrs
+      - report_ignore_changed_attrs (deprecates ignore_list)
+      - report_ignore_e2fsattrs (closes: #642272)
+      - report_ignore_removed_attrs
+      - report_quiet
+  * debian/control:
+    - add build-dep on libpcre3-dev
+    - use secure Vcs-* fields
+    - aide-common: drop dependency on initscripts (closes: #804984)
+    - bumped to Standards-Version 3.9.7 (no changes necessary)
+  * debian/rules:
+    - add libpcre3-dev to BUILT_USING_PACKAGES
+  * 31_aide_ntp-server, 31_aide_inn2:
+    - fix malformed negative rules
+  * aide-common.README.Debian, update-aide.conf.8:
+    - fix spelling errors
+  * debian/watch:
+    - enable GPG signature verification
+    - add debian/upstream/signing-key.asc
+  * debian/copyright:
+    - update copyright statements
+    - fix license short name
+  * debian/lintian/overrides/aide-common:
+    - start-stop-daemon-in-maintainer-script has been renamed to
+      maintainer-script-should-not-use-start-stop-daemon
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Sun, 17 Apr 2016 22:08:22 +0200
+
+aide (0.16~a2.git20130520-3) unstable; urgency=medium
+
+  * cron.daily/aide:
+    - fixed 'unbound variable' error with bash-4.3 (LP: #1323827)
+  * 31_aide_postfix: new
+    - handle files/dirs in /var/spool/postfix
+    - handle prng_exch file
+  * 31_aide_apt:
+    - handle files in /var/lib/apt/periodic
+  * 31_aide_tt-rss:
+    - handle /var/lib/tt-rss
+  * 31_aide_etckeeper: new
+    - handle /etc/.git and /etc/.git/index
+  * debian/control:
+    - bumped to Standards-Version 3.9.6 (no changes necessary)
+    - added libaudit-dev to build dependencies (linux only)
+  * debian/rules:
+    - enabled audit support (closes: #745781)
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Fri, 24 Oct 2014 22:19:43 +0200
+
+aide (0.16~a2.git20130520-2) unstable; urgency=low
+
+  * 31_aide_apt, 31_aide_apt-file:
+    - fixed infinite hang if $SOURCESLIST is empty (closes: #714303)
+  * debian/watch:
+    - adjusted uversionmangle to match new upstream versioning scheme
+  * 31_aide_tt-rss: new
+    - handle log files, thanks to Frederik Himpe (closes: #724480)
+  * 31_aide_clamav-data:
+    - removed rules (clamav-data has been removed from Debian)
+  * cron.daily/aide, default/aide:
+    - added CRON_DAILY_RUN option (default: yes)
+  * debian/rules:
+    - fixed Built-Using field on hurd, ia64 and kfreebsd (closes: #717396)
+  * debian/control:
+    - bumped to Standards-Version 3.9.5 (no changes necessary)
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Mon, 16 Dec 2013 07:28:23 +0100
+
+aide (0.16~a2.git20130520-1) experimental; urgency=low
+
+  [ Hannes von Haugwitz ]
+  * new upstream git snapshot, changes include:
+    - new options: root_prefix, database_attrs,
+      report_detailed_init, report_base16
+    - many changes of report layout
+  * debian/control:
+    - removed obsolete DM-Upload-Allowed field
+    - bumped to Standards-Version 3.9.4
+    - drop obsolete Breaks/Replaces
+  * cron.daily/aide:
+    - fixed permission of log file at first run (closes: #706740)
+    - replaced "files" by "entries"
+    - removed 'database characteristics' part (incorporated upstream)
+    - adapted TRUNCATEDETAILS feature
+    - use /run/aide instead of /var/run/aide
+    - adjusted error message if database does not exist (closes: #641810)
+  * debian/patches/:
+    - removed patches applied upstream:
+       05-configure_32-bit_lfs_fix.patch
+       06-conf_yacc.y_conftext_declaration_fix.patch
+       07-db_file.c_missing_format_string_fix.patch
+    - adapted 10-manpages.patch
+  * aide.conf:
+    - added database_attrs option (default: Checksums)
+    - added report_base16 option (default: no)
+    - added verbose option (default: 6)
+    - removed X group (incorporated upstream)
+  * 31_aide_rsnapshot: new
+    - handle log files
+  * 31_aide_btmp: new
+    - handle log files
+  * 31_aide_wtmp:
+    - adjusted handling of log files
+  * 31_aide_apt:
+    - fixed handling of log files
+    - handle /var/log/apt
+    - escape dot character in urls
+  * 31_aide_dpkg:
+    - fixed handling of log files
+  * 31_aide_ifupdown:
+    - replaced obsolete script with native aide rule
+  * debian/copyright:
+    - migrated to DEP-5 format
+  * Added Built-Using field to aide and aide-xen binary package
+  * Removed handling of obsolete /usr/lib/aide directory
+  * 31_aide_apt-file:
+    - escape dot character in urls
+  * 31_aide_samba:
+    - adjusted rule for /@@{RUN}/samba/notify_onelevel.tdb
+  * debian/README.source: removed (dpatch no longer used)
+  * aide-common.postinst:
+    - don't create aide directory in /var/run
+    - removed check for aide binary in /usr/bin
+  * aide-common.postrm:
+    - try to remove /run/aide instead of /var/run/aide
+    - don't try to remove /var/lib/aide
+
+  [ Marc Haber ]
+  * cron.daily/aide:
+    - use savelog only if present
+    - bail if aide is not found in /usr/[s]?bin/
+    - fix a typo in a comment
+    - call mail(1) without full path
+    - exit with return code 0 if we reach the end of things
+  * 10_aide_constants: new
+    - added IP4ADDRESS and IP6ADDRESS macros
+  * Allow aide binary in /usr/sbin as well
+  * Added SILENTREPORTS option
+  * Added CRONEXITHOOK option
+  * Make update-aide.conf more flexible
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Fri, 14 Jun 2013 17:12:22 +0200
+
+aide (0.15.1-8) unstable; urgency=low
+
+  * 31_aide_samba:
+    - /@@{RUN}/samba/wins.tdb has been moved to /var/lib/samba
+    - adjusted rule for /@@{RUN}/samba/gencache.tdb
+    - handle notify_onelevel.tdb and gencache_notrans.tdb in /@@{RUN}/samba/
+  * aide.conf:
+    - reverted 'removed I from HiSerMemberLog'
+  * 31_aide_rkhunter:
+    - removed rule for rkhunter.dat and rkhunter.dat.old
+    - adjusted log file rules
+  * 31_aide_mtab:
+    - removed rule for /etc/mtab (now a symlink to /proc/mounts)
+  * 31_aide_mdadm:
+    - handle autorebuild.pid and map file in /@@{RUN}/mdadm
+  * 31_aide_man:
+    - added da, hr, jp, ro, sk and sl to LANGS macro
+  * 31_aide_cups:
+    - handle .snmp files in /var/cache/cups
+  * 31_aide_apt-file:
+    - handle component in file names
+  * 31_aide_apt:
+    - handle InRelease and Translation files
+  * cron.daily/aide:
+    - fixed FILTERINSTALLATIONS and FILTERUPDATES to support arch in
+      package names
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Sat, 30 Jun 2012 00:26:33 +0200
+
+aide (0.15.1-7) unstable; urgency=low
+
+  * debian/rules:
+    - fixed arch-specific build
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Thu, 21 Jun 2012 07:40:37 +0200
+
+aide (0.15.1-6) unstable; urgency=low
+
+  * lowered dependency on aide-common (closes: #545852):
+    - aide, aide-xen, aide-dynamic:
+      - moved aide-common from Depends to Recommends
+      - added Breaks/Replaces: aide-common (<< 0.15.1-6)
+    - moved aide.1 and aide.conf.5 from aide-common to binary packages
+    - aide-common: replaced dependency on aide | aide-binary with
+      versionised dependency on aide | aide-xen | aide-dynamic
+  * debian/patches/06-conf_yacc.y_conftext_declaration_fix.dpatch: new
+    - fixed broken 'Error in expression' message (closes: #631398)
+  * 31_aide_lighttpd:
+    - adjusted log file rules
+  * 31_aide_postgresql:
+    - handle moved pgstat.stat file
+  * 31_aide_resolvconf:
+    - extended rule for files in /@@{LIBINITRW}/resolvconf/interface/
+  * 31_aide_cron-apt:
+    - adjusted rule for files in mailchanges/
+  * 31_aide_initramfs-tools: new
+    - handle /@@{DEVDOT}initramfs
+  * 31_aide_util-linux: new
+    - handle utab file and mount dir
+  * 31_aide_xdm: new
+    - handle auth files
+    - handle pid file
+  * 31_aide_libvirt-bin:
+    - handle .monitor files
+    - handle /var/lib/libvirt
+    - handle /@@{RUNLOCK}/libvirt-guests
+    - handle /@@{RUN}/libvirt/uml-guest
+  * 31_aide_laptop-mode-tools:
+    - handle lock files
+    - handle state-brightness-command and nolm-mountopts state file
+  * 31_aide_munin,31_aide_munin-nodes:
+    - /var/www/munin has been moved to /var/cache/munin/www
+  * 70_aide_run:
+    - handle /@@{RUNLOCK}/.ramfs
+  * removed optional aide-config-zg2 package
+  * debian/aide-common.prerm: removed (/usr/doc/ handling is obsolete)
+  * Migrated to dpkg-source 3.0 (quilt) format:
+    - converted dpatch patches to quilt
+    - use dh7 syntax
+    - use dh-autoreconf
+    - removed debian/aide_fixperms (not needed anymore)
+    - removed build-dep on dpatch
+    - set debian/compat to 7
+    - build depend on debhelper >= 7.0.50~ and dh-autoreconf
+  * debian/patches/07-db_file.c_missing_format_string_fix.patch: new
+    - added missing format string in dofprintf calls
+  * Switched to debhelper 9
+    - set debian/compat to 9
+    - build depend on debhelper >= 9
+  * aide.conf.in:
+    - added X group and use it instead of 'acl+xattrs+e2fsattrs_SELINUX_'
+    - fixed typo in comment
+    - removed I from HiSerMemberLog
+  * Moved aide.conf.in back to aide.conf and adjusted debian/rules
+  * debian/control:
+    - removed build-dep on libgcrypt11-dev (not needed anymore)
+    - adjusted URLs of Vcs-* fields
+    - removed pointer to configuration from description of binary packages
+    - bumped to Standards-Version 3.9.3 (no changes necessary)
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Wed, 20 Jun 2012 14:46:28 +0200
+
+aide (0.15.1-5) unstable; urgency=low
+
+  * cron.daily/aide:
+    - revert 'replaced "files" by "entries"'
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Sat, 07 Jan 2012 18:51:46 +0100
+
+aide (0.15.1-4) unstable; urgency=low
+
+  [ Hannes von Haugwitz ]
+  * debian/aide-common.README.Debian:
+    - fixed wrong filename of auto generated config file, thanks to Olivier
+      Berger for the hint (closes: #623687)
+  * debian/po/it.po: new
+    - added Italian debconf translations, thanks to Mark Caglienzi
+      (closes: #608128)
+  * debian/control:
+    - use dpkg architecture wildcard to limit selinux support to linux
+      architectures only
+    - changed Homepage field
+    - build-dep on libgcrypt11-dev instead of libgcrypt-dev
+    - removed alternative build-dep on flex-old
+    - removed upstream URL from description, URL is available via Homepage
+      field
+    - drop obsolete Breaks/Replaces: aide (<< 0.13.1-6)
+    - removed redundant dependencies (bsd-mailx, liblockfile1, ucf) and
+      recommendation (cron) from aide, aide-xen and aide-dynamic
+    - aide-common: added alternative dep on mailx
+    - aide-common: added dep on initscripts (>= 2.88dsf-13.3) for
+      /run transition
+  * cron.daily/aide:
+    - replaced "files" by "entries"
+  * debian/aide.conf.in:
+    - enabled summarize_changes option by default (to follow upstream)
+  * debian/aide.wrapper.8:
+    - fixed path of configuration file, thanks to "A. N. Other"
+      (closes: #642270)
+  * Fixed lintian overrides:
+    - aide,aide-xen:
+      - statically-linked-binary: fixed path of binary
+      - embedded-library: added for libm and zlib
+      - embedded-zlib: removed (now in embedded-library)
+    - aide,aide-dynamic,aide-xen:
+      - binary-without-manpage: removed (fixed in lintian)
+  * /run transition (closes: #633028, #654752)
+    - 10_aide_run: new (define RUN, RUNLOCK, DEVDOT and LIBINITRW macro)
+    - 31_aide_lib-init-rw: replaced with empty dummy
+    - 31_aide_udev: use DEVDOT macro and handle /@@{DEVDOT}udev
+    - 70_aide_run: new (handle /run and subdirs)
+    - 70_aide_var: removed rule for /var/run and /var/lock
+    - Adjusted rules in the following files (use new macros and allow change
+      of inode):
+      - 31_aide_acpid
+      - 31_aide_aide
+      - 31_aide_amavisd-new
+      - 31_aide_anubis
+      - 31_aide_apache
+      - 31_aide_apache2
+      - 31_aide_apcupsd
+      - 31_aide_aptitude
+      - 31_aide_at
+      - 31_aide_bind9
+      - 31_aide_clamav
+      - 31_aide_clamav-freshclam
+      - 31_aide_console-log
+      - 31_aide_cron
+      - 31_aide_cups
+      - 31_aide_dbus
+      - 31_aide_ddclient
+      - 31_aide_dhcp3-client
+      - 31_aide_dhcpd
+      - 31_aide_dovecot
+      - 31_aide_exim4
+      - 31_aide_fail2ban
+      - 31_aide_fcron
+      - 31_aide_hald
+      - 31_aide_hapsd
+      - 31_aide_ifplugd
+      - 31_aide_inetd
+      - 31_aide_initscripts
+      - 31_aide_inn2
+      - 31_aide_ippl
+      - 31_aide_laptop-mode-tools
+      - 31_aide_libvirt-bin
+      - 31_aide_lighttpd
+      - 31_aide_logcheck
+      - 31_aide_lvm2
+      - 31_aide_mailman
+      - 31_aide_mdadm
+      - 31_aide_munin
+      - 31_aide_munin-nodes
+      - 31_aide_mysql-server
+      - 31_aide_nagios2
+      - 31_aide_nagios3
+      - 31_aide_network
+      - 31_aide_nfs
+      - 31_aide_nrpe
+      - 31_aide_nscd
+      - 31_aide_nslcd
+      - 31_aide_ntp-server
+      - 31_aide_openvpn
+      - 31_aide_pcscd
+      - 31_aide_pm-utils
+      - 31_aide_portmap
+      - 31_aide_postgresql
+      - 31_aide_proftpd
+      - 31_aide_resolvconf
+      - 31_aide_rngd
+      - 31_aide_rsyslog
+      - 31_aide_samba
+      - 31_aide_screen
+      - 31_aide_slapd
+      - 31_aide_smartmontools
+      - 31_aide_smokeping
+      - 31_aide_snmpd
+      - 31_aide_spamassassin
+      - 31_aide_ssh-server
+      - 31_aide_sudo
+      - 31_aide_torrus
+      - 31_aide_utmp
+      - 31_aide_vpnc
+      - 31_aide_wpasupplicant
+      - 31_aide_xinetd
+  * 70_aide_dev:
+    - removed support for static dev (closes: #644307)
+    - replaced for loop with native aide rule (closes: #599930, LP: #456710)
+
+  [ Marc Haber ]
+  * 31_aide_apt, 31_aide_apt-file:
+    - factor out shared code, only cat files that actually exist. This
+      streamlines /etc/apt/sources.list(.d) handling. (closes: #641805)
+    - provide aide.settings.d/10_aide_sourceslist
+  * 31_aide_amanda-client:
+    - adapt to amanda 2.6.1p2 (squeeze)
+  * 10_aide_distribution:
+    - add code to reference the current distribution in rule files to be more
+      flexible.
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Fri, 06 Jan 2012 21:52:17 +0100
+
+aide (0.15.1-3) unstable; urgency=low
+
+  [ Marc Haber ]
+  * 31_aide_bind9:
+    - fix wrong group (closes: #612405)
+
+  [ Hannes von Haugwitz ]
+  * debian/patches/05-configure_32-bit_lfs_fix.dpatch: new
+    - fixed lfs on 32-bit systems (closes: #615111)
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Fri, 11 Mar 2011 09:50:46 +0100
+
+aide (0.15.1-2) unstable; urgency=low
+
+  * debian/po/da.po:
+    - updated Danish debconf translations, thanks to Joe Hansen
+      (closes: #597777)
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Mon, 18 Oct 2010 09:24:53 +0200
+
+aide (0.15.1-1) unstable; urgency=low
+
+  * new upstream version, changes include:
+    - fixed bug with DB_CHECKINODE (closes: #596230)
+  * 31_aide_rkhunter:
+    - adjusted rule for rkhunter.dat and rkhunter.dat.old
+  * 31_aide_munin:
+    - handle exim_mailstats-<IPv4> in /var/lib/munin/plugin-state/
+  * 31_aide_apt:
+    - handle backups of APT's extended_states file
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Tue, 14 Sep 2010 08:22:03 +0200
+
+aide (0.15-2) unstable; urgency=low
+
+  * Upload to unstable
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Wed, 11 Aug 2010 06:56:20 +0200
+
+aide (0.15-1) experimental; urgency=low
+
+  * new upstream version
+  * debian/aide.conf.in:
+    - added grouped option (by default enabled)
+  * debian/control:
+    - aide-common: replaced Conflicts with Breaks/Replaces
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Sun, 08 Aug 2010 21:37:10 +0200
+
+aide (0.14.2.git20100726-1) experimental; urgency=low
+
+  * new upstream git snapshot, changes include:
+    - fit detailed output in 80 columns (closes: #146112)
+    - added new attribute 'ftype' for file type change detection
+    - added new attribute 'e2fsattrs' file attributes on a second extended
+      file system
+    - sort files in report by filename (see: #146113)
+    - new grouped option
+  * debian/control:
+    - bumped to Standards-Version 3.9.1 (no changes necessary)
+    - added e2fslibs-dev to build dependencies
+  * cron.daily/aide:
+    - fixed spelling error
+  * debian/rules:
+    - enabled e2fsattrs support
+  * debian/aide.conf.in:
+    - removed whirlpool from Checksums
+    - added ftype to OwnerMode
+    - added e2fsattrs to InodeData, VarFile, VarDir, VarDirInode and Log
+  * debian/copyright:
+    - updated upstream copyright
+    - added myself as co-maintainer
+  * cron.daily/aide:
+    - adjusted script to work with new upstream git snapshot
+    - replaced "New" with "Added" in "End of AIDE output" message
+    - don't fail when aide.conf contains white spaces, thanks to Adam Bolte
+      for the patch (LP: #302669)
+    - update configuration file before parsing it
+    - exit with code 1 if database doesn't exist
+    - include database name in error message if database doesn't exist
+    - exit with fatal error if new database does not exist
+    - reworked FILTERINSTALLATIONS and FILTERUPDATES
+  * 31_aide_smartmontools:
+    - handle files in /var/lib/smartmontools/
+  * 31_aide_dhcp3-client:
+    - /var/lib/dhcp3/ has been moved to /var/lib/dhcp/
+  * 31_aide_pm-utils: new
+    - handle files in /var/run/pm-utils/
+  * 31_aide_apt:
+    - fixed handling of comments in sources.list, thanks to Harvey Muller for
+      the patch (LP: #112242)
+  * 31_aide_kerberos:
+    - handle principal and principal.ok
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Thu, 29 Jul 2010 08:38:20 +0200
+
+aide (0.14.2-1) unstable; urgency=low
+
+  * new upstream version
+  * debian/control:
+    - set priority of aide-xen and aide-dynamic to extra
+  * debian/aide-attributes.1:
+    - adjusted warning message example to match upstream version
+
+ -- Hannes von Haugwitz <hannes@vonhaugwitz.com>  Sun, 06 Jun 2010 11:15:59 +0200
+
+aide (0.14.1-1) unstable; urgency=low
+
+  [ Hannes von Haugwitz ]
+  * new upstream version
+  * Removed unused lintian override from aide-dynamic
+  * debian/aide-common.doc-base: new
+    - registered manual.html with doc-base
+  * debian/{aide.wrapper.8,aideinit.8}:
+    - fixed spelling errors
+  * debian/aideinit:
+    - removed useless hint in error message
+  * debian/patches/10-manpages.dpatch:
+    - added patch description
+  * cron.daily/aide:
+    - fixed "grep: Unmatched [ or [^" issue,
+      thanks to Jerome Wittmann for the report
+    - removed superfluous blank
+  * 31_aide_dlocate:
+    - fixed dlocate database name
+    - handle dlocatedb.stamps
+  * 31_aide_bind9:
+    - handle session.key
+  * 31_aide_clamav-freshclam:
+    - handle bytecode.cld
+  * 31_aide_libvirt-bin:
+    - handle /var/lib/libvirt/qemu/{save,snapshot}
+  * Added man page for aide-attributes
+  * debian/{aide-common.manpages,rules}:
+    - added aide-attributes and man page to aide-common
+  * debian/control:
+    - added myself to the Uploaders field
+    - added DM-Upload-Allowed field
+
+  [ Marc Haber ]
+  * Add debian/watch, thanks to Guillaume Delacour
+  * Welcome Hannes to the Debian team
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 03 Jun 2010 20:06:40 +0200
+
+aide (0.14-1) unstable; urgency=low
+
+  [ Marc Haber ]
+  * new upstream version
+  * Dear Lintian: There is no technical reason to convert a working
+    package to dpkg maintainers' new toy format, so kindly shut up.
+
+  [ Hannes von Haugwitz ]
+  * cron.daily/aide:
+    - the log file checksum is sha256, not sha512
+    - fixed aide return value handling
+    - only truncate details if files have been changed
+    - reworked "End of AIDE output" message
+    - print "no significant changes detected" message only if
+      COPYNEWDB=ifnochange
+    - use echo instead of printf for printing file names
+  * aide.conf:
+    - added new group definition: VarDirTime
+  * 31_aide_x11-xkb-utils: new
+    - handle /var/lib/xkb
+  * 31_aide_man:
+    - added en and zh to LANGS macro
+  * 31_aide_wpasupplicant:
+    - fixed handling of /var/run/wpa_supplicant
+  * 31_aide_postgresql:
+    - handle .s.PGSQL.5432 and .s.PGSQL.5432.lock in /var/run/postgresql/
+    - handle pgstat.stat in /var/lib/postgresql/<VERSION>/main/global/
+  * 31_aide_apt:
+    - exclude *.gpg.reverify files in /var/lib/apt/lists/partial/
+  * 31_aide_udev: new
+    - handle queue.bin
+  * 31_aide_nfs:
+    - fixed handling of /var/lib/nfs/etab
+  * debian/rules, debian/control:
+    - disabled selinux support on non-linux architectures
+  * 31_aide_samba:
+    - handle files in /var/(run|log|cache|lib)/samba
+    - handle /etc/samba/passdb.tdb
+  * Moved aide.conf to aide.conf.in
+  * aide.conf.in
+    - use _SELINUX_ instead of +selinux to disable selinux support on
+      non-linux architectures
+  * update-aide.conf.8:
+    - fixed wrong path of /etc/aide/aide.settings.d
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Fri, 09 Apr 2010 22:22:39 +0200
+
+aide (0.14~rc3-1) experimental; urgency=low
+
+  [ Marc Haber ]
+  * new upstream CVS snapshot
+    * snprintf.c from rsync (more compatible license)
+    * new summarize_changes option by Hannes von Haugwitz
+    * more compatibility with recent autotools (thanks, Steve Grubb)
+  * 31_aide_aptitude: add /var/lib/aptitude
+  * aide-common.postinst: remove unneeded CONFDIR variable
+  * clarify debian/copyright for snprintf.c and fopen.c
+  * fix debian/NEWS version number 0.13.1-10
+  * fix broken mail addresse in changelog
+  * Standards-Version: 3.8.4 (no changes necessary)
+
+  [ Hannes von Haugwitz ]
+  * 31_aide_bind9: /var/run/bind/run has been moved to /var/run/named
+  * Added options to filter package updates or installations (closes: #542621)
+  * debian/rules: enabled xattr, selinux and posix-acl support
+  * 10-manpages.dpatch: "block count" patch is now in upstream source
+  * cron.daily/aide:
+    - adjusted regex for NOISE to work with new summarize_changes option
+    - added log file checksum to truncated mail
+    - removed duplicated "at" in ""End of AIDE daily cron job" line
+    - don't fail when NOISE removes everything
+    - replaced obsolete checksums md5 and sha1 with sha256 and sha512
+  * 31_aide_svn-server: new
+    - handle variable files in svn repositories
+    - provide 31_aide_svn-server_settings
+  * 31_aide_trac: new
+    - handle trac.db in trac repositories
+    - provide 31_aide_trac_settings
+  * 31_aide_cups: new
+    - handle files in /var/run/cups, /var/spool/cups, /var/log/cups
+      and /var/cache/cups
+  * 31_aide_samba: new
+    - handle files in /var/run/samba, /var/log/samba and /var/lib/samba
+  * 31_aide_root-dotfiles: new
+    - added rules for some dotfiles in root/ (by default disabled)
+  * Added option to truncate the detailed part in the mail
+  * Added aide.settings.d directory
+  * update-aide.conf: added --settingsd option
+  * default/aide: added UPAC_SETTINGSD variable
+  * 31_aide_apt:
+    - read settings file from aide.settings.d
+    - warn if 31_local_apt_settings is used
+  * Provide aide.settings.d/31_aide_apt_settings
+  * Allow LINES=0 to disable option
+  * 31_aide_wpasupplicant: new
+    - handle files in /var/run/
+    - handle log files
+    - handle files in /lib/init/rw/wpasupplicant/
+  * debian/control:
+    - added Vcs-Git and Vcs-Browser fields
+    - added libselinux1-dev, libattr1-dev, libacl1-dev to build dependencies
+  * 31_aide_postgresql: new (handle log files and pid file)
+  * 31_aide_ifplugd: new (handle pid file)
+  * 31_aide_dhcp3-client: added INTERFACES variable
+  * 31_aide_nfs: new (handle pid files and files in /var/lib/nfs)
+  * 31_aide_at: new
+    - handle /var/spool/cron/at(spool|jobs)
+    - handle /var/run/atd.pid
+  * 31_aide_laptop-mode-tools: new
+    - handle files in /var/run/laptop-mode-tools
+  * 31_aide_nagios3: new
+    - handle files in /var/lib/nagios3
+    - handle files in /var/log/nagios3
+    - handle files in /var/run/nagios3
+    - handle files in /var/cache/nagios3
+  * 31_aide_slapd: new
+    - handle files in /var/lib/ldap/
+    - handle files in /var/run/slapd
+    - handle /var/run/ldapi
+  * 31_aide_nslcd: new (handle files in /var/run/nslcd)
+  * 31_aide_dbus: new (handle files in /var/run/dbus)
+  * 31_aide_vpnc: new (handle /var/run/vpnc)
+  * 31_aide_portmap: new
+    - handle /lib/init/rw/sendsigs.omit.d/portmap
+    - handle files in /var/run
+  * 31_aide_kerberos: new (handle temp files)
+  * 31_aide_dhcpd: new (handle pid file)
+  * 31_aide_rkhunter:
+    - fixed handling of old log file
+    - handle files in /var/lib/rkhunter/db/
+  * 31_aide_apcupsd: handle /var/lock/LCK..
+  * 31_aide_xfree86-common: replaced with empty dummy, rules
+    are now in 31_aide_x11-common
+  * 31_aide_x11-common: new (handle dirs in /tmp)
+  * 31_aide_opie-server: new (handle /etc/opiekeys)
+  * 31_aide_network: new (handle /var/run/network)
+  * 31_aide_anubis: new (handle pid file)
+  * 31_aide_pcscd: new (handle files in /var/run/pcscd)
+  * 31_aide_resolvconf: handle files in /lib/init/rw/resolvconf
+  * 31_aide_tiger: new (handle /var/lib/tiger/work and files in /var/log/tiger)
+  * 31_aide_alsa: new (handle asound.state file)
+  * 31_aide_mdadm: new (handle files in /var/run/mdadm and /lib/init/rw/mdadm)
+  * 31_aide_rsyslog: handle /lib/init/rw/sendsigs.omit.d/rsyslog
+  * 31_aide_lib-init-rw: new (handle some files in /lib/init/rw)
+  * 31_aide_hapsd: new (handle pid file)
+  * 31_aide_smartmontools: new (handle pid file)
+  * 31_aide_mail: new (handle files in /var/mail)
+  * 31_aide_fcron: new (handle spool files, fifo and pid file)
+  * 31_aide_lighttpd: new (handle log files, pid file and php sockets)
+  * 31_aide_nscd: new (handle /var/run/nscd and cache files)
+  * 31_aide_aptitude_frqchg: replaced with empty dummy, rules
+    are contained in 31_aide_aptitude
+  * 31_aide_hald: removed unneeded rule for acl-list file
+  * 31_aide_munin:
+    - added rule for munin-node pid file
+    - fixed handling of files in /var/run/munin/
+  * aide.conf:
+    - added new rules (VarTime, VarInode, VarDirInode)
+    - added link name attribute to InodeData and VarFile
+    - added summarize_changes option (by default disabled)
+    - added acl, xattrs and selinux attributes to InodeData, VarFile, VarDir,
+      VarDirInode and Log
+    - replaced obsolete checksums md5 and sha1 with sha256 and sha512
+  * 31_aide_lvm2: fixed handling of cache file and added rule for lock dir
+  * 31_aide_libvirt-bin: new
+    - handle files in /var/run/libvirt
+    - handle /var/lib/libvirt/qemu and /var/cache/libvirt/qemu
+  * 31_aide_nrpe: new (handle pid file)
+  * 31_aide_aptitude: added rules for log rotation and exclude lock file
+  * 31_aide_fail2ban: added rules for /var/run/fail2ban, socket and pid file
+  * 31_aide_screen: added rule for /var/run/screen
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sun, 28 Feb 2010 17:20:43 +0100
+
+aide (0.13.1-11) unstable; urgency=low
+
+  * Fix ] typo in 31_aide_amanda-server. Closes: #476502
+  * Add 30_aide_bind9 example to automatically snarf BINDCHROOT
+    setting from /etc/default/bind9. Modify bind9 rules appropriately.
+    Thanks to Guido Bozzetto. Closes: #475983
+  * 31_aide_mailman: message number in archive dir can have six digits
+  * 31_aide_proftpd: logs are in a subdir
+  * Patches by Hannes von Haugwitz:
+    * 31_aide_exim4_logs: fix log rotation
+    * 31_aide_clamav: fix log rotation. Closes: #540748
+    * 31_aide_munin: apply patch from Hannes von Haugwitz. Closes: #541680
+    * 31_aide_cron-apt: fix log rotation: Closes: #540987
+    * 31_aide_clamav-freshclam: fix log rotation. Closes: #544688
+    * 31_aide_mailman: fix log rotation. Closes: #544765
+    * 31_aide_apache2: fix log rotation. Closes: #544768
+    * 31_aide_acpid: process pid file. Closes: #544817
+    * 31_aide_clamav-freshclam, 31_aide_clamav: handle pid file.
+      Closes: #544818
+    * 31_aide_munin-nodes. don't fail if munin is not installed.
+      Closes: #545011
+    * 31_aide_bind9. Fix typo in svn version. Closes: #545014
+  * New files by Hannes von Haugwitz:
+    * 31_aide_rsyslogd
+    * 31_aide_cracklib-runtime
+    * 31_aide_logcheck
+    * 31_aide_rkhunter
+    * 31_aide_apt-file. Closes: #542541
+    * 31_aide_hald. Closes: #541478
+    * 31_aide_fail2ban. Closes: #541345
+    * 31_aide_apt-show-versions. Closes: #544690
+    * 31_aide_ddclient: Closes: #544815
+    * 31_aide_apcupsd. Closes: #544816
+  * Apply patches by Guido Günther:
+    * New postgrey rule. Closes: #500438
+    * Optimize munin rules (and add munin-nodes). Closes: #500159
+    * fix udev backslash escaping (also thanks to Ian Redfern).
+      Closes: #506747, #472692
+  * 31_aide_syslog: replace with empty dummy
+  * cron.daily: protect $LOGHEAD and $MAILHEAD with :- in two more
+    places. Closes: #544414
+  * more README.Debian clarifications, again, thanks to Russell Gadd
+    and Bill Wohler.
+  * remove obsolete TODO file
+  * Fix typo in debian/control, thanks to Rogério Brito. Closes: #520019
+  * debian/control: clarify that aide-xen should be used in both DomU
+    and Dom0
+  * Adapt Package to later Debian policy:
+    * make sure that /var/run exists in daily cron job. Closes: #501848.
+    * Add Homepage: field.
+    * Standards-Version now 3.8.3
+  * build depend on debhelper 5
+  * add README.source refering to /usr/share/doc/dpatch/README.source.gz
+  * Add lintian overrides to aide and aide-xen for embedded-zlib
+    ./usr/bin/aide. The binaries _are_ statically linked as a feature.
+  * Have aide-common depend on aide | aide-binary
+  * depend on bsd-mailx instead of mailx
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue, 08 Sep 2009 14:45:51 +0200
+
+aide (0.13.1-10) unstable; urgency=low
+
+  * debian/control: fix deprecated "<" in Conflicts
+  * Add explanation "b: block count" to aide.conf.5.
+    Thanks to Francois Gouget. Closes: #469503
+  * 31_aide_syslog: modify regexp to match kern.log as well.
+    Thanks to Francois Gouget. This partly addresses #469507
+  * 31_aide_checksecurity: add file with rules from
+    Francois Gouget, thanks. Closes: #469508
+  * example rules for debian-multimedia packages from Francois Gouget.
+    * mythweb. Closes: #469511
+    * mythbackend. Closes: #469509
+  * Move README.Debian to aide-common
+  * README.Debian: add missing space, remove vote request (no votes
+    received, ever)
+  * /etc/default/aide: Add hint how to obtain a variable subject
+  * update-aide.conf now adds @@{ROOTPREFIX} to all lines, making
+    audit of chroots and vservers with identical rules easier without
+    uglifying the actual rules. Thanks to Russell Gadd.
+  * more fixes to aide_fixperms, thanks to Tom Geissler.
+  * introduce YEAR4D variable, make use of it
+  * remove bashism from debian/rules.
+    Thanks to Raphael Geissert. Closes: #472905
+  * README.Debian changes, thanks to Russell Gadd:
+    * clarify the role of debconf in README.Debian
+    * move the wrapper paragraph lower
+    * Add a little more prose about Debian's configuration scheme
+  * 31_aide_apt: allow tildes in archive names
+  * enable gzip_dbout again
+  * Collect modified rules from Marc's productive systems:
+    * re-work log mechanics, add lots of documentation
+    * 31_aide_aide: Log rotation hopefully fixed
+    * 31_aide_amanda-server: Take verified rule from productive system
+    * 31_aide_amanda-client: Parse data from amanda config
+    * 31_aide_apt: Add Release and IndexDiff for deb-src lines, remove
+        sarge support including APT_VERS code. Add new var and log rules.
+    * 31_aide_aptitude: add rule for /var/lock/aptitude, and config
+        files in /root
+    * 31_aide_bind9: BINDCHROOT is now the path to the chroot
+    * 31_aide_clamav: fix log rotation rules
+    * 31_aide_dokuwiki: new
+    * 31_aide_exim4: remove /root/.rnd, add /var/spool/exim4/.rnd
+        and -J spool files. exim4 >= 4.69-3 will place the .rnd file
+        in /var/spool/exim4
+    * 31_aide_exim4_logs: introduce macros, explain how to include
+        paniclog
+    * 31_aide_mailman: new
+    * 31_aide_man: adapt to new directory structure
+    * 31_aide_munin: rule for munin server socket
+    * 31_aide_mlocate: new
+    * 31_aide_nagios2: adapt to current packaging
+    * 31_aide_php4: no-op file
+    * 31_aide_privoxy: new
+    * 31_aide_smokeping: new
+    * 31_aide_spamassassin: add rule (default disabled) for rule updates
+    * 31_aide_syslog: logs are rotated with seven cycles
+    * 31_aide_torrus: adapt to current packages
+  * R.I.P. linda
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sun, 13 Apr 2008 09:27:49 +0200
+
+aide (0.13.1-9) unstable; urgency=low
+
+  * Add versioned conflicts of aide-common with earlier aide.
+    Thanks to Zoe Parsons. Closes: #443784
+  * Move php4 rule to php5.
+  * Add database_new to default configuration to allow aide --compare
+    to be used. Thanks to Bill Wohler. Closes: #442620
+  * Have aide_fixperms go through aide-common's files instead of aide.
+    Thanks to Tom Geissler. Closes: #447769
+  * Add ${shlibs:Depends} to aide-dynamic's Depends.
+    Thanks to Tom Geissler. Closes: #447773
+  * build-depend on libmhash 0.9.7 instead of 0.9.7-1 (lintian)
+  * Standards-Version: 3.7.3 (no changes necessary) (lintian)
+  * remove unused linda override directory from aide-common.dirs (lintian)
+  * override start-stop-daemon-in-maintainer-script error for
+    aide-common (lintian)
+  * Add proper copyright (lintian)
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue, 26 Feb 2008 23:36:16 +0100
+
+aide (0.13.1-8) unstable; urgency=low
+
+  * Have aide, aide-xen and aide-dynamic conflict mutually.
+    Thanks to Michael Ablassmeier. Closes: #429906
+  * 70_aide_dev: Escape hashes in file names.
+    Thanks to Sebastian Maus. Closes: #440674
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Wed, 12 Sep 2007 23:30:57 +0200
+
+aide (0.13.1-7) unstable; urgency=low
+
+  * fix log file rules for clamav and freshclam. Fix regexp for clamav.
+    Thanks, again, to Tim Stoop. Closes: #418623
+  * better exclusion rule for /var/lib/amavis/tmp.
+    Tim again. Closes: #418626
+  * Remove /var/run/aide on aide-common purge.
+    Thanks to Dr. Markus Waldeck. Closes: #426089
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sat, 16 Jun 2007 22:26:07 +0200
+
+aide (0.13.1-6) experimental; urgency=low
+
+  * remove unecessary confmodule call from postrm.
+    Thanks to Michael Ablassmeier. Closes: #416641
+  * Use ucfr/ucfq. Depend on ucf >= 2.0020.
+  * Add clamav-freshclam recipe. Thanks to Tim Stoop. Closes: #418623
+  * Add libapache2-mod-fastcgi recipe from Tim Stoop. Closes: #418628
+  * Add preliminary amavisd-new recipe from Tim Stoop. Closes: #418626
+  * 31_aide_apt: Fix gratuitous "VarFile" in ARCHIVESDIR handling.
+    Thanks to Tim Stoop, again.
+  * Change sysconfdir in configure call to
+    /var/lib/aide/please-dont-call-aide-without-parameters
+    to no longer point to a world writeable location and to give a
+    better error message. Thanks to Goswin von Brederlow. Closes: #373255
+  * cron.daily/aide: Fix broken temp file handling in de-noising code
+    and adapt code to new aide output format.
+    Thanks to Guillaume Lécroart. Closes: #419676
+  * Split package into -common and different binary packages to help
+    architectures that do not cope well with statically linked binaries.
+  * remove DH_COMPAT line from debian/rules
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 24 May 2007 15:33:50 +0200
+
+aide (0.13.1-5) unstable; urgency=low
+
+  * 31_aide_apt:
+    * add rule generation for deb-src lines
+    * fix ARCHIVESDIR/lock for sarge
+  * 31_aide_aide: Apply patch by Tim Stoop. Closes: #412320
+  * cron.daily:
+    * handle broken hostname
+    * fix language issue regarding return code
+    * remove last references to former CHANGES variable.
+      Thanks to P.M. van Aalten. Closes: #411823
+  * zg2.d/31_local_apt_settings: set IGNORE_FRQCHG yes by default
+  * 31_aide_dovecot: add /var/lib/dovecot
+  * 31_aide_exim4:
+    * zap obsolete rule for dh-params
+    * add /root/.rnd (side effect of openssl gendh)
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue,  6 Mar 2007 12:03:24 +0100
+
+aide (0.13.1-4) unstable; urgency=low
+
+  * Rule tweaks thanks to Tim Stoop. Closes: #407280
+    * 31_aide_syslog: add mail.err and mail.warn, move mail.log to mail clause
+    * 31_aide_apt_unstable, 31_aide_apt_stable, 31_aide_apt_frqchange:
+      no-op contents with comments, replace functionality with new
+      scripted rule 31_aide_apt.
+  * 10_aide_hostname: set @@{ARCH}. Closes: #407328
+  * postinst: handle OLDSUM correctly if no old file found. Closes: #407326
+  * 31_aide_ifupdown: make IFSTATE a variable, handle non-symlinks as
+    well
+  * update-aide.conf: Export some variables to make them available in
+    config scripts
+  * 70_aide_tmp, 31_aide_tetex-bin: add rules
+  * add 31_aide_dlocate thanks to Tim Stoop
+  * examples/31_example_exclude-homes: use awk -v
+  * debian/control: add ucf dependency for zg2 package
+  * README.Debian: add warning that aide needs memory
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sun, 11 Feb 2007 12:05:39 +0100
+
+aide (0.13.1-3) unstable; urgency=low
+
+  * add trailing slash to home directory in zg2 rules to avoid
+    unexpected prefix
+  * Adapt 31_aide_ifupdown rule: ifstate has moved to /etc/network/run
+    and might be hidden behind a symlink. Leave option to select sarge
+    behavior.
+  * refactor cron job to handle lock files and cleanup better.
+    Thanks to Matthijs van Aalten. Closes: #406206
+  * aide.conf.d/31_aide_modules: Allow hyphens in kernel version number.
+  * Have aide wrapper hand through aide's return code.
+  * have aideinit and cron job do useful things with aide's return code.
+    Closes: #226138
+  * debian/copyright: Add myself as co-maintainer
+  * 31_aide_syslog: Add user.log to syslog file list.
+    Thanks to Tim Stoop. Closes: #407247
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Wed, 17 Jan 2007 11:48:00 +0100
+
+aide (0.13.1-2) unstable; urgency=low
+
+  * Fix aide.db paths in aideinit man page. Closes: #403342, #377383
+  * Fix ERRORTMP occurrence in cron job.
+    Thanks to Fridtjof Busse. Closes: #403437
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue, 19 Dec 2006 12:51:03 +0100
+
+aide (0.13.1-1) unstable; urgency=low
+
+  * new upstream version. Closes: #402785
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Fri, 15 Dec 2006 17:53:46 +0100
+
+aide (0.13-1) unstable; urgency=low
+
+  * new upstream version
+  * mkdir /var/run/aide in postinst
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Fri,  8 Dec 2006 10:44:04 +0100
+
+aide (0.13~rc2-1) experimental; urgency=low
+
+  * upstream release candidate
+  * remove --with-mhash, --with-gcrypt from configure command line,
+    the libs are now detected automatically
+  * Activate the whirlpool hash in the default configuration
+  * Build-Depends:
+    * allow building with flex (not flex-old) while avoiding the known
+      broken flex 2.5.31
+    * tighten up versioned build dependency on libmash-dev, older
+      libmhash (known: the 0.9.1 from sarge) do not support whirlpool.
+  * major re-work of daily aide cron job:
+    * Include aide data including checksums of the new and old AIDE
+      database in the daily cron job report. Thanks to Mike Markley for
+      this great idea.
+    * More quotes
+    * Better handling of temp files
+    * Adapt 31_aide_aide to properly cope with the new temp files
+  * Adapt numerous rule files to changed package behavior
+  * Fix postrm to now cleanly purge.
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sun, 26 Nov 2006 10:42:52 +0100
+
+aide (0.12.20061028-1) experimental; urgency=low
+
+  * upstream CVS snapshot including a lot of stabilty patches from Redhat
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sat, 28 Oct 2006 11:17:45 +0000
+
+aide (0.12-2) unstable; urgency=low
+
+  * first try at dotlocking the cron job. This might be a possible
+    solution for #245423.
+  * Update French (fr) debconf translation.
+    Thanks to Gregory Colpart. Closes: #393294
+  * Update Spanish (es) debconf translation.
+    Thanks to Rudy Godoy. Closes: #393781
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Fri, 20 Oct 2006 07:39:25 +0000
+
+aide (0.12-1) unstable; urgency=low
+
+  * new upstream version
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu,  5 Oct 2006 07:44:53 +0000
+
+aide (0.11.99.20061004-1) experimental; urgency=low
+
+  * New upstream release candidate 0.12-rc2
+  * Re-word copynew template and remove warnnew template as suggested
+    by Thomas Huriaux. Closes: #385999
+  * Update Russian (ru) debconf translation.
+    Thanks to Yuri Kozlov. (mh) Closes: #386790, #388994
+  * Update Dutch (nl) debconf translation.
+    Thanks to cobaco (aka Bart Cornelis). Closes: #390619
+  * Update Vietnamese (vi) debconf translation.
+    Thanks to Clytie Siddall. Closes: #390307
+  * Update Portuguese (pt) debconf translation.
+    Thanks to Marco Ferra.
+  * Update Czech (cs) debconf translation.
+    Thanks to Miroslav Kure. Closes: #389117
+  * Update Swedish (sv) debconf translation.
+    Thanks to Daniel Nylander. Closes: #388778
+  * Update Polish (pl) debconf translation.
+    Thanks to Marcin Owsiany.
+  * Update French (fr) debconf translation.
+    Thanks to Gregory Colpart. Closes: #381547
+  * Update Japanese (ja) debconf translation.
+    Thanks to Hideki Yamane. Closes: #389062
+  * Update Brazilian Portuguese (pt_BR) debconf translation.
+    Thanks to André Luís Lopes.
+  * Update German (de) debconf translation.
+    Thanks to Erik Schanze. Closes: #390763
+  * Fix abuse of debconf notes:
+    * Remove setmailaddress template, move text to README.Debian.
+    * Remove mustaideinit template, make aideinit template more verbose.
+    * Make debconf templates more policy compliant.
+    * Thanks to Christian Perrier. Closes: #388704
+  * Streamline aide and AIDE use: AIDE refers to the project and the
+    program, while aide is the Debian package and the actual binary.
+    Thanks to Erik Schanze.
+  * Add vserver section to README.Debian. Thanks to Christian Thaeter
+    for this idea. Closes: #387463
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Wed,  4 Oct 2006 13:16:06 +0000
+
+aide (0.11.99.20060718-1) experimental; urgency=low
+
+  * New post-0.12-rc1 CVS snapshot.
+    * No extra "No such file or directory" error messages any more.
+      Closes: #247685.
+    * No longer segfaults on --config-check and @@ifnhost.
+      Thanks to Andy Spiegl. Closes:  #244917.
+    * Adapt 10-manpages.dpatch
+    * remove all other patches (incorporated upstream)
+  * Update French (fr) debconf translation.
+    Thanks to Christian Perrier. (mh) Closes: #369242
+  * Update Czech (cs) debconf translation.
+    Thanks to Miroslav Kure. (mh) Closes: #370312
+  * Fix/Remove paths in FILES section of aide.1 man page.
+    Thanks to Dr. Markus Waldeck. Closes: #377383
+  * Fix typo in README.Debian.
+    Thanks to Richard van den Berg. Closes: #378438
+  * Fix syslog rules. Thanks to Richard van den Berg.
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue,  8 Aug 2006 13:57:39 +0200
+
+aide (0.11a-4) unstable; urgency=low
+
+  * statically link against libmhash 0.9.6-2, which might fix some
+    issues on big-endian archs.
+  * Tighten up build-deps to force buildds to link against the same
+    libmhash. The versioned build-dep can be removed for backports, at the
+    price of probably not running on big-endian archs.
+  * 70_aide_dev: allow two digit /dev/pts numbers.
+  * 31_aide_inn2: /var/spool/news/incoming is VarDir itself
+  * Update Dutch (nl) debconf translation.
+    Thanks to cobaco (aka Bart Cornelis). (mh) Closes: #363652
+  * Update Swedish (sv) debconf translation.
+    Thanks to Daniel Nylander. (mh) Closes: #365774
+  * Call dh_installexamples from debian/rules, to actually include
+    31_example_exclude-homes into package.
+    Thanks to Glyn Kennington for spotting this. (mh) Closes: #361714
+  * Do not define HOSTNAME, DNSDOMAINNAME and FQDN if the
+    corresponding binary gives no output. Adapt rules to not fail in
+    case of undefined variable.
+    Thanks to Corey Wright and Craig Small. Closes: #366776
+  * Fix badly formatted debian/NEWS file.
+  * Fix incorrect dotlockfile presence test.
+    Thanks to Bob Proulx. Closes: #367333
+  * Fix issues addressed by Bob Proulx (thanks!). Closes: #367337.
+    * Move
+      * aide wrapper to aide.wrapper
+        * add man page for aide.wrapper
+      * aide.real to aide
+        * fix lintian and linda overrides
+    * This kind of restores expected aide behavior.
+    * Debian scripts now call aide.wrapper explicitly
+      * thus, our lock locks the Debian configuration only and
+        not the aide binary.
+    * use "$@" instead of $@ in aide.wrapper
+    * keep accidentally invoked aide from tampering with Debian database:
+      * set sysconfdir to /tmp/empty
+      * set config_file to /dev/null
+      * have wrapper explicitly set --config /etc/aide/aide.conf
+      * do not set --config explicitly in aideinit
+  * zap /var/lib files instead of /var/log in postinst
+  * replace ` with $() in aideinit
+  * handle /var/log/apache2/suexec.log.* if
+    /etc/apache2/mods-enabled/suexec.load exists.
+    Thanks to Craig Small. Closes: #368935
+  * Fix dumb scripting error in aide.conf.d/31_aide_amanda-server
+    Thanks to Craig Small. Closes: #368409
+  * Minor modifications to the Debconf templates to make lintian happy.
+  * Standards-Version: 3.7.2 (no change necessary).
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Fri, 26 May 2006 12:44:51 +0000
+
+aide (0.11a-3) unstable; urgency=low
+
+  * fix bashism in /etc/aide/aide.conf.d/10_aide_hostname.
+    Thanks to Michael Gurski. Closes: #361550
+  * Update Russian (ru) debconf translation.
+    Thanks to Yuri Kozlov. (mh) Closes: #361647
+  * fix rules:
+    * 31_aide_exim4: /var/spool/exim4 is VarDir itself
+  * Document that aide might run for a long time on big systems, add
+    31_example_exclude-homes to show how to exclude home directories.
+    Thanks to Frank Lichtenheld and maximilian attems. (mh) Closes: #361714
+  * Fix cron job quiet reports.
+    Thanks to Fridtjof Busse. (mh) Closes: #362441
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sat, 15 Apr 2006 10:43:26 +0000
+
+aide (0.11a-2) unstable; urgency=low
+
+  * include end timestamp and run time into cron job log file
+  * New configuration scheme:
+    * add aide.conf.d to package
+    * new aide.conf file
+    * aide.conf.d with package-dependent files
+    * Documentation in NEWS
+  * use ucf
+  * add aide.* prefix to debhelper control files to ease creation of
+    second binary package
+  * introduce optional (default=off) aide-config-zg2 package holding
+    non-standard rules
+  * patch aide to avoid "There are rules referring to non-existing
+    directories" by default. Patch submitted upstream.
+  * update-aide.conf: change default handling for UPAC_CONFD[DIR] to
+    allow more flexible configuration.
+  * debian/rules: use more debhelper magic
+    * dh_installcron
+    * dh_installinit (to move /etc/default/aide)
+    * dh_install
+  * fix debian/rules so that the package actually gets built only once.
+  * add space after "added:" and similar output strings
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue,  4 Apr 2006 06:06:45 +0000
+
+aide (0.11a-1) unstable; urgency=low
+
+  * New upstream CVS snapshot version with some minor fixes. Inclusion
+    in Debian coordinated with Upstream.
+    * Fix wrongly reported version number. See
+      http://sourceforge.net/mailarchive/forum.php?thread_id=9797743&forum_id=34655.
+      Thanks to Stefan Sontheimer for noticing. Closes: #355091
+    * Document that aide cannot be killed with SIGTERM in man page.
+      Closes: #168264
+  * Update German (de) debconf translation.
+    Thanks to Erik Schanze. (mh) Closes: #345696
+  * Update Dutch (nl) debconf translation.
+    Thanks to Bart Cornelis. (mh) Closes: #354589
+  * re-work cron job and defaults file
+    * Fix QUIETREPORTS which was broken since aide began generating
+      output even if no changes were detected
+    * Introduce COPYNEWDB parameter to have new database copied to old
+      one, making ANF/ARF actually useful for rotated log files
+    * Use $() instead of ``
+    * Introduce MAILSUBJ to cron.daily, document in /etc/default/aide.
+    * Pull FQDN initialization before /etc/default/aide source, allowing
+      FQDN to be used and changed in /etc/default/aide. Document.
+  * zap aide.conf.autogenerated on purge.
+  * re-work README.Debian.
+  * update-aide.conf:
+    * Allow --confdir to be overridden from /etc/default/aide
+    * Introduce --confd to allow snippet directory to be set
+      independently. Overrideable from /etc/default/aide
+    * If an input file is executeable, use its standard output for aide
+      configuration
+    * Documentation
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue, 14 Mar 2006 14:18:11 +0000
+
+aide (0.11-1) unstable; urgency=low
+
+  * new released upstream version
+  * Have /var/lib/dpkg/info/*.md5sums rule also allow dots in the file
+    name. Thanks to Glyn Kennington. Closes: #351433
+  * add some $ to regexp ends in default config.
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sun, 19 Feb 2006 17:53:00 +0000
+
+aide (0.10.99.20060202.rc3-1) experimental; urgency=low
+
+  * new upstream version
+  * remove patches that are not needed any more because of adapted
+    upstream.
+  * Update Swedish (sv) debconf translation.
+    Thanks to Daniel Nylander. (mh) Closes: #350721
+  * Swap Mike and Marc in Uploaders to reflect new responsibilities.
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu,  2 Feb 2006 21:07:14 +0000
+
+aide (0.10.99.20051215-1) experimental; urgency=low
+
+  * new upstream CVS snapshot
+  * this allows more verbose logging of file matching
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 15 Dec 2005 18:25:20 +0000
+
+aide (0.10.99.20051122-2) experimental; urgency=low
+
+  * the "Thanks Mr. Troup for breaking dpkg-sig" release, see #340306
+  * not signed with dpkg-sig but with debsign
+  * reducing upload security at ftpmaster's request
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 24 Nov 2005 09:56:27 +0000
+
+aide (0.10.99.20051122-1) experimental; urgency=low
+
+  * new upstream CVS snapshot
+  * added/removed files are now reported again.
+  * bump DH_COMPAT to 4
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Wed, 23 Nov 2005 09:09:24 +0000
+
+aide (0.10.99.20051120-1) UNRELEASED; urgency=low
+
+  * new local CVS snapshot of which Pablo says that reporting
+    added/removed files works again.
+  * wrapper now refuses to run aide twice, depend on liblockfile1
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue, 22 Nov 2005 07:50:31 +0100
+
+aide (0.10.99.20051115-0) UNRELEASED; urgency=low
+
+  * new upstream CVS snapshot which fixes ANF (allow new files)
+  * new upstream CVS snapshot which adds ARF (allow removed files)
+  * Fix typo in Debconf template and all po files, hopefully not
+    fuzzying them that way. Thanks to Morten Brix Pedersen.
+  * Update Danish (da) debconf translation thanks for Morten Brix
+    Pedersen. (mh) Closes: #340136
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Mon, 21 Nov 2005 08:51:21 +0100
+
+aide (0.10.99.20051107-1) experimental; urgency=low
+
+  * new upstream CVS snapshot which adds ANF (allow new files)
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Wed,  9 Nov 2005 14:00:26 +0000
+
+aide (0.10.99.20051103.rc2-1) experimental; urgency=low
+
+  * new upstream release candidate
+  * have pkg-aide-maintainers as Maintainer, Mike and Marc as Uploaders
+  * New Portuguese (pt) debconf translation thanks to Miguel
+    Figueiredo and Marco Ferra. (mh) Closes: #336336
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu,  3 Nov 2005 20:31:46 +0000
+
+aide (0.10.99.20051026-1) experimental; urgency=low
+
+  * new upstream CVS snapshot after 0.11rc1
+    * Prints stop timestamp whenever start timestamp is printed.
+      Closes: #247954
+  * Fix 0.10.99.20051025-1 changelog entry that didn't close bug.
+    (mh) Closes: #226256.
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Thu, 27 Oct 2005 09:12:47 +0000
+
+aide (0.10.99.20051025-1) experimental; urgency=low
+
+  * new upstream CVS snapshot after 0.11rc1
+    * doesn't segfault any more on two close backslashes in config file.
+      Closes: #247210
+    * doesn't segfault any more on aide -c, more robustly detects errors
+      in config file. Closes: #237969
+  * adapt Debian patches. (mh)
+  * remove error level patches to see what upstream's defaults are. (mh)
+  * remove typo patches, they're fixed upstream. (mh)
+  * Add Last-Translator setting to sv.po, (mh)
+  * Updated French (fr) debconf translation thanks to Christian Perrier.
+    (mh) Closes: #334256
+  * Updated Czech (cs) debconf translation thanks to Miroslav Kure.
+    (mh) Closes: #335576
+  * Add upstream URL to debian/control, minor cosmetic changes. (mh)
+  * Fix download URL in debian/copyright. (mh)
+  * remove $ERRORTMP on abnormal cron job exit. Thanks to Bart
+    Cortooms. (mh) Closes: #325731
+  * Have egrep expressions in aideinit only match if the keyword is
+    first in line. Thanks to Guido Bozzetto. (mh) Closes: #226256
+  * Updated Swedish debconf translation thanks to Daniel Nylander.
+    (mh) Closes: #335331
+  * apply patchlet to allow variables in /etc/defaults/aide.
+    (mh) Closes: #247510
+  * fix aide wrapper to not mistetect --config-check as --config. (mh)
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue, 25 Oct 2005 12:58:26 +0000
+
+aide (0.10-11) unstable; urgency=low
+
+  * correct wrong path to the templates file in POTFILES.in. Run
+    debconf-updatepo in debian/rules clean. Execute debconf-updatepo in
+    source package. Thanks, Thomas Huriaux. (mh) Closes: #331681
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue,  4 Oct 2005 17:01:37 +0000
+
+aide (0.10-10) unstable; urgency=low
+
+  * Updated Swedish debconf translation thanks to Daniel Nylander.
+    (mh) Closes: #330259
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Mon,  3 Oct 2005 08:09:39 +0000
+
+aide (0.10-9) experimental; urgency=low
+
+  * Only invoke update-aide.conf from wrapper if no --config option
+    was given. Thanks to Bob Proulx and Al Nikolov. (mh) Closes: #293457
+  * Invoke update-aide.conf from daily cronjob, invoke
+    update-aide.conf from aideinit if no special --config option was
+    given. Thanks to David Robb, Rolf Kutz, Herbert Thielen, Bob Proulx,
+    and Hadmut Danisch. (mh) Closes: #293073, #293456, #299765
+  * Change Debconf template so that the hint to /etc/default/aide
+    doesn't appear as a question. Thanks to the anonymous bug reporter.
+    (mh) Closes: #315630.
+  * Remove artificial libc6 dependency. aide is statically linked and
+    does not depend on libc at all. Re-enable debhelper magic.
+    Thanks to Santiago Vila. (mh) Closes: #298303
+  * New Vietnamese debconf translation thanks to Clytie Siddall.
+    (mh) Closes: #313017
+  * New Czech debconf translation thanks to Miroslav Kure.
+    (mh) Closes: #315819
+  * Lower debconf priorities. Thanks to Maximilian Attems.
+    (mh) Closes: #295190
+  * Ship with empty NOISE in /etc/defaults/aide. Thanks to Herbert
+    Thielen, Christophe Chisogne and Ralf Hildebrandt. (mh) Closes: #260942
+  * Move AIDEARGS to /etc/defaults/aide. (mh) Closes: #247686
+  * More manpage fixes to aide.1.
+    Thanks to Sven Hoexter. (mh) Closes: #312671
+  * remove po-debconf woody backporting helper, use misc:Depends for
+    debconf dependency to no longer hinder cdebconf migration.
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Tue, 27 Sep 2005 17:39:10 +0000
+
+aide (0.10-8) experimental; urgency=low
+
+  * acknowledge NMUs 0.10-6.1 and 0.10-6.2. Thanks guys.
+  * move development to alioth SVN repository, import Mike's CVS
+  * Include pl.po and zh_TW.po in repository which weren't there.
+    Forgotten cvs add? (mh)
+  * Less aggressive removals of files on purge. (mm)
+  * Move upstream patches to debian/patches, use dpatch. (mh)
+  * Standards-Version: 3.6.2 (no changes necessary). (mh)
+  * put quotes around .IP parameters in man pages to get rid of
+    errors. (mh)
+  * fix broken /usr/doc handling in prerm, remove bashisms. (mh)
+  * Add debugging code to maintainer scripts. (mh)
+  * Call update-aide.conf in postinst before creating database. (mh)
+
+ -- Marc Haber <mh+debian-packages@zugschlus.de>  Sun, 18 Sep 2005 16:24:43 +0000
+
+aide (0.10-7) unstable; urgency=low
+
+  * Added errormessage() function to update-aide.conf (Closes: #300454)
+
+ -- Mike Markley <mike@markley.org>  Sat,  7 May 2005 19:21:54 -0700
+
+aide (0.10-6.2) unstable; urgency=medium
+
+  * NMU to update static zlib with one that is not vulnerable to
+    CAN-2005-2096. Closes: #317523
+
+ -- Joey Hess <joeyh@debian.org>  Sun,  4 Sep 2005 15:55:43 -0400
+
+aide (0.10-6.1) unstable; urgency=low
+
+  * Non-maintainer upload
+  * Updated Dutch debconf translation thanks to Bart Cornelis
+    (Closes: #260296)
+  * Updated German debconf translation thanks to Erik Schanze
+    (Closes: #252495)
+  * New Traditional Chinese debconf translation thanks to Asho Yeh
+  * New Polish debconf translation thanks to Marcin Owsiany
+  * doc/aide.1 doc/aide.conf.5: Fixed hyphen as minus sign
+
+ -- Luk Claes <luk@debian.org>  Fri, 18 Feb 2005 08:36:15 +0100
+
+aide (0.10-6) unstable; urgency=low
+
+  * Oops. Wrong PATH in the new wrapper in -5.
+
+ -- Mike Markley <mike@markley.org>  Sun, 30 Jan 2005 18:18:59 -0800
+
+aide (0.10-5) unstable; urgency=low
+
+  * Added support for /etc/aide/aide.conf.d directory with patch
+    from Marc Haber (Closes: #267978)
+  * Added updated Japanese debconf translation I'd overlooked
+    (Closes: #266790)
+  * Added Marc Haber as a co-maintainer.
+
+ -- Mike Markley <mike@markley.org>  Sun, 30 Jan 2005 18:17:02 -0800
+
+aide (0.10-4) unstable; urgency=medium
+
+  * Changed $DENOISE check in cron script to $NOISE (Closes: #247689)
+  * Updated Brazilian debconf template (Closes: #262600)
+  * Updated Danish debconf template (Closes: #243070)
+  * Updated Japanese debconf template (Closes: #243265)
+
+ -- Mike Markley <mike@markley.org>  Sun,  1 Aug 2004 18:20:46 -0700
+
+aide (0.10-3) unstable; urgency=low
+
+  * Tweak the debug levels again. This is a patch from CVS that
+    makes the debug levels between 0 and 5 a great deal more granular
+    than they were, while leaving the default level as it was before.
+  * Adjust the cron script to use -V4 as per the new verbosity levels
+    provided by the aforementioned patch (Closes: #243140)
+  * Add /dev/xconsole to ignored devices in aide.conf
+  * Fiddle with default /var/log config lines
+
+ -- Mike Markley <mike@markley.org>  Sun,  2 May 2004 14:37:32 -0700
+
+aide (0.10-2) unstable; urgency=low
+
+  * Patch src/Makefile.am and .in for include directory precedence
+    to fix the conflict that sometimes happens when building with
+    libdb-dev installed
+  * Added Japanese debconf translation (Closes: #225847)
+  * Added Greek debconf translation (Closes: #229532, #229500, #229524)
+  * Added Russian debconf translation (Closes: #140888)
+  * Use ISO-8601 date format (Closes: #228201)
+  * Move configuration for cron and update scripts to /etc/default/aide
+  * Add QUIETREPORTS option to suppress mail reports when there's nothing
+    changed (Closes: #190186)
+  * Some debconf templates have changed; I gladly accept any updated
+    translations
+
+ -- Mike Markley <mike@markley.org>  Sun, 28 Mar 2004 19:31:52 -0800
+
+aide (0.10-1) unstable; urgency=low
+
+  * The "Bite the Bullet" release
+  * New upstream version (Closes: #222427)
+  * Now ignoring /var/log/ksymoops by default (Closes: #166681)
+  * Depends: on mailx instead of Recommends: (Closes: #213135)
+  * Clarified purpose in long description (Closes: #171977)
+  * Added Danish debconf translation (Closes: #174739)
+  * Added Dutch debconf translation (Closes: #206324)
+  * Added Colin Watson's code for po-debconf handling on woody
+    as per Marc Haber's suggestion (Closes: #217830)
+  * Add checks to the /var/lib/dpkg/info/*.md5sums example to make
+    it syntatically correct without changes (Closes: #222114, #222422)
+  * Add README.Debian note about mmap() error and modify default
+    config to skip /dev/cpu/mtrr (Closes: #224010)
+  * Included Marc Haber's replacement cron script basically verbatim
+    (Closes: #130375, #148147)
+  * New separate error condition for @@end_db should take care of the
+    not implemented errors (Closes: #163233, #222739)
+  * Update to DH_COMPAT 3
+  * Remove patches that are integrated upstream
+  * Temporarily leave output_readability patch unapplied because
+    it would break po translation. I'll integrate this into upstream
+    CVS with appropriate po changes.
+  * Tighten up build-deps on libmhash-dev to exclude the versions
+    that did not include libmhash.a. Allow old versions with the
+    proper lib to aid backporting.
+  * Standards version 3.6.1.
+  * Remove debconf ugliness from the aideinit script. All debconf
+    prompting is now done in config.
+
+ -- Mike Markley <mike@markley.org>  Fri, 19 Dec 2003 04:33:44 -0800
+
+aide (0.9-4) unstable; urgency=low
+
+  * Applied patch for va_list problems and a bad malloc, many thanks
+    to Sam Hocevar (Closes: #154829)
+
+ -- Mike Markley <mike@markley.org>  Fri, 13 Jun 2003 23:26:48 -0700
+
+aide (0.9-3) unstable; urgency=low
+
+  * Fix LC_MESSAGES directory (Closes: #190411)
+  * Moved debconf templates to po-debconf w/patch from Andre Luis Lopes
+    (Closes: #187508)
+  * Build-Depends: on flex-old until changes for new flex are made
+    (Closes: #191184)
+
+ -- Mike Markley <mike@markley.org>  Sat, 24 May 2003 03:02:34 -0700
+
+aide (0.9-2) unstable; urgency=low
+
+  * Added patch to conf_yacc.y for missing ;s (Closes: #165342)
+
+ -- Mike Markley <mike@markley.org>  Thu,  7 Nov 2002 22:51:20 -0800
+
+aide (0.9-1) unstable; urgency=low
+
+  * New upstream release.
+  * Tiger support works again (Closes: #144092)
+
+ -- Mike Markley <mike@markley.org>  Sat, 22 Jun 2002 02:05:10 -0700
+
+aide (0.8-2) unstable; urgency=low
+
+  * Added build-dep for libgcrypt-dev (Closes: #136408, #137808)
+
+ -- Mike Markley <mike@markley.org>  Fri, 15 Mar 2002 20:20:06 -0800
+
+aide (0.8-1) unstable; urgency=low
+
+  * New upstream release.
+  * Added english back into debconf templates as per barbier's
+    suggestions (Closes: #134500)
+
+ -- Mike Markley <mike@markley.org>  Tue, 19 Feb 2002 23:41:29 -0800
+
+aide (0.7-11) unstable; urgency=low
+
+  * Fixed errorlog output display in cron script (Closes: #118013)
+  * Made output a little more readable with newlines (Closes: #90471)
+  * Implemented a LINES define as per Marc Haber's suggestions
+    Closes: #96734
+  * Added Brazilian Portuguese debconf template (Closes: #106939)
+  * Now testing just /proc, not its contents, in default config
+  * Updated build-dep from libz-dev to zlib1g-dev
+  * Accidentally uploaded broken mkdep script previously, fixed now
+    Closes: #123888
+
+ -- Mike Markley <mike@markley.org>  Fri, 14 Dec 2001 00:17:22 -0800
+
+aide (0.7-10) unstable; urgency=low
+
+  * Added Spanish debconf template (Closes: #84414)
+  * Updated the ugly mkdep script to know about hurd
+
+ -- Mike Markley <mike@markley.org>  Fri, 27 Jul 2001 01:51:51 -0700
+
+aide (0.7-9) unstable; urgency=high
+
+  * Fixed the call to debian/mkdep in rules - can now build from source
+    (Closes: #89214)
+  * Now uses dpkg-gencontrol -V instead of directly modifying substvars
+
+ -- Mike Markley <mike@markley.org>  Fri, 16 Mar 2001 11:42:52 -0800
+
+aide (0.7-8) unstable; urgency=high
+
+  * The build should now correctly determine the correct libc dependencies
+    (Closes: #87597)
+
+ -- Mike Markley <mike@markley.org>  Wed, 28 Feb 2001 16:02:53 -0800
+
+aide (0.7-7) unstable; urgency=medium
+
+  * Added swedish debconf templates (closes: #83746)
+  * Added french debconf templates (closes: #83763)
+  * Added german debconf template (closes: #83885)
+  * Added Build-Dep for debconf-utils
+  * Cron script now only mails first 1000 lines of each output file and directs
+    the recipient of the reports to the filename in which to find the output.
+    Closes: #83108
+
+ -- Mike Markley <mike@markley.org>  Mon, 29 Jan 2001 14:23:23 -0800
+
+aide (0.7-6) unstable; urgency=medium
+
+  * Added debhelper to build-depends (I need to somehow remind myself to do this
+    on all packages :), Closes: #68818
+
+ -- Mike Markley <mike@markley.org>  Wed,  9 Aug 2000 13:56:19 -0700
+
+aide (0.7-5) unstable; urgency=medium
+
+  * Added a test -f for the binary at the top of cron script (Closes: #67681)
+  * Cron script defaults to root if it can't find a MAILTO
+
+ -- Mike Markley <mike@markley.org>  Mon,  7 Aug 2000 22:18:32 -0700
+
+aide (0.7-4) unstable; urgency=medium
+
+  * Added flex and bison to Build-Depends. closes: #64209
+
+ -- Mike Markley <mike@markley.org>  Tue, 16 May 2000 12:56:22 -0700
+
+aide (0.7-3) unstable; urgency=medium
+
+  * New heavily-commented config file with a bit more caution by default
+  * Removed old dir /usr/lib/aide from debian/dirs
+  * Further tweaks to cron script, now puts FQDN in all reports and warns
+    if the database doesn't exist (in case an attacker has simply deleted it)
+
+ -- Mike Markley <mike@markley.org>  Thu,  4 May 2000 00:11:22 -0700
+
+aide (0.7-2) unstable; urgency=medium
+
+  * The cron script now gets the email address from /etc/aide/aide.conf
+  * Config file now defaults to specifying gzipped databases
+  * The aideinit script now passes any command-line params to aide
+
+ -- Mike Markley <mike@markley.org>  Wed,  3 May 2000 00:40:50 -0700
+
+aide (0.7-1) unstable; urgency=medium
+
+  * New upstream source
+  * Patch for configure.in is now in upstream source
+  * Now passing --with-zlib to configure (allows compressed databases)
+  * Now passing --with-mhash to configure (gives a wider variety of hash algorithms)
+  * Moved data dir to /var/lib (for FHS compliancy)
+
+ -- Mike Markley <mike@markley.org>  Sat, 29 Apr 2000 00:34:49 -0700
+
+aide (0.6-3) unstable; urgency=low
+
+  * Safe handling of tmp files
+  * Now strips aide binary
+  * Fixed manpath
+  * Fixed changelog filename
+
+ -- Mike Markley <mike@markley.org>  Fri,  7 Apr 2000 18:52:11 -0700
+
+aide (0.6-2) unstable; urgency=low
+
+  * Compiled for potato and moved it over to debconf
+
+ -- Mike Markley <mike@markley.org>  Tue, 28 Mar 2000 16:31:23 -0800
+
+aide (0.6-1) unstable; urgency=low
+
+  * Initial Release.
+  * Added a basic conf mostly yanked from manual.html
+  * Modified configure.in to actually honor the --sysconfdir
+  * debian/rules installs sample conf in /usr/lib/aide
+
+ -- Mike Markley <mike@markley.org>  Thu, 17 Feb 2000 13:57:06 -0500

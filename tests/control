@@ -1,0 +1,3 @@
+Tests: 01-aide-config-check, 02-aide-path-check, 03-aide-init, 04-aide-cronjob
+Depends: aide, aide-common, s-nail
+Restrictions: needs-root

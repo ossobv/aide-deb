@@ -1,0 +1,2 @@
+/@@{RUN}/network$ d VarDirInode
+/@@{RUN}/network/ifstate$ f VarInode

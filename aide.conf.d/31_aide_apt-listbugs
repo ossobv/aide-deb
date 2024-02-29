@@ -1,0 +1,2 @@
+!/var/cache/apt-listbugs/%2Findices%2Findex.db-(critical|grave|serious)\\.gz$ f
+/var/cache/apt-listbugs$ d VarDir

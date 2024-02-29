@@ -1,0 +1,29 @@
+
+/var/(cache|spool)/cups$ d VarDir
+/var/cache/cups/(org\\.cups\\.cupsd|job\\.cache(\\.O)?)$ f VarFile
+/var/cache/cups/@@{IP4ADDRESS}\\.snmp$ f VarFile
+
+!/var/spool/cups/c[[:digit:]]{5}$ f
+!/var/spool/cups/d[[:digit:]]{5}-001$ f
+!/var/spool/cups/tmp/cups-dbus-notifier-lockfile$ f
+!/var/spool/cups/tmp/foomatic-[[:alnum:]]{6}$ f
+/var/spool/cups(/tmp)?$ d VarDir
+
+/@@{RUN}/cups/certs/0$ f VarFile
+/@@{RUN}/cups/printcap$ f VarFile
+/@@{RUN}/cups/cups\\.sock$ s VarFile
+/@@{RUN}/cups(/certs)?$ d VarDirInode
+
+/etc/cups$ d VarDir
+/etc/cups/(printers|subscriptions)\\.conf(\\.O)?$ f VarFile
+
+@@define CUPS_LOGDIR var/log/cups
+@@define CUPS_LOGRE (access|error|page|cups-pdf)_log
+/@@{CUPS_LOGDIR}$ d VarDir
+/@@{CUPS_LOGDIR}/@@{CUPS_LOGRE}$ f ActLog
+/@@{CUPS_LOGDIR}/@@{CUPS_LOGRE}\\.1$ f RotLog
+/@@{CUPS_LOGDIR}/@@{CUPS_LOGRE}\\.2\\.@@{LOGEXT}$ f CompSerLog
+/@@{CUPS_LOGDIR}/@@{CUPS_LOGRE}\\.[3-6]\\.@@{LOGEXT}$ f MidlSerLog
+/@@{CUPS_LOGDIR}/@@{CUPS_LOGRE}\\.7\\.@@{LOGEXT}$ f LastSerLog
+@@undef CUPS_LOGDIR
+@@undef CUPS_LOGRE

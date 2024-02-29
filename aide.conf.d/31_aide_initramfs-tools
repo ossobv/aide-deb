@@ -1,0 +1,6 @@
+# this can be improved by giving a list of disk and dm device nodes
+/@@{RUN}/(fsck|initramfs)$ d VarDirInode
+/@@{RUN}/initramfs/fsck(\\.log|-(root|usr))$ f VarFile
+/@@{RUN}/fsck/[vs]d[abc]$ f VarFile
+/@@{RUN}/dm-[[:digit:]]+\\.lock$ f VarFile
+

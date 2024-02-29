@@ -1,0 +1,28 @@
+@@define MARIADB_DATADIR var/lib/mysql
+
+/@@{MARIADB_DATADIR}/mysql/innodb_(index|table)_stats\\.ibd$ f VarFile
+/@@{MARIADB_DATADIR}/ib(data1|_logfile[01]|tmp1)$ f VarFile
+/@@{MARIADB_DATADIR}/tc\\.log$ f VarFile
+/@@{MARIADB_DATADIR}/aria_log(\\.00000001|_control)$ f VarFile
+/@@{MARIADB_DATADIR}$ d VarDir
+
+@@if defined MARIADB_DBFILES_RE
+/@@{MARIADB_DATADIR}/@@{MARIADB_DBFILES_RE}\\.ibd$ f VarFile
+@@endif
+
+@@define MARIADB_LOGDIR var/log/mysql
+@@define MARIADB_LOGFILERE error\\.log
+/@@{MARIADB_LOGDIR}$ d VarDir
+/@@{MARIADB_LOGDIR}/@@{MARIADB_LOGFILERE}$ f ActLog
+/@@{MARIADB_LOGDIR}/@@{MARIADB_LOGFILERE}\\.1$ f RotLog
+/@@{MARIADB_LOGDIR}/@@{MARIADB_LOGFILERE}\\.2.@@{LOGEXT}$ f CompSerLog
+/@@{MARIADB_LOGDIR}/@@{MARIADB_LOGFILERE}\\.[3456]\\.@@{LOGEXT}$ f MidlSerLog
+/@@{MARIADB_LOGDIR}/@@{MARIADB_LOGFILERE}\\.7\\.@@{LOGEXT}$ f LastSerLog
+
+/@@{RUN}/mysqld$ d RecreatedDir
+/@@{RUN}/mysqld/mysqld\\.pid$ f VarFile
+!/@@{RUN}/mysqld/mysqld\\.sock$ s
+
+@@undef MARIADB_LOGDIR
+@@undef MARIADB_LOGFILERE
+@@undef MARIADB_DATADIR

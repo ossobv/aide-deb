@@ -1,0 +1,39 @@
+!/dev/shm/PostgreSQL\\.[[:digit:]]+$ f
+
+@@define PG_VERS 15
+@@define PG_MCL @@{PG_VERS}/main
+@@define RUNPG @@{RUN}/postgresql
+@@define VLPG var/lib/postgresql
+
+/@@{RUNPG}$ d RecreatedDir
+!/@@{RUNPG}/\\.s\\.PGSQL\\.5432$ s
+!/@@{RUNPG}/\\.s\\.PGSQL\\.5432\\.lock$ f
+/@@{RUNPG}/@@{PG_VERS}-main\\.pg_stat_tmp$ d RecreatedDir
+/@@{RUNPG}/@@{PG_VERS}-main\\.pid$ f VarFile
+!/@@{RUNPG}/@@{PG_VERS}-main\\.pg_stat_tmp/(db_[[:digit:]]+|global)\\.stat$ f
+
+/@@{VLPG}/@@{PG_MCL}(/base(/(1|[[:digit:]]{5,6}))?)?$ d VarDir
+!/@@{VLPG}/@@{PG_MCL}/base/[[:digit:]]{5,6}/[[:digit:]]{4,6}(_(fsm|vm))?$ f
+/@@{VLPG}/@@{PG_MCL}/(global|pg_(logical|subtrans|wal|xact))$ d VarDir
+/@@{VLPG}/@@{PG_MCL}/global/pg_control$ f VarFile
+!/@@{VLPG}/@@{PG_MCL}/(base/[[:digit:]]+|global)/pg_internal\\.init$ f
+/@@{VLPG}/@@{PG_MCL}/postmaster\\.(opts|pid)$ f VarFile
+/@@{VLPG}/@@{PG_MCL}/pg_logical/replorigin_checkpoint$ f VarFile
+/@@{VLPG}/@@{PG_MCL}/pg_xact/00[012][[:xdigit:]]$ f VarFile+ANF
+/@@{VLPG}/@@{PG_MCL}/pg_multixact/offsets/0000$ f VarFile
+!/@@{VLPG}/@@{PG_MCL}/pg_subtrans/[[:xdigit:]]{4}$ f
+!/@@{VLPG}/@@{PG_MCL}/pg_wal/[[:xdigit:]]{24}$ f
+
+@@define POSTGRES_LOGDIR var/log/postgresql
+@@define POSTGRES_LOGFILES postgresql-@@{PG_VERS}-main\\.log
+/@@{POSTGRES_LOGDIR}$ d VarDir
+/@@{POSTGRES_LOGDIR}/@@{POSTGRES_LOGFILES}$ f VarFile
+/@@{POSTGRES_LOGDIR}/@@{POSTGRES_LOGFILES}\\.1$ f RotLog+ANF
+/@@{POSTGRES_LOGDIR}/@@{POSTGRES_LOGFILES}\\.2\\.@@{LOGEXT}$ f CompSerLog
+/@@{POSTGRES_LOGDIR}/@@{POSTGRES_LOGFILES}\\.[3456789]\\.@@{LOGEXT}$ f MidlSerLog
+/@@{POSTGRES_LOGDIR}/@@{POSTGRES_LOGFILES}\\.10\\.@@{LOGEXT}$ f LastSerLog
+
+@@undef PG_VERS
+@@undef PG_MCL
+@@undef RUNPG
+@@undef VLPG

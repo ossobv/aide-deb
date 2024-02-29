@@ -1,0 +1,12 @@
+#!/bin/sh
+
+SOURCESLIST=""
+if [ -e "/etc/apt/sources.list" ]; then
+  SOURCESLIST="/etc/apt/sources.list"
+fi
+
+for file in /etc/apt/sources.list.d/*; do
+  if [ -e "$file" ]; then
+    SOURCESLIST="$SOURCESLIST $file"
+  fi
+done

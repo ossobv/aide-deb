@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# set -eu
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+ROOTDIR=$(mktemp -d)
+trap 'rm -rf ${ROOTDIR} /etc/aide/aide.conf.d/00-autopkgtest' 0 INT QUIT ABRT PIPE TERM
+
+echo "root_prefix = ${ROOTDIR}" > /etc/aide/aide.conf.d/00-autopkgtest
+
+mkdir -p /run/aide
+
+aideinit -f 2>&1
+
+OUTFILE="/tmp/dailyaidecheck"
+rm -f "${OUTFILE}"
+/usr/share/aide/bin/dailyaidecheck --autopkgtest
+
+if ! [ -e "${OUTFILE}" ]; then
+  printf >&2 "autopkgtest FAIL: %s not created\n" "${OUTFILE}"
+  exit 1
+fi
+FILESIZE="$(stat --format="%s" "${OUTFILE}")"
+if [ "${FILESIZE}" -lt 1024 ]; then
+  printf >&2 "autopkgtest FAIL: %s is uneasonably small: %d bytes\n" "${OUTFILE}" "${FILESIZE}"
+fi
+

@@ -1,0 +1,12 @@
+/var/lib/dovecot$ d VarDir
+/var/lib/dovecot/(instances|mounts|ssl-parameters\\.dat)$ f VarFile
+
+/@@{RUN}/dovecot(/(login|empty))?$ d VarDirInode
+!/@@{RUN}/dovecot/(auth-token-secret\\.dat)$ f
+/@@{RUN}/dovecot/(auth-worker\\.[0-9]{4}|master\\.pid)$ f VarFile
+/@@{RUN}/dovecot/login/(default|dns-client|imap|ipc-proxy|login|pop3|ssl-params)$ f VarFile
+/@@{RUN}/dovecot/auth-worker\\.[0-9]{4}$ f VarFile
+/@@{RUN}/dovecot/anvil(-auth-penalty)?$ f VarFile
+/@@{RUN}/dovecot/auth-(client|login|master|userdb|worker)$ f VarFile
+/@@{RUN}/dovecot/(config|dict|director-(admin|userdb)|dns-client|indexer(-worker)?|ipc|log-errors|mounts|replicat(oon-notify(-fifo)?|or)|stats(-mail)?)$ f VarFile
+/@@{RUN}/dovecot/dovecot.conf$ l VarInode

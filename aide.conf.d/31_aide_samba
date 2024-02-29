@@ -1,0 +1,23 @@
+/@@{RUN}/samba$ d RecreatedDir
+/@@{RUN}/samba/(brlock|gencache|smbd_clientupd|leases|locking|names|printer_list|serverid|smbXsrv_((open|session|tcon|version)_global))\\.tdb$ f VarFile
+!/@@{RUN}/samba/(smbd_cleanupd|smbXsrv_((client)_global))\\.tdb$ f
+/@@{RUN}/samba/(nmbd|smbd)\\.pid$ f VarFile
+/@@{RUN}/samba/(msg\\.(lock|sock)|nmbd)$ d RecreatedDir
+!/@@{RUN}/samba/msg\\.(lock|sock)/[[:digit:]]+$ f
+/@@{RUN}/samba/(ncalrpc(/np)?)$ d RecreatedDir
+!/@@{RUN}/samba/ncalrpc/np/(eventlog|initshutdown|lsa(rpc|ss)|mdssvc|net(dfs|logon)|ntsvcs|plugplay|samr|spoolss|srvsvc|svcctl|winreg|wkssvc)$ s
+!/@@{RUN}/samba/ncalrpc/DEFAULT$ s
+/@@{RUN}/samba/nmbd/unexpected$ s VarFile
+!/@@{RUN}/samba/namelist\\.debug$ f
+/var/cache/samba$ d VarDir
+/var/cache/samba/(browse\\.dat|gencache\\.tdb)$ f VarFile
+/var/log/samba$ d VarDir
+/var/log/samba/log\\.smbd\\.spoolssd$ f Log
+/var/log/samba/log\\.[sn]mbd$ f ActLog
+/var/log/samba/log\\.[sn]mbd\\.1$ f RotLog
+/var/log/samba/log\\.[sn]mbd\\.2.@@{LOGEXT}$ f CompSerLog
+/var/log/samba/log\\.[sn]mbd\\.[23456]\\.@@{LOGEXT}$ f MidlSerLog
+/var/log/samba/log\\.[sn]mbd\\.7.@@{LOGEXT}$ f LastSerLog
+/var/lib/samba(/private/msg\\.sock)?$ d VarDir
+!/var/lib/samba/private/msg\\.sock/[[:digit:]]+$ s
+/var/lib/samba/dhcp\\.conf$ f VarFile

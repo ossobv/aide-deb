@@ -1,0 +1,26 @@
+@@define NETDATA_VC var/cache/netdata
+/@@{NETDATA_VC}/dbengine(-tier[12])?$ d VarDir
+!/@@{NETDATA_VC}/dbengine(-tier[12])?/datafile-1-[0-9]{10}\\.ndf$ f
+!/@@{NETDATA_VC}/dbengine(-tier[12])?/journalfile-1-[0-9]{10}\\.njf$ f
+/@@{NETDATA_VC}/(context|netdata)-meta\\.db(-(shm|wal))?$ f VarFile
+/var/lib/netdata(/health)?$ d VarDir
+/var/lib/netdata/\\.agent_crash$ f VarFile
+/var/lib/netdata/health/health-log\\.db(\\.old)?$ f VarFile
+
+@@define NETDATA_LOGDIR var/log/netdata
+@@define NETDATA_LOGRE error\\.log
+/@@{NETDATA_LOGDIR}$ d VarDir
+/@@{NETDATA_LOGDIR}/@@{NETDATA_LOGRE}$ f ActLog
+/@@{NETDATA_LOGDIR}/@@{NETDATA_LOGRE}\\.1$ f RotLog
+/@@{NETDATA_LOGDIR}/@@{NETDATA_LOGRE}\\.2\\.gz$ f CompSerLog
+/@@{NETDATA_LOGDIR}/@@{NETDATA_LOGRE}\\.([3456789]|1[0123])\\.gz$ f MidlSerLog
+/@@{NETDATA_LOGDIR}/@@{NETDATA_LOGRE}\\.14\\.gz$ f LastSerLog
+/@@{NETDATA_LOGDIR}/health\\.log$ f ActLog
+@@undef NETDATA_LOGRE
+@@undef NETDATA_LOGDIR
+
+/@@{RUN}/netdata$ d VarDir-i
+!/@@{RUN}/systemd/propagate/netdata\\.service$ d
+!/(var/)?tmp/systemd-private-[[:xdigit:]]{32}-netdata\\.service-[[:alnum:]]{6}/tmp/netdata-ipc$ s
+/dev/shm/netdata_shm_cgroup_ebpf$ f VarFile
+@@undef NETDATA_VC

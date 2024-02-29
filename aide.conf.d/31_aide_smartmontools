@@ -1,0 +1,4 @@
+/@@{RUN}/smartd\\.pid$ f VarFile
+/var/lib/smartmontools/smartd\\.[-_[:alnum:]]+\\.ata\\.state~?$ f VarFile
+/var/lib/smartmontools/attrlog\\.[-_[:alnum:]]+\\.ata\\.csv$ f VarFile
+/var/lib/smartmontools$ d VarDir

@@ -1,0 +1,4 @@
+/@@{RUN}/syslog-ng$ d VarDirInode
+/@@{RUN}/syslog-ng\\.pid$ f VarFile
+/var/lib/syslog-ng$ d VarDir
+/var/lib/syslog-ng/syslog-ng.(ctl|persist)$ f VarFile

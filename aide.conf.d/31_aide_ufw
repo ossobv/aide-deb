@@ -1,0 +1,5 @@
+/var/log/ufw\\.log$ f ActLog
+/var/log/ufw\\.log\\.1$ f RotLog
+/var/log/ufw\\.log\\.2\\.@@{LOGEXT}$ f CompSerLog
+/var/log/ufw\\.log\\.3\\.@@{LOGEXT}$ f MidlSerLog
+/var/log/ufw\\.log\\.4\\.@@{LOGEXT}$ f LastSerLog

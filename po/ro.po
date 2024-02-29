@@ -1,0 +1,91 @@
+# Mesajele în limba română pentru pachetul aide.
+# Romanian translation of aide.
+# Copyright © 2023 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the aide package.
+#
+# Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2023.
+#
+# Cronologia traducerii fișierului „aide”:
+# Traducerea inițială, făcută de R-GC, pentru versiunea aide 0.17.4-2(2013-06-09 22).
+# Actualizare a traducerii pentru versiunea Y, făcută de X, Y(anul).
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: aide\n"
+"Report-Msgid-Bugs-To: aide@packages.debian.org\n"
+"POT-Creation-Date: 2013-06-09 22:00+0200\n"
+"PO-Revision-Date: 2023-01-24 12:22+0100\n"
+"Last-Translator: Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>\n"
+"Language-Team: Romanian <debian-l10n-romanian@lists.debian.org>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n==0 || (n!=1 && n%100>=1 && "
+"n%100<=19) ? 1 : 2);\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid "Initialize AIDE database?"
+msgstr "Inițializați baza de date AIDE?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid ""
+"Before AIDE can be used, you will have to initialize a database. You can "
+"immediately do this here, or run the '/usr/sbin/aideinit' script from a shell "
+"later."
+msgstr ""
+"Înainte ca programul AIDE să poată fi utilizat, va trebui să inițializați o "
+"bază de date. Puteți face acest lucru imediat aici sau puteți rula scriptul «/"
+"usr/sbin/aideinit» dintr-un shell mai târziu."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid "Overwrite existing /var/lib/aide/aide.db.new?"
+msgstr "Suprascrieți fișierul „/var/lib/aide/aide.db.new” existent?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid ""
+"You have already a newly generated AIDE database in /var/lib/aide/aide.db.new. "
+"If you choose this option, the existing file will be be overwritten by the new "
+"data obtained from the current state of your file system."
+msgstr ""
+"Aveți deja o bază de date AIDE nou generată în „/var/lib/aide/aide.db.new”. "
+"Dacă alegeți această opțiune, fișierul existent va fi suprascris cu noile date "
+"obținute din starea curentă a sistemului dumneavoastră de fișiere."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid "Copy aide.db.new to aide.db?"
+msgstr "Se copiază „aide.db.new” la „aide.db”?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"It is advisable for you to first look over /var/lib/aide/aide.db.new file "
+"before replacing the existing db. You can have the package replace the database "
+"anyway here."
+msgstr ""
+"Este recomandabil să vă uitați mai întâi peste fișierul „/var/lib/aide/aide.db."
+"new” înainte de a înlocui baza de date existentă. În orice caz, puteți solicita "
+"pachetului să înlocuiască baza de date aici."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"If you do not choose this option, you will need to copy the file /var/lib/aide/"
+"aide.db.new to /var/lib/aide/aide.db before AIDE can use it."
+msgstr ""
+"Dacă nu alegeți această opțiune, va trebui să copiați fișierul „/var/lib/aide/"
+"aide.db.new” la „/var/lib/aide/aide.db” înainte ca AIDE să îl poată utiliza."

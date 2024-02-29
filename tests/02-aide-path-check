@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e
+
+PATH=/bin:/usr/bin
+test "$(aide --config /etc/aide/aide.conf --path-check f:/proc/cpuinfo || true)" = "[ ] f '/proc/cpuinfo': negative rule: '!/proc$ (none)' (/etc/aide/aide.conf.d/70_aide_proc_sys:1: '!/proc$ 0')"

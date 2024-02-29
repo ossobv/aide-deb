@@ -1,0 +1,4 @@
+/var/lib/logrotate$ d VarDir
+/var/lib/logrotate/status$ f VarFile
+/var/lib/systemd/timers/stamp-logrotate\\.timer$ f VarFile
+!/@@{RUN}/systemd/propagate/logrotate\\.service$ d

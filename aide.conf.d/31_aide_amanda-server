@@ -1,0 +1,119 @@
+#!/bin/bash
+
+# this is not consistently generating restricted rules. If you have
+# an amanda host, please help by adding the appropriate restrictions
+
+MULTILINEDLE=0
+
+skip_multiline_dle() {
+    if [ "$MULTILINEDLE" = "0" ]; then	
+        if echo "${rest}" | grep -q '{'; then
+	    MULTILINEDLE=1
+        fi
+	return 1
+    elif echo "${host} ${dev} ${rest}" | grep -q '}'; then
+	MULTILINEDLE=0
+    fi
+    return 0
+}
+
+if ! [ -d "/etc/amanda" ]; then
+  exit 0
+fi
+for configfile in $(find /etc/amanda -name amanda.conf ! -path '/etc/amanda/template.d*' | tr '
+' ' '); do
+  config="$(dirname "${configfile}")"
+  cd "${config}" || exit 1
+  CONF="${config##*/}"
+  AMANDA_TAPEDEV="$(amgetconf "${CONF}" tapedev)"
+  AMANDA_TAPEDEV="${AMANDA_TAPEDEV#file:/}"
+  if [ -d "${AMANDA_TAPEDEV}" ]; then
+    print "@@define AMANDA_TAPEDEV %s\\n" "${AMANDA_TAPEDEV}"
+    #shellcheck disable=SC2044
+    for slot in $(find /"${AMANDA_TAPEDEV}" -type d -regex '.*/slot[0-9]+' -printf "%P\\n"); do
+      if [ -f "disklist" ]; then
+        while read -r host dev rest; do
+          if echo "${host}" | grep -qE '^(#.*)?$'; then continue; fi
+	  #shellcheck disable=SC2001
+	  dev="$(echo "${dev}" | sed 's|/|_|g')"
+	  if ! skip_multiline_dle; then
+	      printf "!/@@{AMANDA_TAPEDEV}/%s/[0-9]{5}[-\\.]%s\\.%s\\.[0123]$" "${slot}" "${host}" "${dev}"
+	  fi
+        done < disklist
+        MULTILINEDLE=0
+      fi
+      printf "/@@{AMANDA_TAPEDEV}/%s/00000[-\\.]%s-%03d$ f VarFile\\n" "${slot}" "${CONF}" "${slot#slot}"
+      printf "!/@@{AMANDA_TAPEDEV}/%s/[0-9]{5}[-\\.]TAPEEND$\\n" "${slot}"
+      printf "/@@{AMANDA_TAPEDEV}/%s$ d VarDir\\n" "${slot}"
+    done
+    printf "/@@{AMANDA_TAPEDEV}/(data|info)$ f VarFile\\n"
+    printf "/@@{AMANDA_TAPEDEV}$ d VarDir\\n"
+  fi
+  AMANDA_LOGDIR="$(amgetconf "${CONF}" logdir)"
+  AMANDA_LOGDIR="${AMANDA_LOGDIR#/}"
+  if [ -n "$AMANDA_LOGDIR" ]; then
+    printf "@@define AMANDA_LOGDIR %s\\n" "${AMANDA_LOGDIR}"
+    printf "/@@{AMANDA_LOGDIR}/log\\.@@{YEAR4D}[0-9]{4}\\.0$ f LowDELog\\n"
+    printf "/@@{AMANDA_LOGDIR}/oldlog/log\\.@@{YEAR4D}[0-9]{4}\\.0$ f SerMemberDELog\\n"
+    printf "/@@{AMANDA_LOGDIR}/amdump\\.1$ f LoSerMemberLog\\n"
+    printf "/@@{AMANDA_LOGDIR}/amdump\\.[2-8]$ f SerMemberLog\\n"
+    printf "/@@{AMANDA_LOGDIR}/amdump\\.9$ f HiSerMemberLog\\n"
+    printf "/@@{AMANDA_LOGDIR}(/oldlog)?$ d VarDir\\n"
+  fi
+  AMANDA_INDEXDIR="$(amgetconf "${CONF}" indexdir)"
+  AMANDA_INDEXDIR="${AMANDA_INDEXDIR#/}"
+  if [ -n "${AMANDA_INDEXDIR}" ]; then
+    printf "@@define AMANDA_INDEXDIR %s\\n" "${AMANDA_INDEXDIR}"
+    if [ -f "disklist" ]; then
+      while read -r host dev rest; do
+        if echo "${host}" | grep -Eq '^(#.*)?$'; then continue; fi
+        dev="$(echo "${dev}" | sed 's|[/:]|_|g;s|\\"||g')"
+	if ! skip_multiline_dle; then
+            printf "!/@@{AMANDA_INDEXDIR}/%s/%s/@@{YEAR4D}[0-9]{4}_[0123]\\.gz$ f\\n" "${host}" "${dev}"
+            printf "/@@{AMANDA_INDEXDIR}/%s/%s$ d VarDir\\n" "${host}" "${dev}"
+	fi
+      done < disklist
+      MULTILINEDLE=0
+    fi
+  fi
+  AMANDA_CHANGERFILE="$(amgetconf "${CONF}" changerfile)"
+  AMANDA_CHANGERDIR="${AMANDA_CHANGERFILE%changer}"
+  AMANDA_CHANGERDIR="${AMANDA_CHANGERDIR#/}"
+  if [ -n "${AMANDA_CHANGERDIR}" ]; then
+    printf "@@define AMANDA_CHANGERDIR %s\\n" "${AMANDA_CHANGERDIR}"
+    printf "/@@{AMANDA_CHANGERDIR}/(changer-(access|clean|slot)|tapelist(\\.yesterday)?)$ f VarFile\\n"
+    printf "/@@{AMANDA_CHANGERDIR}$ d VarDir\\n"
+  fi
+  AMANDA_INFOFILE="$(amgetconf "${CONF}" infofile)"
+  AMANDA_INFOFILE="${AMANDA_INFOFILE#/}"
+  if [ -n "${AMANDA_INFOFILE}" ]; then
+    printf "@@define AMANDA_INFOFILE %s\\n" "${AMANDA_INFOFILE}"
+    if [ -f "disklist" ]; then
+      while read -r host dev rest; do
+        if echo "${host}" | grep -qE '^(#.*)?$'; then continue; fi
+	#shellcheck disable=SC2001
+        dev="$(echo "${dev}" | sed 's|[/:]|_|g;s|\"||g')"
+	if ! skip_multiline_dle; then
+            printf "/@@{AMANDA_INFOFILE}/%s/%s/info$ f VarFile\\n" "${host}" "${dev}"
+            printf "/@@{AMANDA_INFOFILE}/%s/%s$ d VarDir\\n" "${host}" "${dev}"
+        fi
+      done < disklist
+      MULTILINEDLE=0
+    fi
+  fi
+  # this is hardcoded since amgetconf refuses to deliver diskdir
+  AMANDA_HOLDING="srv/amanda/holding"
+  if [ -n "$AMANDA_HOLDING" ]; then
+    printf "/%s$ d VarDir\\n" "${AMANDA_HOLDING}"
+  fi
+  printf "@@define AMANDALOG var/log/amanda/server/%s\\n" "${CONF}"
+  printf "!/@@{AMANDALOG}/(amcheck|amlogroll|amreport|amtrm(idx|log)|chunker|driver|dumper|planner|taper)\\.@@{YEAR4D}[0-9]{10}\\.debug$ f\\n"
+  printf "!/@@{AMANDALOG}/(chunker|dumper)\\.@@{YEAR4D}[0-9]{13}\\.debug$ f\\n"
+  printf "/@@{AMANDALOG}$ d VarDir\\n"
+  printf "/var/log/amanda/server$ d VarDir\\n"
+done
+
+printf "@@define AMANDALOG var/log/amanda/amandad\\n"
+printf "!/@@{AMANDALOG}/(amandad)\\.@@{YEAR4D}[0-9]{10}\\.debug$ f\\n"
+printf "/@@{AMANDALOG}$ d VarDir\\n"
+printf "/tmp/amanda$ d VarDir\\n"

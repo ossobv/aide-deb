@@ -1,0 +1,4 @@
+version=4
+opts="searchmode=plain,pgpsigurlmangle=s/$/.asc/,uversionmangle=s/(a|b|rc)/~$1/" \
+  https://api.github.com/repos/@PACKAGE@/@PACKAGE@/releases \
+  https://github.com/@PACKAGE@/@PACKAGE@/releases/download/v[^/]+/@PACKAGE@-@ANY_VERSION@.tar.gz(?!.asc)

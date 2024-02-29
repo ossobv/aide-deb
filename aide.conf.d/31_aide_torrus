@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if ! [ -d /var/lib/torrus ]; then
+  exit 0
+fi
+
+find /var/lib/torrus/collector_rrd -name '*.rrd' | \
+     sed 's/^\(.*\)/\1$ f VarFile/'
+
+TORRUS_TREES=""
+#shellcheck disable=SC2154
+if [ -r "$UPAC_settingsd/31_aide_torrus_settings" ]; then
+  # pull in configuration
+  #shellcheck disable=SC1090
+  . "$UPAC_settingsd/31_aide_torrus_settings"
+fi
+
+for tree in $TORRUS_TREES; do
+    printf "@@define TORRUS_TREE %s\\n" "${tree}"
+    printf "/var/lib/torrus/db/sub/@@{TORRUS_TREE}/(config_readers|nodepcache_1|scheduler_stats)\\.db$ f VarFile\\n"
+    printf "/var/log/torrus/collector\\.@@{TORRUS_TREE}_0\\.log$ f Log\\n"
+    printf "/@@{RUN}/torrus/collector\\.@@{TORRUS_TREE}_0\\.pid$ f VarFile\\n"
+done
+
+printf "!/var/cache/torrus/[0-9a-f]{32}_[0-9]{5}$ f\\n"
+printf "/var/lib/torrus/db/__db\\.00[1234]$ f VarFile\\n"
+printf "/var/lib/torrus/db/render_cache\\.db$ f VarFile\\n"
+printf "!/var/lib/torrus/session_data/store/[0-9a-f]{32}$ f\\n"
+printf "!/var/lib/torrus/session_data/lock/Apache-Session-[0-9a-f]{32}\\.lock$ f\\n"
+printf "/var/lib/torrus/session_data/(store|lock)$ d VarDir\\n"
+printf "!/var/log/torrus/dbenv_errlog_%d$ f\\n" "$(pidof collector)"
+printf "/var/log/torrus$ d VarDir\\n"
+printf "/@@{RUN}/torrus$ d VarDirInode\\n"

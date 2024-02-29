@@ -1,0 +1,18 @@
+#!/bin/bash
+
+SVN_REPOS=""
+
+#shellcheck disable=SC2154
+if [ -r "$UPAC_settingsd/31_aide_svn-server_settings" ]; then
+  # pull in configuration
+  #shellcheck disable=SC1090
+  . "$UPAC_settingsd/31_aide_svn-server_settings"
+fi
+
+for svnpath in $SVN_REPOS; do
+    [ -d "${svnpath}" ] || exit 1
+    svnpath="${svnpath//\./\\\\.}"
+    printf "%sdb/(txn-)?current$ f VarFile\\n" "${svnpath}"
+    printf "%sdb/rev(prop)?s/0/[0-9]+$ f Full+ANF\\n" "${svnpath}"
+    printf "%s(db(/(txn-protorevs|transactions|rev(prop)?s/0))?|dav/activities\\.d)$ d VarDir\\n" "${svnpath}"
+done

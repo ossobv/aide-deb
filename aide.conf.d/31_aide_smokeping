@@ -1,0 +1,11 @@
+@@define VLS var/lib/smokeping
+@@define VCS var/cache/smokeping
+/@@{VLS}/Local/LocalMachine\\.rrd$ f VarFile
+/@@{VLS}/__sortercache$ d VarDir
+/@@{VLS}/__sortercache/data\\.FPing6?\\.storable$ f VarFile
+/@@{VLS}/[a-z-]+(/[-a-z0-9_]+)?/[-a-z0-9_]+(_[0-9a-f_]+)?\\.rrd$ f VarFile
+/@@{VCS}/images/([-[:alnum:]_]+/)+[-[:alnum:]_]+(_(last_(108000?|31104000|864000?)|mini)\\.png|\\.maxheight)$ f VarFile
+/@@{VCS}/images/__navcache$ d VarDir
+!/@@{VCS}/images/__navcache/[[:digit:]]{13,15}_[[:digit:]]{10}_[[:digit:]]{10}\\.png$ f
+/@@{RUN}/smokeping$ d VarDirInode
+/@@{RUN}/smokeping/smokeping\\.pid$ f VarFile

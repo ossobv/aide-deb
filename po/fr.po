@@ -1,0 +1,120 @@
+# translation of fr.po to French
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+#    Developers do not need to manually edit POT or PO files.
+# Christian Perrier <bubulle@debian.org>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: fr\n"
+"Report-Msgid-Bugs-To: aide@packages.debian.org\n"
+"POT-Creation-Date: 2013-06-09 22:00+0200\n"
+"PO-Revision-Date: 2006-10-11 09:23+0200\n"
+"Last-Translator: Gregory Colpart <reg@evolix.fr>\n"
+"Language-Team: French <debian-l10n-french@lists.debian.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid "Initialize AIDE database?"
+msgstr "Faut-il créer la base de données d'AIDE ?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid ""
+"Before AIDE can be used, you will have to initialize a database. You can "
+"immediately do this here, or run the '/usr/sbin/aideinit' script from a "
+"shell later."
+msgstr ""
+"Avant de pouvoir utiliser AIDE, vous devez créer une base de données. Vous "
+"pouvez le faire dès maintenant ou exécuter le script « /usr/sbin/aideinit » "
+"par la suite."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid "Overwrite existing /var/lib/aide/aide.db.new?"
+msgstr "Faut-il écraser « /var/lib/aide/aide.db.new » ?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid ""
+"You have already a newly generated AIDE database in /var/lib/aide/aide.db."
+"new. If you choose this option, the existing file will be be overwritten by "
+"the new data obtained from the current state of your file system."
+msgstr ""
+"Vous avez déjà une nouvelle base de données « /var/lib/aide/aide.db.new ». "
+"Si vous confirmez, ce fichier sera écrasé par les nouvelles données obtenues "
+"par l'état actuel de votre système de fichiers."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid "Copy aide.db.new to aide.db?"
+msgstr "Faut-il copier « aide.db.new » vers « aide.db » ?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"It is advisable for you to first look over /var/lib/aide/aide.db.new file "
+"before replacing the existing db. You can have the package replace the "
+"database anyway here."
+msgstr ""
+"Vous devriez d'abord vérifier la nouvelle base de données « /var/lib/aide/"
+"aide.db.new » avant de la remplacer. Veuillez confirmer si vous souhaitez la "
+"remplacer maintenant."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"If you do not choose this option, you will need to copy the file /var/lib/"
+"aide/aide.db.new to /var/lib/aide/aide.db before AIDE can use it."
+msgstr ""
+"Si vous ne confirmez pas, vous devrez copier le fichier « /var/lib/aide/aide."
+"db.new » vers « /var/lib/aide/aide.db » avant de pouvoir l'utiliser."
+
+#~ msgid "Move AIDE data files from old directory to new?"
+#~ msgstr ""
+#~ "Faut-il déplacer les fichiers de données depuis l'ancien répertoire ?"
+
+#~ msgid ""
+#~ "AIDE now stores its databases in /var/lib/aide by default. It appears "
+#~ "that you have an older version installed which uses /usr/lib/aide. You "
+#~ "can have the data files moved automatically."
+#~ msgstr ""
+#~ "AIDE place désormais ses bases de données dans « /var/lib/aide » par "
+#~ "défaut. La version plus ancienne que vous utilisiez les plaçait dans « /"
+#~ "usr/lib/aide ». Choisissez cette option pour que les données soient "
+#~ "automatiquement déplacées."
+
+#~ msgid "Daily reports are mailed to root by default"
+#~ msgstr "Envoi des rapports quotidiens au superutilisateur"
+
+#~ msgid "You may change that in /etc/default/aide."
+#~ msgstr ""
+#~ "Par défaut, les rapports quotidiens sont envoyés au superutilisateur. Ce "
+#~ "réglage peut être modifié dans le fichier « /etc/default/aide »."
+
+#~ msgid "Before AIDE can be used, you will have to initialize a database"
+#~ msgstr ""
+#~ "Avant de pouvoir utiliser AIDE, vous devez créer une base de données."
+
+#~ msgid "In order to do this, simply use the '/usr/sbin/aideinit' script."
+#~ msgstr "Pour cela, vous pouvez utiliser le script « /usr/sbin/aideinit »."

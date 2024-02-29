@@ -1,0 +1,2 @@
+/var/cache/spampd$ d VarDir
+/@@{RUN}/spampd\\.pid$ f VarFile

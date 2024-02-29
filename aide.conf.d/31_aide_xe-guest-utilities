@@ -1,0 +1,3 @@
+/var/cache/xenstore/data/(meminfo_free|updated)$ f VarFile
+/var/cache/xenstore/unique-domain-id$ f VarFile
+

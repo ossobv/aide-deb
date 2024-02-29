@@ -1,0 +1,13 @@
+@@define NGINX_LOGDIR var/log/nginx
+@@define NGINX_LOGRE (access|error)\\.log
+/@@{NGINX_LOGDIR}$ d VarDir
+/@@{NGINX_LOGDIR}/@@{NGINX_LOGRE}$ f ActLog
+/@@{NGINX_LOGDIR}/@@{NGINX_LOGRE}\\.1$ f RotLog
+/@@{NGINX_LOGDIR}/@@{NGINX_LOGRE}\\.2\\.@@{LOGEXT}$ f CompSerLog
+/@@{NGINX_LOGDIR}/@@{NGINX_LOGRE}\\.([3-9]|1[0-3])\\.@@{LOGEXT}$ f MidlSerLog
+/@@{NGINX_LOGDIR}/@@{NGINX_LOGRE}\\.14\\.@@{LOGEXT}$ f LastSerLog
+
+/@@{RUN}/nginx\\.pid$ f VarFile
+
+@@undef NGINX_LOGDIR
+@@undef NGINX_LOGRE

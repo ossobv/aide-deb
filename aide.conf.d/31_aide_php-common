@@ -1,0 +1,4 @@
+/var/lib/systemd/timers/stamp-phpsessionclean\\.timer$ f VarFile
+/var/lib/php/sessions$ d VarDir
+!/var/lib/php/sessions/sess_[[:digit:][:lower:]]{26}$ f
+!/var/lib/php/sessions/sess_[[:xdigit:]]{32}$ f

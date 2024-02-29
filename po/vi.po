@@ -1,0 +1,117 @@
+# Vietnamese Translation for aide.
+# Copyright © 2006 Free Software Foundation, Inc.
+# Clytie Siddall <clytie@riverland.net.au>, 2005-2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: aide 0.11.99.20060718-1.0\n"
+"Report-Msgid-Bugs-To: aide@packages.debian.org\n"
+"POT-Creation-Date: 2013-06-09 22:00+0200\n"
+"PO-Revision-Date: 2006-09-30 20:36+0930\n"
+"Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
+"Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: LocFactoryEditor 1.6fc1\n"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid "Initialize AIDE database?"
+msgstr "Khởi động cơ sở dữ liệu AIDE không?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid ""
+"Before AIDE can be used, you will have to initialize a database. You can "
+"immediately do this here, or run the '/usr/sbin/aideinit' script from a "
+"shell later."
+msgstr ""
+"Trước khi có thể sử dụng AIDE, bạn sẽ cần phải khởi tạo một co sở dữ liệu. "
+"Bạn có thể làm việc này ngay bây giờ ở đây, hoặc chạy tập lệnh « /usr/sbin/"
+"aideinit » từ trình bao sau này."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid "Overwrite existing /var/lib/aide/aide.db.new?"
+msgstr "Ghi đè lên tập tin « /var/lib/aide/aide.db.new » tồn tại không?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid ""
+"You have already a newly generated AIDE database in /var/lib/aide/aide.db."
+"new. If you choose this option, the existing file will be be overwritten by "
+"the new data obtained from the current state of your file system."
+msgstr ""
+"Bạn đã có một co sở dữ liệu AIDE mới tạo ra trong « /var/lib/aide/aide.db."
+"new ». Nếu bạn bật tùy chọn này, tập tin tồn tại sẽ bị ghi đè bằng dữ liệu "
+"mới đã được giành từ tình trạng hiện thời của hệ thống tập tin của bạn."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid "Copy aide.db.new to aide.db?"
+msgstr "Sao chép « aide.db.new » sang « aide.db » không?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"It is advisable for you to first look over /var/lib/aide/aide.db.new file "
+"before replacing the existing db. You can have the package replace the "
+"database anyway here."
+msgstr ""
+"Đệ nghị bạn kiểm tra xem tập tin mới « /var/lib/aide/aide.db.new » là thích "
+"hợp, trước khi thay thế cơ sở dữ liệu đã có. Ở đây, bạn vẫn còn có khả năng "
+"báo gói này thay thế co sở dữ liệu đó."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"If you do not choose this option, you will need to copy the file /var/lib/"
+"aide/aide.db.new to /var/lib/aide/aide.db before AIDE can use it."
+msgstr ""
+"Nếu bạn không bật tùy chọn này, bạn sẽ cần phải sao chép tập tin « /var/lib/"
+"aide/aide.db.new » sang « /var/lib/aide/aide.db » để cho trình AIDE sử dụng "
+"nó được."
+
+#~ msgid "Move AIDE data files from old directory to new?"
+#~ msgstr ""
+#~ "Di chuyển các tập tin dữ liệu AIDE từ thư mục cũ đến điều mới không?"
+
+#~ msgid ""
+#~ "AIDE now stores its databases in /var/lib/aide by default. It appears "
+#~ "that you have an older version installed which uses /usr/lib/aide. You "
+#~ "can have the data files moved automatically."
+#~ msgstr ""
+#~ "Trình AIDE lúc bây giờ cất giữ các cơ sở dữ liệu trong « /var/lib/aide » "
+#~ "theo mặc định. Hình như bạn đã cài đặt một phiên bản cũ hơn mà dùng « /"
+#~ "usr/lib/aide ». Bạn có khả năng di chuyển tự động các tập tin dữ liệu."
+
+#~ msgid "Daily reports are mailed to root by default"
+#~ msgstr "Mặc định là gửi thông báo hàng ngày cho người chủ (root)."
+
+#~ msgid "You may change that in /etc/default/aide."
+#~ msgstr ""
+#~ "Bạn có khả năng thay đổi tùy chọn này trong tập tin « /etc/default/aide »."
+
+#~ msgid "Before AIDE can be used, you will have to initialize a database"
+#~ msgstr "Để sử dụng trình AIDE, bạn cần phải khởi động một cơ sở dữ liệu"
+
+#~ msgid "In order to do this, simply use the '/usr/sbin/aideinit' script."
+#~ msgstr ""
+#~ "Để làm như thế, chỉ đơn giản hãy sử dụng tập lệnh « /usr/sbin/aideinit »."
+
+#~ msgid "You must install aide.db.new as /var/lib/aide/aide.db"
+#~ msgstr ""
+#~ "Bạn cần phải cài đặt tập tin «aide.db.new» là «/var/lib/aide/aide.db»."
+
+#~ msgid "Where should daily reports be mailed?"
+#~ msgstr "Bạn có muốn gửi thông báo hàng ngày cho địa chỉ nào?"

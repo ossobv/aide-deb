@@ -1,0 +1,3 @@
+/var/lib/unbound$ d VarDir
+/var/lib/unbound/root\\.key$ f VarFile
+

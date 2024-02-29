@@ -1,0 +1,5 @@
+/@@{RUN}/(blkid|mount)$ d RecreatedDir
+!/@@{RUN}/blkid/blkid\\.tab(\\.old)?$ f
+/var/lib/libuuid/clock\\.txt$ f VarFile
+!/var/lib/systemd/timers/stamp-fstrim\\.timer$ f
+!/@@{RUN}/systemd/propagate/fstrim\\.service$ d

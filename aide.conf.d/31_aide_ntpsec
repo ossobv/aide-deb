@@ -1,0 +1,8 @@
+/var/lib/ntpsec/ntp\\.drift$ f VarFile
+!/var/log/ntpsec/(loop|peer)stats(\\.[0-9]{8})? f
+/var/(lib|log)/ntpsec$ d VarDir
+/@@{RUN}/ntpd\\.pid$ f VarFile
+/@@{RUN}/lock/ntpsec-ntpdate$ f VarTime
+!/@@{RUN}/systemd/propagate/ntpsec\\.service$ d
+/var/lib/systemd/timers/stamp-ntpsec-rotate-stats\\.timer$ f VarFile
+

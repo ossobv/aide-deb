@@ -1,0 +1,28 @@
+Template: aide/aideinit
+Type: boolean
+Default: false
+_Description: Initialize AIDE database?
+ Before AIDE can be used, you will have to initialize a database. You
+ can immediately do this here, or run the '/usr/sbin/aideinit' script
+ from a shell later.
+
+Template: aideinit/overwritenew
+Type: boolean
+Default: true
+_Description: Overwrite existing /var/lib/aide/aide.db.new?
+ You have already a newly generated AIDE database in
+ /var/lib/aide/aide.db.new. If you choose this option, the existing file
+ will be be overwritten by the new data obtained from the current state
+ of your file system.
+
+Template: aideinit/copynew
+Type: boolean
+Default: false
+_Description: Copy aide.db.new to aide.db?
+ It is advisable for you to first look over /var/lib/aide/aide.db.new
+ file before replacing the existing db. You can have the package
+ replace the database anyway here.
+ .
+ If you do not choose this option, you will need to copy the file
+ /var/lib/aide/aide.db.new to /var/lib/aide/aide.db before AIDE can use
+ it.

@@ -1,0 +1,13 @@
+@@define LIGHTTP_LOGDIR var/log/lighttpd
+@@define LIGHTTP_LOGFILERE (access|error|tls-access)\\.log
+/@@{LIGHTTP_LOGDIR}$ d VarDir
+/@@{LIGHTTP_LOGDIR}/@@{LIGHTTP_LOGFILERE}$ f ActLog
+/@@{LIGHTTP_LOGDIR}/@@{LIGHTTP_LOGFILERE}\\.1$ f RotLog
+/@@{LIGHTTP_LOGDIR}/@@{LIGHTTP_LOGFILERE}\\.2\\.@@{LOGEXT}$ f CompSerLog
+/@@{LIGHTTP_LOGDIR}/@@{LIGHTTP_LOGFILERE}\\.([3-9]|10|11)\\.@@{LOGEXT}$ f MidlSerLog
+/@@{LIGHTTP_LOGDIR°/@@{LIGHTTP_LOGFILERE}\\.12\\.@@{LOGEXT}$ f LastSerLog
+
+/@@{RUN}/lighttpd\\.pid$ f VarFile
+/@@{RUN}/lighttpd$ d RecreatedDir
+@@undef LIGHTTP_LOGDIR
+@@undef LIGHTTP_LOGFILERE

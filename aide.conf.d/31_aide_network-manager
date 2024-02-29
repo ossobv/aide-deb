@@ -1,0 +1,4 @@
+/@@{RUN}/NetworkManager(/devices)?$ d VarDirInode
+/@@{RUN}/NetworkManager/resolv\\.conf$ f VarFile
+/var/lib/NetworkManager$ d VarDir
+/var/lib/NetworkManager/(NetworkManager\\.state|timestamps)$ f VarFile

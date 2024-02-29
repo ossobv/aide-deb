@@ -1,0 +1,2 @@
+/var/cache/apt-show-versions/(files|ipackages|apackages)$ f VarFile
+/var/cache/apt-show-versions$ d VarDir

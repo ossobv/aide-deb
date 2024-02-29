@@ -1,0 +1,11 @@
+/@@{RUN}/sendsigs\\.omit\\.d/wpasupplicant\\.wpa_(supplicant|action)\\.@@{INTERFACES}\\.pid$ f VarFile
+
+# if you want this rule to have effect, you need to set WPA_INTERFACES in
+# an earlier file, such as 30_local_wpasupplicant. Due to the new interface
+# naming, it is next to impossible to automaticaly guess which interface needs
+# WPA and which doesn't. If you have an idea to automate this, please give
+# a suggestion or send a patch
+@@if defined WPA_INTERFACES
+/@@{RUN}/wpa_supplicant/@@{WPA_INTERFACES}$ s VarFile
+/@@{RUN}/wpa_supplicant$ d VarDirInode
+@@endif

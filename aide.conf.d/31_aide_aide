@@ -1,0 +1,13 @@
+/var/lib/aide$ d VarDir-n
+/var/lib/aide/aide\\.db$ f VarFile+ANF
+/var/lib/aide/aide\\.db\\.new$ f VarFile
+!/var/lib/aide/dailyaidecheck$ d
+!/var/lib/aide/dailyaidecheck/((error|a(run|err))log|mailfile)$ f
+/var/log/aide$ d VarDir
+/var/log/aide/aide\\.log$ f VarFile
+/var/log/aide/aide\\.log\\.0?$ f Full+ANF
+/var/log/aide/aide\\.log\\.1\\.@@{LOGEXT}$ f CompSerLog
+/var/log/aide/aide\\.log\\.[2-5]\\.@@{LOGEXT}$ f MidlSerLog
+/var/log/aide/aide\\.log\\.6\\.@@{LOGEXT}$ f LastSerLog
+!/@@{RUN}/aide$ d
+!/@@{RUN}/aide/dailyaidecheck\\.lock$ f

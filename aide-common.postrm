@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# post-removal script for AIDE
+# A whole lot of this is "borrowed" from tripwire's postinst
+#
+
+set -e
+
+if [ -n "$AIDEDEBUG" ]; then
+  printf "now debugging %s %s\n" "$0" "$@"
+  set -x
+fi
+
+PKGNAME="aide"
+
+# Make sure we should be running...
+[ "$1" = "purge" ] || exit 0
+
+UCF="ucf"
+UCFR="ucfr"
+
+if command -v ucfq >/dev/null; then
+  for file in $(ucfq --with-colons "$PKGNAME" | cut --delimiter=: --fields=1); do
+    for ext in '' '~' '%' .bak .dpkg-tmp .dpkg-new .dpkg-old .dpkg-dist .ucf-new .ucf-old .ucf-dist;  do
+      rm -f "${file}${ext}"
+    done
+
+    if command -v $UCF >/dev/null; then
+      $UCF --purge "${file}"
+    fi
+    if command -v $UCFR >/dev/null; then
+      $UCFR --purge "${PKGNAME}" "${file}"
+    fi
+  done
+else
+  printf >&2 "ucf no longer installed, not cleaning up\n"
+fi
+
+rm -f /var/lib/aide/aide.db /var/lib/aide/aide.db.new
+if [ -d "/run/aide" ]; then
+    rmdir --ignore-fail-on-non-empty "/run/aide"
+fi
+
+#DEBHELPER#

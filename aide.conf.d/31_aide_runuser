@@ -1,0 +1,21 @@
+@@define SYSTEMD_UNIT_NAME [-a-z\\\\]+
+
+/@@{RUN}/user$ d RecreatedDir-n
+!/@@{RUN}/user/[0-9]+(/systemd)?$ d
+!/@@{RUN}/user/[0-9]+/systemd/(notify|private)$ s
+!/@@{RUN}/user/[0-9]+/systemd/(propagate|transient|units)$ d
+!/@@{RUN}/user/[0-9]+/systemd/inaccessible$ d
+!/@@{RUN}/user/[0-9]+/systemd/inaccessible/blk$ b
+!/@@{RUN}/user/[0-9]+/systemd/inaccessible/chr$ c
+!/@@{RUN}/user/[0-9]+/systemd/inaccessible/dir$ d
+!/@@{RUN}/user/[0-9]+/systemd/inaccessible/fifo$ p
+!/@@{RUN}/user/[0-9]+/systemd/inaccessible/reg$ f
+!/@@{RUN}/user/[0-9]+/systemd/inaccessible/sock$ s
+!/@@{RUN}/user/[0-9]+/systemd/generator\\.late(/xdg-desktop-autostart(\\.target)?\\.wants)?$ d
+!/@@{RUN}/user/[0-9]+/systemd/generator\\.late/xdg-desktop-autostart\\.target\\.wants/app-xdg\\\\x2duser\\\\x2ddirs@autostart\\.service$ l
+/@@{RUN}/user/[0-9]+/systemd/generator\\.late(/@@{SYSTEMD_UNIT_NAME}(\\.target)?\\.wants)?$ d VarDir
+!/@@{RUN}/user/[0-9]+/systemd/generator\\.late/@@{SYSTEMD_UNIT_NAME}(@autostart)?\\.service$ f
+/@@{RUN}/user/[0-9]+/systemd/generator\\.late/@@{SYSTEMD_UNIT_NAME}\\.wants/@@{SYSTEMD_UNIT_NAME}(@autostart)?\\.service$ l VarFile
+!/@@{RUN}/user/[0-9]+/systemd/propagate/os-release$ f
+!/@@{RUN}/user/[0-9]+/systemd/units/invocation:(dirmngr|gpg-agent)\\.service$ l
+@@undef SYSTEMD_UNIT_NAME

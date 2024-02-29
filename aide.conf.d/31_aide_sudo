@@ -1,0 +1,8 @@
+@@if not defined SUDO_ALLOWED_USERS
+@@define SUDO_ALLOWED_USERS ([[:alnum:]]+)
+@@endif
+
+@@define SUDO_STATE_DIR @@{RUN}/sudo
+/@@{SUDO_STATE_DIR}(/ts)?$ d RecreatedDir
+!/@@{SUDO_STATE_DIR}/ts/@@{SUDO_ALLOWED_USERS}$ f
+@@undef SUDO_STATE_DIR

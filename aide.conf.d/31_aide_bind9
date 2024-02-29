@@ -1,0 +1,18 @@
+@@if defined BINDCHROOT
+/@@{BINDCHROOT}/dev/log$ f LowLog
+/@@{BINDCHROOT}/dev$ d VarDir
+@@endif
+/@@{BINDCHROOT}@@{RUN}/named/(session\\.key|named\\.pid)$ f VarFile
+/@@{BINDCHROOT}@@{RUN}/named$ d VarDirInode
+/@@{BINDCHROOT}var/cache/bind$ d VarDir
+/@@{BINDCHROOT}var/cache/bind/[-[:alnum:].]+$ f VarFile
+
+@@if defined BIND_SLAVE_DIRS
+@@if defined BIND_SLAVE_PATHS
+/@@{BINDCHROOT}var/cache/bind/slave/@@{BIND_SLAVE_DIRS}$ d VarDir
+/@@{BINDCHROOT}var/cache/bind/slave/@@{BIND_SLAVE_PATHS}$ f VarFile
+@@endif
+@@endif
+
+
+

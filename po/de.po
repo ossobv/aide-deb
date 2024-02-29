@@ -1,0 +1,104 @@
+# translation of aide_0.11.99.20060718-1.0_de.po to German
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans#
+#    Developers do not need to manually edit POT or PO files.
+#
+# Erik Schanze <eriks@debian.org>, 2004-2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: aide_0.11.99.20060718-1.0_de\n"
+"Report-Msgid-Bugs-To: aide@packages.debian.org\n"
+"POT-Creation-Date: 2013-06-09 22:00+0200\n"
+"PO-Revision-Date: 2006-10-03 00:24+0200\n"
+"Last-Translator: Erik Schanze <eriks@debian.org>\n"
+"Language-Team: German <debian-l10n-german@lists.debian.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid "Initialize AIDE database?"
+msgstr "Datenbank für AIDE anlegen?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:1001
+msgid ""
+"Before AIDE can be used, you will have to initialize a database. You can "
+"immediately do this here, or run the '/usr/sbin/aideinit' script from a "
+"shell later."
+msgstr ""
+"Bevor Sie AIDE benutzen können, müssen Sie eine Datenbank einrichten. Sie "
+"können das gleich jetzt erledigen oder später das Skript '/usr/sbin/"
+"aideinit' in der Kommandozeile aufrufen."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid "Overwrite existing /var/lib/aide/aide.db.new?"
+msgstr "Vorhandene Datei /var/lib/aide/aide.db.new überschreiben?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:2001
+msgid ""
+"You have already a newly generated AIDE database in /var/lib/aide/aide.db."
+"new. If you choose this option, the existing file will be be overwritten by "
+"the new data obtained from the current state of your file system."
+msgstr ""
+"Es gibt bereits eine neu erstellte AIDE-Datenbank in der Datei /var/lib/aide/"
+"aide.db.new. Wenn Sie dieser Auswahl zustimmen, wird die bestehende Datei "
+"mit den Daten überschrieben, die vom aktuellen Zustand Ihres Systems "
+"ermittelt wurden."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid "Copy aide.db.new to aide.db?"
+msgstr "Soll aide.db.new nach aide.db kopiert werden?"
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"It is advisable for you to first look over /var/lib/aide/aide.db.new file "
+"before replacing the existing db. You can have the package replace the "
+"database anyway here."
+msgstr ""
+"Sie sollten sich die Datei /var/lib/aide/aide.db.new erst einmal ansehen, "
+"bevor Sie die vorhandene Datenbank überschreiben. Sie können die Datenbank "
+"aber trotzdem jetzt ersetzen."
+
+#. Type: boolean
+#. Description
+#: ../aide-common.templates:3001
+msgid ""
+"If you do not choose this option, you will need to copy the file /var/lib/"
+"aide/aide.db.new to /var/lib/aide/aide.db before AIDE can use it."
+msgstr ""
+"Wenn Sie diese Auswahl ablehnen, müssen Sie die Datei /var/lib/aide/aide.db."
+"new selbst nach /var/lib/aide/aide.db kopieren, bevor AIDE sie nutzen kann."
+
+#~ msgid "Move AIDE data files from old directory to new?"
+#~ msgstr "AIDE-Dateien aus dem alten ins neue Verzeichnis verschieben?"
+
+#~ msgid ""
+#~ "AIDE now stores its databases in /var/lib/aide by default. It appears "
+#~ "that you have an older version installed which uses /usr/lib/aide. You "
+#~ "can have the data files moved automatically."
+#~ msgstr ""
+#~ "AIDE legt die Datenbank jetzt standardmäßig im Verzeichnis /var/lib/aide "
+#~ "ab. Es scheint bereits eine ältere Version installiert zu sein, die das "
+#~ "Verzeichnis /usr/lib/aide verwendet. Sie können die Dateien automatisch "
+#~ "verschieben lassen."

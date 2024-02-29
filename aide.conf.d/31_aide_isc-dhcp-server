@@ -1,0 +1,3 @@
+/@@{RUN}/dhcpd\\.pid$ f VarFile
+/var/lib/dhcp/dhcpd6?.leases~?$ f VarFile
+/var/lib/dhcp$ d VarDir

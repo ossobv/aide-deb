@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if command -v sa-update > /dev/null
+then
+    SA_VERSION_PROCESSED=$(sa-update --help 2>&1 | grep lib | cut -d '/' -f 5 | cut -d ')' -f 1)
+    printf "@@if not defined SA_VERSION_PROCESSED\\n"
+    printf "@@define SA_VERSION_PROCESSED %s\\n" "${SA_VERSION_PROCESSED}"
+    printf "@@endif\\n"
+fi

@@ -1,0 +1,30 @@
+@@if not defined SAVERSION
+@@if defined SA_VERSION_PROCESSED
+@@define SAVERSION @@{SA_VERSION_PROCESSED}
+@@else
+@@define SAVERSION 4.000000
+@@endif
+@@endif
+
+/@@{RUN}/spamd\\.pid$ f VarFile
+/var/spool/spamassassin/bayes$ d VarDir
+/var/spool/spamassassin/bayes/bayes_(journal|seen|toks)$ f VarFile
+!/var/spool/spamassassin/bayes/bayes\\.lock(\\.@@{FQDN}\\.[[:digit:]]+)?$ f
+/var/lib/spamassassin/sa-update-keys$ d VarDir
+@@define SABASE var/lib/spamassassin/@@{SAVERSION}
+@@define SAUPDATES @@{SABASE}/updates_spamassassin_org
+/@@{SABASE}$ d VarDir
+/@@{SAUPDATES}$ d VarDir
+/@@{SAUPDATES}\\.cf$ f VarFile
+/@@{SAUPDATES}/(local\\.cf|MIRRORED\\.BY)$ f VarFile
+/@@{SAUPDATES}/10_(default_prefs|hasbase)\\.cf$ f VarFile
+/@@{SAUPDATES}/20_(advance_fee|aux_tlds|body_tests|compensate|dnsbl_tests|drugs|dynrdns|fake_helo_tests|freemail(|_domains|_mailcom_domains)|head_tests|html_tests|imageinfo|mailspike|meta_tests|net_tests|pdfinfo|phrases|porn|ratware|uri_tests|vbounce)\\.cf$ f VarFile
+/@@{SAUPDATES}/23_(bayes)\\.cf$ f VarFile
+/@@{SAUPDATES}/25_(accessdb|antivirus|asn|dcc|dkim|dmarc|dnswl|hashcash|pyzor|razor2|replace|spf|textcat|uribl|url_shortener)\\.cf$ f VarFile
+/@@{SAUPDATES}/30_(text_(de|fr|it|nl|pl|pt_br))\\.cf$ f VarFile
+/@@{SAUPDATES}/50_(scores)\\.cf$ f VarFile
+/@@{SAUPDATES}/60_(adsp_override_dkim|awl|bayes_stopwords|shortcircuit|txrep|whitelist(|_auth|_dkim|_spf|_subject)|welcomelist(_(auth|dkim|spf|subject))?)\\.cf$ f VarFile
+/@@{SAUPDATES}/72_(active|scores)\\.cf$ f VarFile
+/@@{SAUPDATES}/73_(sandbox_manual_scores)\\.cf$ f VarFile
+/@@{SAUPDATES}/STATISTICS-set[0123]-72_scores\\.cf\\.txt$ f VarFile
+/@@{SAUPDATES}/(languages|regression_tests\\.cf|sa-update-pubkey\\.txt|user_prefs\\.template)$ f VarFile

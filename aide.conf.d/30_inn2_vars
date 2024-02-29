@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -e /etc/news/innfeed.conf ]; then
+  echo -n "@@define INN2_INNFEED_OUTFEEDS ("
+< /etc/news/innfeed.conf \
+   sed -n '/^[[:space:]]*peer[[:space:]]\+/{s/^[[:space:]]*peer[[:space:]]\+\([-.[:alnum:]]\+\).*/\1/;p;}' | \
+   tr '\n' '|' |\
+   sed 's/|$/)/'
+  echo
+fi

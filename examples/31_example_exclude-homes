@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# this excludes the home directories of system accounts with
+# uid >= 1000 from the AIDE check.
+
+getent passwd | awk -v FS=":" '{ if( $3 >= 1000) { print "!" $6 }}'

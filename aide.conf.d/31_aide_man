@@ -1,0 +1,9 @@
+/var/lib/systemd/timers/stamp-man-db\\.timer$ f VarFile
+!/@@{RUN}/systemd/propagate/man-db\\.service$ d
+
+@@define LANGS (ca|cs|da|de(\\.UTF-8)?|en|es(\\.UTF-8)?|fi|fr(\\.(ISO8859-1|UTF-8))?|gl|hr|hu|id|it(\\.(ISO8859-1|UTF-8))?|ja(\\.UTF-8)?|jp|ko|nl|pl(\\.(UTF-8|ISO8859-2))?|pt(_BR)?|ro|ru|sv|sk|sl|sr|tr|uk|vi|zh(_(CH|CN|TW))?)
+
+/usr/share/man(/@@{LANGS})?(/man[1378])?$ d VarDir
+/var/cache/man(/@@{LANGS})?$ d VarDir
+/var/cache/man(/@@{LANGS})?/(CACHEDIR\\.TAG|index\\.db)$ f VarFile
+@@undef LANGS

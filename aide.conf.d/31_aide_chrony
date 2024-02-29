@@ -1,0 +1,5 @@
+!/@@{RUN}/chrony/chronyd\\.sock$ s
+/@@{RUN}/chrony/chronyd\\.pid$ f VarFile
+/@@{RUN}/chrony(-dhcp)?$ d VarDirInode
+/var/lib/chrony$ d VarDir
+/var/lib/chrony/chrony\\.drift$ f VarFile

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -eu
+
+PATH="/bin:/usr/bin"
+WORKDIR="$(mktemp -d)"
+
+trap 'rm -rf ${WORKDIR}' 0 INT QUIT ABRT PIPE TERM
+
+ROOTDIR="${WORKDIR}/root"
+
+mkdir "${ROOTDIR}"
+
+aide --before "database_out = file:${WORKDIR}/aide.db.out" --config /etc/aide/aide.conf --after "database_add_metadata = false" --after "root_prefix = ${ROOTDIR}" --init

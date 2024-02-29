@@ -1,0 +1,9 @@
+/var/(lib|log)/mysql$ d VarDir
+/var/lib/mysql/mysql$ d VarDir
+/var/lib/mysql/mysql/(general|slow)_log\\.(CSM|CSV|frm)$ f VarFile
+/var/lib/mysql/(ibdata1|ib_logfile[01])$ f VarFile
+/var/log/mysql/mysql-bin\\.index$ f VarFile
+!/var/log/mysql/mysql-bin\\.[0-9]{3}$ d
+!/var/log/mysql/mysql-bin\\.[0-9]{6}$ d
+/@@{RUN}/mysqld/mysqld\\.(sock|pid)$ f VarFile
+/@@{RUN}/mysqld$ d VarDirInode
