@@ -37,5 +37,8 @@ override_dh_auto_configure:
 override_dh_auto_install:
 	dh_auto_install
 	dh_installsystemd --name=dailyaidecheck
-	# this is needed until dh compat 14
-	dh_installsysusers
+	## this is needed until dh compat 14
+	#dh_installsysusers
+	if ! dh_installsysusers; then \
+		install -m0644 -DT debian/aide-common.sysusers debian/aide-common/usr/lib/sysusers.d/aide-common.conf; \
+	fi

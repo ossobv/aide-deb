@@ -3,8 +3,6 @@ OSSO build of the aide Advanced Intrusion Detection Environment
 
 This enables builds for aide 0.18.x for older Ubuntu, like *Focal* and *Jammy*.
 
-Right now it builds on *Jammy*.
-
 
 Docker build
 ------------

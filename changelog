@@ -1,6 +1,12 @@
+aide (0.18.6-2osso1+REL) stable; urgency=medium
+
+  * Version taken from Noble, backported to Jammy and Focal.
+
+ -- Walter Doekes <wjdoekes+aide@osso.nl>  Thu, 29 Feb 2023 13:34:08 +0100
+
 aide (0.18.6-2osso0+REL) stable; urgency=medium
 
-  * Version taken from Noble, backported to Focal/Jammy.
+  * Version taken from Noble, backported to Jammy.
 
  -- Walter Doekes <wjdoekes+aide@osso.nl>  Thu, 29 Feb 2023 11:40:11 +0100
 
