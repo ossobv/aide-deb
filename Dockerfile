@@ -11,12 +11,18 @@ ARG DEBIAN_FRONTEND=noninteractive
 # building/testing and not for running, so we can keep files like apt
 # cache. We do this before copying anything and before getting lots of
 # ARGs from the user. That keeps this bit cached.
-RUN echo 'APT::Install-Recommends "0";' >/etc/apt/apt.conf.d/01norecommends
+RUN echo 'APT::Install-Recommends "0";' >/etc/apt/apt.conf.d/01norecommends && \
+    . /etc/os-release && case $VERSION_ID in \
+    8) printf '%s\n' >/etc/apt/sources.list \
+        'deb http://apt.osso.nl/debian-old jessie main' \
+        'deb http://apt.osso.nl/debian-security-old jessie/updates main';; \
+    esac
 # We'll be ignoring "debconf: delaying package configuration, since apt-utils
 #   is not installed"
-RUN apt-get update -q && \
+RUN . /etc/os-release && force= && case $VERSION_ID in 8) force='--force-yes';; esac && \
+    apt-get update -q && \
     apt-get dist-upgrade -y && \
-    apt-get install -y \
+    apt-get install -y $force \
         ca-certificates curl \
         build-essential devscripts dh-autoreconf dpkg-dev equivs quilt && \
     printf "%s\n" \
@@ -27,9 +33,26 @@ RUN apt-get update -q && \
 
 # Apt-get prerequisites according to control file.
 COPY control /build/debian/control
-RUN mk-build-deps --install --remove --tool "apt-get -y" /build/debian/control
+RUN . /etc/os-release && case $VERSION_ID in \
+    8) sed -i -e '/libpcre2-dev/d;/libext2fs-dev/d' /build/debian/control;; \
+    esac
+RUN . /etc/os-release && force= && case $VERSION_ID in 8) force='--force-yes';; esac && \
+    mk-build-deps --install --remove --tool "apt-get -y $force" /build/debian/control && \
+    cp /build/debian/control /build/debian/control.new
+RUN . /etc/os-release && case $VERSION_ID in \
+    8) \
+        cd /build && \
+        curl https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.39/pcre2-10.39.tar.gz \
+          -sSfLo pcre2-10.39.tar.gz.tar.gz && \
+        test $(md5sum /build/pcre2-10.39.tar.gz.tar.gz | awk '{print $1}' | tee /dev/stderr) = 7389e3524de2cda3d21fde8c224febf1 && \
+        tar zxf pcre2-10.39.tar.gz.tar.gz && \
+        cd pcre2-10.39 && \
+        CFLAGS='-fPIC -O2' ./configure --enable-shared=no --enable-static=yes && \
+        make -j6 && \
+        make install;; \
+    esac
 
-# debian, deb, jammy, aide, 0.18.6, '', 2osso0
+# debian, deb, jessie, aide, 0.18.6, '', 2osso0
 ARG osdistro osdistshort oscodename upname upversion debepoch= debversion
 
 COPY changelog /build/debian/changelog.new
@@ -64,7 +87,12 @@ RUN rm -rf \
       /build/${upname}-${upversion}/debian/README.rst \
       /build/${upname}-${upversion}/debian/.cache && \
     mv -vf /build/${upname}-${upversion}/debian/changelog.new \
-           /build/${upname}-${upversion}/debian/changelog
+           /build/${upname}-${upversion}/debian/changelog && \
+    mv -vf /build/${upname}-${upversion}/debian/control.new \
+           /build/${upname}-${upversion}/debian/control && \
+    . /etc/os-release && case $VERSION_ID in \
+    8) echo 10 >/build/${upname}-${upversion}/debian/compat;; \
+    esac
 WORKDIR /build/${upname}-${upversion}
 
 # Build!

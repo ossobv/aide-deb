@@ -7,7 +7,7 @@ oscodename=${1:-ubuntu/jammy}  # ubuntu/jammy
 upname=aide
 upversion=${2:-0.18.6}      # aide version
 debepoch=
-debversion=${3:-2osso1}     # deb build version, e.g. 0osso2
+debversion=${3:-2osso2}     # deb build version, e.g. 0osso2
 
 echo "Usage: $0 [$oscodename [$upversion [$debversion]]]"
 echo ".. continuing"
@@ -15,8 +15,12 @@ echo ".. continuing"
 osdistro=${oscodename%/*}   # debian (or ubuntu)
 oscodename=${oscodename#*/} # stretch (or bionic)
 case $osdistro/$oscodename in
+debian/bookworm)osdistshort=deb; oscodenum=12;;
 debian/bullseye)osdistshort=deb; oscodenum=11;;
 debian/buster)  osdistshort=deb; oscodenum=10;;
+debian/stretch) osdistshort=deb; oscodenum=9;;
+debian/jessie)  osdistshort=deb; oscodenum=8;;
+ubuntu/noble)   osdistshort=ubu; oscodenum=24.04;;
 ubuntu/jammy)   osdistshort=ubu; oscodenum=22.04;;
 ubuntu/focal)   osdistshort=ubu; oscodenum=20.04;;
 *) echo "ERROR: undefined OS: $osdistro/$oscodename" >&2 && exit 1
