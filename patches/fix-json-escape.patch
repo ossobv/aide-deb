@@ -1,0 +1,112 @@
+Subject: Fix JSON escaping
+Author: Walter Doekes
+Date: 2024-06-15
+Bug: https://github.com/aide/aide/pull/172
+Fix: https://github.com/ossobv/aide/tree/fix/json-escape
+
+Two patches below
+-----------------
+
+Author: Walter Doekes <walter+github@wjd.nu>
+Date:   Sat Jun 15 14:57:18 2024 +0200
+
+    Fix escacped typo
+
+diff --git a/src/report_json.c b/src/report_json.c
+index 2fc77bc..c50dc2f 100644
+--- a/src/report_json.c
++++ b/src/report_json.c
+@@ -103,11 +103,11 @@ static void _print_line(report_t* report, seltree* node) {
+     if (line_first) { line_first=false; }
+     else { report_printf(report,",\n"); }
+ 
+-    char *escacped_filename = _get_escaped_json_string(((node->checked&NODE_REMOVED)?node->old_data:node->new_data)->filename);
++    char *escaped_filename = _get_escaped_json_string(((node->checked&NODE_REMOVED)?node->old_data:node->new_data)->filename);
+ 
+     if(report->summarize_changes) {
+         char* summary = get_summarize_changes_string(report, node);
+-        report_printf(report, JSON_FMT_STRING_PLAIN, 4, ' ', escacped_filename, summary);
++        report_printf(report, JSON_FMT_STRING_PLAIN, 4, ' ', escaped_filename, summary);
+         free(summary); summary=NULL;
+     } else if (!report->grouped) {
+         char* change_type;
+@@ -118,11 +118,11 @@ static void _print_line(report_t* report, seltree* node) {
+         } else {
+             change_type = "changed";
+         }
+-        report_printf(report, JSON_FMT_STRING_PLAIN, 4, ' ', escacped_filename, change_type);
++        report_printf(report, JSON_FMT_STRING_PLAIN, 4, ' ', escaped_filename, change_type);
+     } else {
+-        report_printf(report, JSON_FMT_ARRAY_ELEMENT_PLAIN, 4, ' ', escacped_filename);
++        report_printf(report, JSON_FMT_ARRAY_ELEMENT_PLAIN, 4, ' ', escaped_filename);
+     }
+-    free(escacped_filename);
++    free(escaped_filename);
+ }
+ 
+ static void _print_attribute_value(report_t *report, const char* name, ATTRIBUTE attribute, char **value, int num, int ident) {
+@@ -192,14 +192,14 @@ static void _print_database_attributes(report_t *report, db_line* db) {
+     if (databases_first) { databases_first=false; }
+     else { report_printf(report,",\n"); }
+ 
+-    char *escacped_filename = _get_escaped_json_string(db->filename);
++    char *escaped_filename = _get_escaped_json_string(db->filename);
+ 
+     database_first = true;
+-    report_printf(report, JSON_FMT_OBJECT_BEGIN, 4, ' ', escacped_filename);
++    report_printf(report, JSON_FMT_OBJECT_BEGIN, 4, ' ', escaped_filename);
+     print_dbline_attrs(report, db, NULL, db->attr, _print_database_attribute);
+     report_printf(report,"\n");
+     report_printf(report, JSON_FMT_OBJECT_END_PLAIN, 4, ' ');
+-    free(escacped_filename);
++    free(escaped_filename);
+ }
+ 
+ static void _print_report_dbline_attributes(report_t *report, db_line* oline, db_line* nline, DB_ATTR_TYPE report_attrs) {
+@@ -207,13 +207,13 @@ static void _print_report_dbline_attributes(report_t *report, db_line* oline, db
+         if (details_first) { details_first=false; }
+         else { report_printf(report,",\n"); }
+ 
+-        char *escacped_filename = _get_escaped_json_string((nline==NULL?oline:nline)->filename);
+-        report_printf(report, JSON_FMT_OBJECT_BEGIN, 4, ' ', escacped_filename);
++        char *escaped_filename = _get_escaped_json_string((nline==NULL?oline:nline)->filename);
++        report_printf(report, JSON_FMT_OBJECT_BEGIN, 4, ' ', escaped_filename);
+         attributes_first = true;
+         print_dbline_attrs(report, oline, nline, report_attrs, _print_attribute);
+         report_printf(report,"\n");
+         report_printf(report, JSON_FMT_OBJECT_END_PLAIN, 4, ' ');
+-        free(escacped_filename);
++        free(escaped_filename);
+     }
+ }
+ 
+
+-----------------
+
+Author: Walter Doekes <walter+github@wjd.nu>
+Date:   Sat Jun 15 15:03:28 2024 +0200
+
+    Fix JSON escaping of filenames in different_attributes
+
+diff --git a/src/report_json.c b/src/report_json.c
+index c50dc2f..25d2d1d 100644
+--- a/src/report_json.c
++++ b/src/report_json.c
+@@ -301,11 +301,12 @@ static void print_report_diff_attrs_entries_json(report_t *report) {
+     if (report->num_diff_attrs_entries) {
+         report_printf(report, JSON_FMT_OBJECT_BEGIN, 2, ' ', "different_attributes");
+         for(int i = 0; i < report->num_diff_attrs_entries; ++i) {
+-            char *str = NULL;
+-            report_printf(report, i+1<report->num_diff_attrs_entries?JSON_FMT_STRING_COMMA:JSON_FMT_STRING_LAST , 4, ' ',
+-                    report->diff_attrs_entries[i].entry,
+-                    str= diff_attributes(report->diff_attrs_entries[i].old_attrs, report->diff_attrs_entries[i].new_attrs));
+-            free(str);
++            char *escaped_filename = _get_escaped_json_string(report->diff_attrs_entries[i].entry);
++            char *attrs = diff_attributes(report->diff_attrs_entries[i].old_attrs, report->diff_attrs_entries[i].new_attrs);
++            report_printf(report, i + 1 < report->num_diff_attrs_entries ? JSON_FMT_STRING_COMMA : JSON_FMT_STRING_LAST, 4, ' ',
++                    escaped_filename, attrs);
++            free(escaped_filename);
++            free(attrs);
+         }
+         report->num_diff_attrs_entries = 0;
+         free(report->diff_attrs_entries);
